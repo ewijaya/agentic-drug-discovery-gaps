@@ -10,9 +10,9 @@ This figure appears in a position paper titled *"What Drug Discovery AI Agents S
 
 **Core argument:** Current AI agent systems for drug discovery are designed with Big Pharma resources in mind. They assume massive datasets, large ML teams, extensive compute infrastructure, and months of runtime. Most drug discovery happens in small biotechs with 10-100x fewer resources. This figure quantifies that gap.
 
-**Section context (Gap 4):** The paper's fourth gap addresses "The Small Biotech Reality" — the mismatch between agent system requirements and the resource constraints most practitioners face. While systems like ChatInvent are deployed at AstraZeneca with enormous infrastructure, small biotech teams operate with limited proprietary data, modest compute budgets, and small multidisciplinary teams where one scientist may orchestrate 10+ different project types.
+**Section context (Gap 4):** The paper's fourth gap addresses "The Small Biotech Reality" — the mismatch between agent system requirements and the resource constraints most practitioners face. While systems like ChatInvent are deployed at AstraZeneca with institutional databases, HPC clusters, and specialized teams built over decades, small biotechs operate with **10-100× leaner resource profiles**: 50-100 employees, single wet labs, limited computational infrastructure, and modest funding. One person designs experiments, analyzes results, and manages 14+ project types simultaneously.
 
-**Key message:** Current agent architectures ignore cold-start problems, data efficiency, and generalization under scarcity. This figure makes the resource disparity visible and quantifiable.
+**Key message:** Current agent architectures ignore cold-start problems, data efficiency, and generalization under scarcity. The manuscript emphasizes that **one person manages 14+ project types simultaneously** in small biotech contexts—a reality incompatible with interactive chat interfaces. This figure makes the resource disparity visible and quantifiable.
 
 **Audience:** AI researchers building agent systems, drug discovery practitioners, biotech founders, and funding bodies. The figure must communicate the scale of resource inequality without making small biotechs look "inadequate" — they're constrained, not incompetent.
 
@@ -124,7 +124,7 @@ Two-column comparison with five resource categories arranged vertically. A callo
 
 **Header text:** "SMALL BIOTECH" — 11 pt, Bold, Pale Blue (#B3D9F2)
 
-**Subheader:** "Resource-constrained reality (10-100 person startups)" — 7 pt, Regular, #888888
+**Subheader:** "Resource-constrained reality (50-100 employees, single wet lab)" — 7 pt, Regular, #888888
 
 **Background:** Very light gray tint (#FAFAFA)
 
@@ -142,9 +142,9 @@ Two-column comparison with five resource categories arranged vertically. A callo
 - **Color:** Deep Blue (#0072B2), 2 pt stroke, no fill (outlined style)
 - **Internal detail:** 5-6 horizontal lines inside suggesting stacked data layers
 
-**Label below icon:** "10,000–100,000+ compounds" — 10 pt, Bold, Deep Blue (#0072B2)
+**Label below icon:** "Millions of tested molecules" — 10 pt, Bold, Deep Blue (#0072B2)
 
-**Sublabel:** "High-throughput screening libraries, years of assay data" — 7 pt, Regular, #888888
+**Sublabel:** "Institutional databases built over decades" — 7 pt, Regular, #888888
 
 ---
 
@@ -158,12 +158,12 @@ Two-column comparison with five resource categories arranged vertically. A callo
 - **Color:** Pale Blue (#B3D9F2), 2 pt stroke, no fill
 - **Internal detail:** 2-3 horizontal lines
 
-**Label below icon:** "50–200 compounds" — 10 pt, Bold, Pale Blue (#B3D9F2)
+**Label below icon:** "50–500 proprietary sequences" — 10 pt, Bold, Pale Blue (#B3D9F2)
 
-**Sublabel:** "Focused libraries, limited historical data" — 7 pt, Regular, #888888
+**Sublabel:** "Every assay is precious" — 7 pt, Regular, #888888
 
 **Ratio annotation (between columns, centered):**
-Arrow pointing from Small → Big with text "100–500× less data" — 8 pt, SemiBold Italic, Warm Orange (#D55E00)
+Arrow pointing from Small → Big with text "10,000× less data" — 8 pt, SemiBold Italic, Warm Orange (#D55E00)
 
 ---
 
@@ -181,9 +181,9 @@ Arrow pointing from Small → Big with text "100–500× less data" — 8 pt, Se
 - **Color:** Deep Blue (#0072B2), 2 pt stroke, no fill
 - **Total grid size:** ~35 mm × 24 mm
 
-**Label below icon:** "50–100 person team" — 10 pt, Bold, Deep Blue (#0072B2)
+**Label below icon:** "Specialized teams" — 10 pt, Bold, Deep Blue (#0072B2)
 
-**Sublabel:** "Dedicated ML engineers, data scientists, computational chemists" — 7 pt, Regular, #888888
+**Sublabel:** "ML engineers, chemists, biologists, data engineers" — 7 pt, Regular, #888888
 
 ---
 
@@ -197,9 +197,9 @@ Arrow pointing from Small → Big with text "100–500× less data" — 8 pt, Se
 - **Color:** Pale Blue (#B3D9F2), 2 pt stroke, no fill
 - **Positioned to align with the center-left of the Big Pharma grid for visual comparison**
 
-**Label below icon:** "1–2 people" — 10 pt, Bold, Pale Blue (#B3D9F2)
+**Label below icon:** "1 person doing everything" — 10 pt, Bold, Pale Blue (#B3D9F2)
 
-**Sublabel:** "Scientist who also codes, or part-time consultant" — 7 pt, Regular, #888888
+**Sublabel:** "Design, modeling, analysis, infrastructure" — 7 pt, Regular, #888888
 
 **Ratio annotation (between columns, centered):**
 Arrow with text "50× smaller team" — 8 pt, SemiBold Italic, Warm Orange (#D55E00)
@@ -219,9 +219,9 @@ Arrow with text "50× smaller team" — 8 pt, SemiBold Italic, Warm Orange (#D55
 - **Color:** Deep Blue (#0072B2), 2 pt stroke, no fill
 - **Internal detail:** Each server unit has 3-4 small circles (ports/LEDs)
 
-**Label below icon:** "Multi-GPU clusters (A100/H100)" — 10 pt, Bold, Deep Blue (#0072B2)
+**Label below icon:** "HPC clusters" — 10 pt, Bold, Deep Blue (#0072B2)
 
-**Sublabel:** "Dedicated HPC, on-demand cloud at scale" — 7 pt, Regular, #888888
+**Sublabel:** "Multi-GPU, dedicated infrastructure" — 7 pt, Regular, #888888
 
 ---
 
@@ -237,9 +237,9 @@ Arrow with text "50× smaller team" — 8 pt, SemiBold Italic, Warm Orange (#D55
 
 **Alternative icon (if preferred):** Single GPU card (smaller rectangle with PCIe connector detail)
 
-**Label below icon:** "1 GPU workstation or spot instances" — 10 pt, Bold, Pale Blue (#B3D9F2)
+**Label below icon:** "1–2 GPUs" — 10 pt, Bold, Pale Blue (#B3D9F2)
 
-**Sublabel:** "RTX 3090/4090, or AWS p3 spot instances" — 7 pt, Regular, #888888
+**Sublabel:** "Sparse cloud credits, no HPC" — 7 pt, Regular, #888888
 
 **Ratio annotation (between columns, centered):**
 Arrow with text "100× less compute power" — 8 pt, SemiBold Italic, Warm Orange (#D55E00)
@@ -340,9 +340,9 @@ Arrow with text "100× less runtime" — 8 pt, SemiBold Italic, Warm Orange (#D5
 
 **Body text (8 pt, Regular, Charcoal #333333, left-aligned, 10 mm padding on all sides):**
 
-"Current agent systems (e.g., ChatInvent at AstraZeneca) assume Big Pharma resources: massive datasets, large teams, and extensive compute. Small biotechs—where most early drug discovery happens—need agents optimized for **data efficiency** (transfer learning, few-shot adaptation), **resource constraints** (sample-efficient algorithms, batch-mode orchestration), and **generalization under scarcity**. An agent that requires 10,000 compounds to train is inaccessible to 90% of practitioners."
+"Current agent systems assume Big Pharma resources: millions of molecules, specialized teams, and HPC infrastructure. Small biotechs operate with **10-100× leaner profiles** but are where most early innovation happens. They need agents optimized for: **transfer learning** (ESM-2 pre-trained on millions enables fine-tuning on 50-200 examples), **active learning** (reducing experimental assays by 30-40%), and **batch-mode automation** (one person managing 14+ project types). Agents optimized for AstraZeneca leave the biotech ecosystem behind."
 
-**Key phrases bolded:** "data efficiency", "resource constraints", "generalization under scarcity"
+**Key phrases bolded:** "10-100× leaner profiles", "transfer learning", "active learning", "batch-mode automation"
 
 ---
 
@@ -354,11 +354,11 @@ The entire point of this figure is to make resource disparities **immediately vi
 
 | Row | Big Pharma Icon | Small Biotech Icon | Ratio Preserved |
 |-----|----------------|-------------------|----------------|
-| 1: Data | 40 × 35 mm (area: 1400 mm²) | 8 × 7 mm (area: 56 mm²) | 25:1 area ratio |
-| 2: Team | 50 silhouettes (grid) | 1 silhouette | 50:1 count ratio |
-| 3: Compute | 30 × 28 mm server rack | 12 × 8 mm laptop | ~8:1 area ratio |
-| 4: Data Eng | 35 mm wide pipeline | 10 × 10 mm folder | 3.5:1 width ratio |
-| 5: Budget | 30 × 20 mm calendar | 10 mm clock | 6:1 area ratio |
+| 1: Data | 40 × 35 mm (area: 1400 mm²) | 8 × 7 mm (area: 56 mm²) | ~10,000:1 (millions vs hundreds) |
+| 2: Team | 50 silhouettes (grid) | 1 silhouette | 50:1 count ratio (specialized teams vs 1 person) |
+| 3: Compute | 30 × 28 mm server rack | 12 × 8 mm laptop | ~50:1 (HPC clusters vs 1-2 GPUs) |
+| 4: Data Eng | 35 mm wide pipeline | 10 × 10 mm folder | Infrastructure vs manual (categorical difference) |
+| 5: Budget | 30 × 20 mm calendar | 10 mm clock | Months vs hours-days (~100:1 time) |
 
 **Critical design principle:** A reader should be able to glance at this figure and immediately think "Big Pharma has WAY more of everything." The size differences must be visceral, not subtle.
 
@@ -443,11 +443,11 @@ The entire point of this figure is to make resource disparities **immediately vi
 
 ## Additional Context: Why This Figure Matters
 
-From the paper's Section 6:
+From the paper's Section 5 (Gap 4: The Small Biotech Reality):
 
-> "ChatInvent's deployment at AstraZeneca showcased impressive capabilities—but AstraZeneca has 10,000+ compounds, 50+ person ML teams, and multi-GPU clusters. Most drug discovery happens at small biotechs with 50-200 compounds, 1-2 person AI teams, and single workstation GPUs. Agents designed for the former context fail catastrophically in the latter."
+> "ChatInvent's deployment at AstraZeneca accessed institutional databases, HPC clusters, and proprietary libraries built over decades, with specialized teams (medicinal chemists, computational chemists, biologists, data scientists). This large pharma context defines current agent design assumptions but is not representative. Small biotechs face different constraints: 50-100 employees, single wet labs, limited computational infrastructure, modest funding. Proprietary datasets have hundreds of compounds, not millions. One person designs experiments, analyzes results, and manages projects. Resource profiles are 10-100 times leaner, yet agents assume large pharma contexts."
 
-This figure makes that statement concrete and visual. It validates the experience of small biotech practitioners who feel left behind by the AI agent hype cycle. It also challenges AI researchers to consider resource constraints as a first-class design requirement, not an afterthought.
+This figure makes that disparity concrete and visual. It validates the experience of small biotech practitioners who are underserved by current AI agent systems. It challenges AI researchers to design for **data efficiency** (transfer learning on 50-200 examples), **computational constraints** (1-2 GPUs, not clusters), and **batch-mode automation** (one person managing 14+ projects simultaneously)—contexts where most early drug discovery innovation actually happens.
 
 ---
 
