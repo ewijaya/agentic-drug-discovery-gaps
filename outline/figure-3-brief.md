@@ -8,13 +8,15 @@
 
 This figure supports **Gap 2: The In Vivo–In Silico Bridge** in a position paper titled *"What Drug Discovery AI Agents Still Can't Do."*
 
-**The argument:** Current AI agents excel at processing clean, structured, text-based data (SMILES strings, CSV tables, literature PDFs). They struggle or fail entirely with messy biological data that dominates real drug discovery: behavioral videos, clinical score trajectories with dropout, tissue imaging, multi-modal omics, and longitudinal measurements. This gap prevents agents from bridging in vitro predictions to in vivo reality.
+**The argument from the manuscript:** Current AI agents excel at in vitro automation (synthesis, screening, literature mining) but hit a hard ceiling at in vivo studies. Animal experiments generate fundamentally different data: longitudinal (days to months), multi-modal (behavioral scores, imaging, molecular profiling), noisy, low-throughput, and expensive. These characteristics make in vivo data the bottleneck, yet agents provide no pathway to incorporate it.
 
-**What this figure must communicate in 5 seconds:** There's a stark divide between data types agents can process (green checkmarks) and data types that define real drug discovery but remain inaccessible to agents (red X's).
+**Specific quote from manuscript:** "In vivo studies yield heterogeneous streams. Neurological injury evaluation includes behavioral assessments (motor coordination via beam walking, generating ordinal scores), tissue histology (cell proliferation requiring computer vision), RNA sequencing (high-dimensional gene expression needing differential expression and pathway enrichment), and clinical notes (semi-structured weight and adverse events). Current agents cannot integrate these modalities."
 
-**Audience:** AI researchers, drug discovery scientists, biotech practitioners. This figure is a practical reference — readers should be able to glance at it and immediately understand what's feasible vs. what's not.
+**What this figure must communicate in 5 seconds:** There's a stark accessibility divide: agents handle text-based and structured formats well (green checkmarks), but the messy biological data that dominates real drug discovery remains inaccessible (red X's) or only partially accessible with heavy preprocessing (yellow half-circles).
 
-**Placement:** Section 4 (Gap 2: The In Vivo–In Silico Bridge). This is the second "evidence" figure, illustrating the concrete limitations of current agent architectures.
+**Audience:** AI researchers, drug discovery scientists, biotech practitioners. This is a practical reference figure — a reader should be able to glance at it and immediately understand what's feasible vs. what requires custom pipelines vs. what's currently impossible.
+
+**Placement:** Section 3 (labeled "Blind Spot 2: The In Vivo to In Silico Bridge"). This figure accompanies Table 1 in the manuscript, which lists the same data types in tabular form.
 
 ---
 
@@ -22,11 +24,11 @@ This figure supports **Gap 2: The In Vivo–In Silico Bridge** in a position pap
 
 ### Dimensions & Format
 
-- **Size:** 180 mm × 135 mm (full-width, portrait orientation — taller to accommodate the matrix)
+- **Size:** 180 mm × 110 mm (full-width, landscape — wider to show visual gradient clearly)
 - **Resolution:** 300 DPI minimum; vector (SVG/PDF) preferred
 - **Bleed:** None
 - **Delivery formats:** SVG (primary), high-res PNG (review), layered source file
-- **File name:** `fig3_data_accessibility`
+- **File name:** `fig3-invivo-insilico-gap` (matches manuscript reference)
 
 ---
 
@@ -35,14 +37,13 @@ This figure supports **Gap 2: The In Vivo–In Silico Bridge** in a position pap
 | Element | Font | Size | Weight | Color |
 |---------|------|------|--------|-------|
 | Figure title | Open Sans or Helvetica Neue | 12 pt | Bold | #333333 |
-| Matrix title | Open Sans or Helvetica Neue | 10 pt | SemiBold | #555555 |
-| Row labels (Y-axis) | Open Sans or Helvetica Neue | 8 pt | Regular | #333333 |
-| Row sublabels | Open Sans or Helvetica Neue | 6.5 pt | Regular | #777777 |
-| Column headers (X-axis) | Open Sans or Helvetica Neue | 8 pt | SemiBold | #333333 |
-| Column subheaders | Open Sans or Helvetica Neue | 6.5 pt | Regular | #777777 |
-| Icons (✓/◐/✗) | 16 pt symbol font or vector | — | — | See color palette |
+| Section headers | Open Sans or Helvetica Neue | 9 pt | SemiBold | #555555 |
+| Data type labels | Open Sans or Helvetica Neue | 8 pt | Regular | #333333 |
+| Format sublabels | Open Sans or Helvetica Neue | 6.5 pt | Regular | #777777 |
+| Use case examples | Open Sans or Helvetica Neue | 6.5 pt | Italic | #888888 |
+| Icons (✓/◐/✗) | 18 pt symbol font or vector | — | Bold | See color palette |
 | Legend text | Open Sans or Helvetica Neue | 7 pt | Regular | #555555 |
-| Annotation text | Open Sans or Helvetica Neue | 7 pt | Italic | #999999 |
+| Annotation text | Open Sans or Helvetica Neve | 7 pt | Italic | #999999 |
 
 **All text must remain editable** (not rasterized).
 
@@ -52,373 +53,349 @@ This figure supports **Gap 2: The In Vivo–In Silico Bridge** in a position pap
 
 | Role | Hex | Symbol | Usage |
 |------|-----|--------|-------|
-| Accessible (High) | #228833 | ✓ | Agent can process this data type natively with high reliability |
-| Partial (Medium) | #CCBB44 | ◐ | Agent can process with significant preprocessing or human curation |
-| Inaccessible (Low/None) | #EE6677 | ✗ | Agent cannot meaningfully process this data type |
+| Accessible | #228833 | ✓ | Agent can process natively with high reliability |
+| Partial | #CCBB44 | ◐ | Requires significant preprocessing or human curation |
+| Inaccessible | #EE6677 | ✗ | Agent cannot meaningfully process this data type |
+| Accessible fill (light) | #E8F5E9 | — | Background tint for accessible items |
+| Partial fill (light) | #FFFBEA | — | Background tint for partial items |
+| Inaccessible fill (light) | #FDECEA | — | Background tint for inaccessible items |
 | Neutral Background | #F7F7F7 | — | General background |
-| Grid Lines | #DDDDDD | — | Matrix cell borders |
-| Charcoal | #333333 | — | Text, labels |
-| Medium Gray | #888888 | — | Secondary text |
+| Divider | #DDDDDD | — | Section separators |
+| Charcoal | #333333 | — | Primary text |
+| Medium Gray | #777777 | — | Secondary text |
 
-**Additional Design Rule:**
-- Each cell has BOTH a color fill and an icon symbol
-- Color-only or icon-only would fail accessibility — both are required
-- Pattern fills (optional): Accessible = solid, Partial = diagonal stripes, Inaccessible = crosshatch (use if colorblind testing shows ambiguity)
+**Design Rule:** Each data type has BOTH a color-coded background AND an icon symbol. Never rely on color alone.
 
 ---
 
 ## Icon Style
 
-- **Symbols:** ✓ (checkmark), ◐ (half-filled circle), ✗ (X mark)
-- **Size:** 14–16 pt or vector equivalent (approx 5 mm tall)
-- **Weight:** Bold/heavy stroke weight for visibility
-- **Color:** Symbols inherit the cell's color (darker than fill)
-  - Accessible cell: #228833 fill → #1A6626 symbol
-  - Partial cell: #CCBB44 fill → #998822 symbol
-  - Inaccessible cell: #EE6677 fill → #CC4455 symbol
-- **Alignment:** Centered in each matrix cell
+- **Symbols:** 
+  - ✓ (bold checkmark) for Accessible
+  - ◐ (half-filled circle, left half filled) for Partial
+  - ✗ (bold X mark) for Inaccessible
+- **Size:** 16–18 pt or vector equivalent (approx 5.5 mm tall)
+- **Weight:** Bold/heavy stroke weight for visibility at print scale
+- **Color:** Symbols use the saturated color (not tint):
+  - Accessible: #228833
+  - Partial: #998822 (darker than fill)
+  - Inaccessible: #CC4455
+- **Alignment:** Left-aligned within each data type row, before the label
 
 ---
 
-## Layout
+## Layout Overview
 
-Matrix/grid visualization with:
-- **Rows (Y-axis):** 12 data types commonly encountered in drug discovery
-- **Columns (X-axis):** 4 agent capability dimensions
-- **Cells:** 12 rows × 4 columns = 48 cells total
-
-### Matrix Structure
+**Visual structure:** Horizontal layout showing data types as cards/rows, arranged from most accessible (left) to least accessible (right), creating a visual gradient from green → yellow → red.
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│  Figure Title: "What Agents Can and Cannot Process"                 │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│                    ┌──────┬──────┬──────┬──────┐                    │
-│                    │ Col1 │ Col2 │ Col3 │ Col4 │  (Column headers)  │
-│                    ├──────┼──────┼──────┼──────┤                    │
-│  Row 1 (label)     │  ✓   │  ✓   │  ✗   │  ◐   │                    │
-│  Row 2 (label)     │  ✓   │  ◐   │  ✗   │  ✗   │                    │
-│  Row 3 (label)     │  ◐   │  ✗   │  ✗   │  ✗   │                    │
-│     ...            │ ...  │ ...  │ ...  │ ...  │                    │
-│  Row 12 (label)    │  ✗   │  ✗   │  ✗   │  ◐   │                    │
-│                    └──────┴──────┴──────┴──────┘                    │
-│                                                                     │
-│  [Legend: ✓ Accessible, ◐ Partial, ✗ Inaccessible]                 │
-│  [Annotation: Summary insight]                                      │
-└─────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  Figure 3: What Agents Can and Cannot Process                               │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐            │
+│  │ AGENTS EXCEL    │  │ PARTIAL/LIMITED │  │ AGENTS FAIL     │            │
+│  │ (Native support)│  │ (Heavy lifting) │  │ (Not supported) │            │
+│  ├─────────────────┤  ├─────────────────┤  ├─────────────────┤            │
+│  │ ✓ Data Type 1   │  │ ◐ Data Type 5   │  │ ✗ Data Type 7   │            │
+│  │ ✓ Data Type 2   │  │ ◐ Data Type 6   │  │ ✗ Data Type 8   │            │
+│  │ ✓ Data Type 3   │  │                 │  │ ✗ Data Type 9   │            │
+│  │ ✓ Data Type 4   │  │                 │  │                 │            │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘            │
+│                                                                             │
+│  [Legend: ✓ Accessible, ◐ Partial, ✗ Inaccessible]                         │
+│  [Annotation: "The lab automation ceiling: agents stop where biology begins"]│
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
----
-
-## Column Definitions (X-Axis)
-
-Four capability dimensions representing what agents need to do with data:
-
-| # | Column Header | Subheader | Description |
-|---|--------------|-----------|-------------|
-| 1 | Native Parsing | Direct ingestion | Can the agent read/parse this data format without custom preprocessing? |
-| 2 | Semantic Understanding | Reasoning over content | Can the agent extract meaning, identify patterns, or make inferences? |
-| 3 | Temporal Integration | Longitudinal analysis | Can the agent model change over time, handle dropout, or infer trajectories? |
-| 4 | Multi-Modal Fusion | Cross-modality synthesis | Can the agent integrate this data type with other modalities? |
-
-**Visual layout:**
-- Column width: ~40 mm each
-- Column headers: Bold 8 pt, left-aligned within each column
-- Subheaders: Regular 6.5 pt, left-aligned, medium gray (#777777)
-- 2 mm padding inside each column header cell
+**Key design principle:** The horizontal grouping into three columns creates an immediate visual understanding of the accessibility divide. The size of each column (more red than green) reinforces the message that most real drug discovery data is inaccessible.
 
 ---
 
-## Row Definitions (Y-Axis)
+## Data Types — Exact List from Manuscript
 
-Twelve data types, arranged from "most accessible" (top) to "least accessible" (bottom). This ordering creates a visual gradient of accessibility.
+The manuscript's **Table 1** (Data Type Accessibility for Current Agent Systems) lists these 9 data types. The figure must match this list exactly:
 
-| # | Row Label | Sublabel | Description (for context — not shown in figure) |
-|---|-----------|----------|------------------------------------------------|
-| 1 | Text Literature | PubMed, patents, reviews | Structured text documents — LLM native format |
-| 2 | SMILES Strings | Chemical notation | Text-based molecular representation |
-| 3 | CSV/Tabular Data | Assay results, databases | Structured numerical data |
-| 4 | PDB Files | Protein structures | Standardized 3D structure format |
-| 5 | FASTA Sequences | Amino acid, nucleic acid | Text-based sequence data |
-| 6 | Microscopy Images | Cell cultures, histology | 2D spatial images — requires computer vision |
-| 7 | Clinical Scores | Ordinal, subjective ratings | Longitudinal ordinal data with human judgment |
-| 8 | RNA-Seq Count Matrices | High-dimensional transcriptomics | Thousands of features, sparsity, batch effects |
-| 9 | Behavioral Videos | Animal phenotyping | Unstructured video requiring pose estimation |
-| 10 | Tissue Imaging (Spatial) | Multi-channel microscopy | 3D/4D imaging with spatial transcriptomics |
-| 11 | Longitudinal In Vivo Trajectories | Time-series with dropout | Recovery curves, missing data, variability |
-| 12 | Multi-Modal Omics | RNA-seq + proteomics + metabolomics | Integration across measurement platforms |
+| # | Data Type | Format | Agent-Readable | Example Use Case (from manuscript) |
+|---|-----------|--------|---------------|-----------------------------------|
+| 1 | SMILES strings | Text | Yes (✓) | Small molecule property prediction |
+| 2 | Literature abstracts | Text | Yes (✓) | Knowledge synthesis |
+| 3 | PDB structures | Structured | Yes (✓) | Protein structure analysis |
+| 4 | CSV assay data | Tabular | Yes (✓) | High-throughput screening |
+| 5 | Tissue imaging | Image | Partial (◐) | Histological quantification |
+| 6 | Clinical trajectories | Time-series | Partial (◐) | Longitudinal efficacy modeling |
+| 7 | Clinical notes | Semi-structured text | Partial (◐) | Adverse event detection |
+| 8 | Behavioral videos | Video | No (✗) | Phenotyping analysis |
+| 9 | RNA-seq data | FASTQ/BAM | No (✗) | Transcriptomic profiling |
 
-**Visual layout:**
-- Row height: ~9 mm each (enough for label + sublabel + some breathing room)
-- Row labels: Regular 8 pt, left-aligned, 2 mm padding
-- Sublabels: Regular 6.5 pt, left-aligned, medium gray (#777777), directly below main label
+**Additional context from manuscript text (not in table but mentioned):**
+- "Multi-modal transcriptomics" (mentioned in figure caption)
+- "Longitudinal measurements with dropout" (mentioned in figure caption)
+
+These are implicitly covered by items 6, 8, and 9 above.
 
 ---
 
-## Cell Content — The Matrix Values
+## Three-Column Layout — Detailed Specifications
 
-Each of the 48 cells (12 rows × 4 columns) contains:
-1. A **fill color** (green, yellow, or red tint)
-2. A **symbol** (✓, ◐, or ✗)
+### Left Column — "Agents Excel" (4 items)
+**Header:** "Agents Excel" — 9 pt, SemiBold, #228833
+**Subheader:** "Native support, high reliability" — 6.5 pt, Regular, #777777
 
-### Row 1: Text Literature
+**Column background:** Very light green tint (#E8F5E9), subtle (5% opacity)
+**Column width:** ~50 mm
+**Column border:** 1.5 pt left border in #228833
 
-| Column | Native Parsing | Semantic Understanding | Temporal Integration | Multi-Modal Fusion |
-|--------|---------------|----------------------|---------------------|-------------------|
-| Value | ✓ Accessible | ✓ Accessible | ◐ Partial | ◐ Partial |
-| Rationale | PDF/HTML parsing is mature | LLMs excel at text reasoning | Timeline extraction is partial | Can reference but not deeply integrate with non-text |
+**Data type cards (4 items stacked vertically):**
 
-### Row 2: SMILES Strings
+Each card contains:
+- Icon (✓) — 18 pt, #228833, left-aligned
+- Primary label (e.g., "SMILES strings") — 8 pt, Regular, #333333
+- Format sublabel (e.g., "Text") — 6.5 pt, Regular, #777777
+- Example use case (e.g., "Property prediction") — 6.5 pt, Italic, #888888
 
-| Column | Native Parsing | Semantic Understanding | Temporal Integration | Multi-Modal Fusion |
-|--------|---------------|----------------------|---------------------|-------------------|
-| Value | ✓ Accessible | ✓ Accessible | ✗ Inaccessible | ◐ Partial |
-| Rationale | Standard text format | Cheminformatics tools integrated | No temporal dimension | Can combine with docking/assays but not biology |
+**Card appearance:**
+- Dimensions: ~45 × 16 mm each
+- Internal padding: 2 mm
+- Background: white or very light green (#F1F8F1)
+- Border: 0.75 pt, #CCCCCC
+- Border radius: 3 px
+- Spacing between cards: 2 mm
 
-### Row 3: CSV/Tabular Data
-
-| Column | Native Parsing | Semantic Understanding | Temporal Integration | Multi-Modal Fusion |
-|--------|---------------|----------------------|---------------------|-------------------|
-| Value | ✓ Accessible | ◐ Partial | ◐ Partial | ◐ Partial |
-| Rationale | Trivial to parse | Depends on column semantics; agents guess | Time columns exist but modeling limited | Can merge tables but struggles with heterogeneity |
-
-### Row 4: PDB Files
-
-| Column | Native Parsing | Semantic Understanding | Temporal Integration | Multi-Modal Fusion |
-|--------|---------------|----------------------|---------------------|-------------------|
-| Value | ✓ Accessible | ◐ Partial | ✗ Inaccessible | ◐ Partial |
-| Rationale | Standard format, parsers exist | 3D geometry yes, biology insight limited | Structural dynamics ignored | Can combine with sequences/docking |
-
-### Row 5: FASTA Sequences
-
-| Column | Native Parsing | Semantic Understanding | Temporal Integration | Multi-Modal Fusion |
-|--------|---------------|----------------------|---------------------|-------------------|
-| Value | ✓ Accessible | ✓ Accessible | ✗ Inaccessible | ◐ Partial |
-| Rationale | Simple text format | PLMs provide embeddings | No time dimension | Combines with structures/assays moderately |
-
-### Row 6: Microscopy Images
-
-| Column | Native Parsing | Semantic Understanding | Temporal Integration | Multi-Modal Fusion |
-|--------|---------------|----------------------|---------------------|-------------------|
-| Value | ◐ Partial | ◐ Partial | ✗ Inaccessible | ✗ Inaccessible |
-| Rationale | Image formats parsable but need CV pipelines | Basic detection yes, biological interpretation limited | No temporal modeling out-of-box | Hard to integrate with omics/scores |
-
-### Row 7: Clinical Scores
-
-| Column | Native Parsing | Semantic Understanding | Temporal Integration | Multi-Modal Fusion |
-|--------|---------------|----------------------|---------------------|-------------------|
-| Value | ◐ Partial | ✗ Inaccessible | ✗ Inaccessible | ✗ Inaccessible |
-| Rationale | Can read tables but ordinal semantics lost | Treats as numbers, misses clinical meaning | No longitudinal modeling | Requires domain knowledge to merge with biomarkers |
-
-### Row 8: RNA-Seq Count Matrices
-
-| Column | Native Parsing | Semantic Understanding | Temporal Integration | Multi-Modal Fusion |
-|--------|---------------|----------------------|---------------------|-------------------|
-| Value | ◐ Partial | ✗ Inaccessible | ✗ Inaccessible | ✗ Inaccessible |
-| Rationale | CSV-like but huge/sparse; needs normalization | No pathway understanding without specialized tools | No time-series modeling | Integration with proteomics/metabolomics beyond agents |
-
-### Row 9: Behavioral Videos
-
-| Column | Native Parsing | Semantic Understanding | Temporal Integration | Multi-Modal Fusion |
-|--------|---------------|----------------------|---------------------|-------------------|
-| Value | ✗ Inaccessible | ✗ Inaccessible | ✗ Inaccessible | ✗ Inaccessible |
-| Rationale | Requires DeepLabCut or equivalent; not agent territory | Pose → behavior inference needs domain models | Temporal dynamics exist but not agent-accessible | Isolated from other data modalities |
-
-### Row 10: Tissue Imaging (Spatial)
-
-| Column | Native Parsing | Semantic Understanding | Temporal Integration | Multi-Modal Fusion |
-|--------|---------------|----------------------|---------------------|-------------------|
-| Value | ✗ Inaccessible | ✗ Inaccessible | ✗ Inaccessible | ✗ Inaccessible |
-| Rationale | Multi-channel 3D/4D imaging requires specialized pipelines | Morphology + spatial transcriptomics = expert domain | Time-lapse requires tracking | Cross-modal with clinical data nearly impossible |
-
-### Row 11: Longitudinal In Vivo Trajectories
-
-| Column | Native Parsing | Semantic Understanding | Temporal Integration | Multi-Modal Fusion |
-|--------|---------------|----------------------|---------------------|-------------------|
-| Value | ◐ Partial | ✗ Inaccessible | ✗ Inaccessible | ✗ Inaccessible |
-| Rationale | Can read time-series CSVs but dropout/variability breaks assumptions | Causal inference not supported | No temporal state-space models | Cannot link recovery curves to molecular data |
-
-### Row 12: Multi-Modal Omics
-
-| Column | Native Parsing | Semantic Understanding | Temporal Integration | Multi-Modal Fusion |
-|--------|---------------|----------------------|---------------------|-------------------|
-| Value | ✗ Inaccessible | ✗ Inaccessible | ✗ Inaccessible | ✗ Inaccessible |
-| Rationale | Each modality = separate preprocessing pipeline | No cross-modality reasoning frameworks | Temporal multi-omics = research frontier | Integration is the entire challenge |
+**Order (top to bottom):**
+1. SMILES strings — Text — Small molecule property prediction
+2. Literature abstracts — Text — Knowledge synthesis
+3. PDB structures — Structured — Protein structure analysis
+4. CSV assay data — Tabular — High-throughput screening
 
 ---
 
-## Summary — The Accessibility Pattern
+### Middle Column — "Partial/Limited" (3 items)
+**Header:** "Partial/Limited" — 9 pt, SemiBold, #998822 (darker yellow)
+**Subheader:** "Requires heavy preprocessing" — 6.5 pt, Regular, #777777
 
-Looking at the matrix as a whole:
+**Column background:** Very light yellow tint (#FFFBEA), subtle
+**Column width:** ~50 mm
+**Column border:** 1.5 pt left border in #CCBB44
 
-| Data Type Category | Accessibility Level | Percentage of Cells |
-|-------------------|---------------------|-------------------|
-| Text/Structured (Rows 1-5) | Mostly ✓ Accessible or ◐ Partial | ~70% green or yellow |
-| Biological/Complex (Rows 6-12) | Mostly ✗ Inaccessible | ~75% red |
+**Data type cards (3 items stacked vertically):**
 
-**Visual gradient:** The matrix should show a clear color shift from top (green-dominant) to bottom (red-dominant).
+Same card structure as left column, but:
+- Icon: ◐ (half-filled circle) — 18 pt, #998822
+- Card background: white or very light yellow (#FFFEF5)
+
+**Order (top to bottom):**
+1. Tissue imaging — Image — Histological quantification
+2. Clinical trajectories — Time-series — Longitudinal efficacy modeling
+3. Clinical notes — Semi-structured text — Adverse event detection
+
+---
+
+### Right Column — "Agents Fail" (2 items)
+**Header:** "Agents Fail" — 9 pt, SemiBold, #CC4455
+**Subheader:** "Not supported by current architectures" — 6.5 pt, Regular, #777777
+
+**Column background:** Very light red/pink tint (#FDECEA), subtle
+**Column width:** ~50 mm
+**Column border:** 1.5 pt left border in #EE6677
+
+**Data type cards (2 items stacked vertically):**
+
+Same card structure, but:
+- Icon: ✗ — 18 pt, #CC4455
+- Card background: white or very light pink (#FEF5F5)
+
+**Order (top to bottom):**
+1. Behavioral videos — Video — Phenotyping analysis
+2. RNA-seq data — FASTQ/BAM — Transcriptomic profiling
+
+**Important note:** The manuscript figure caption mentions "behavioral videos, clinical score trajectories, tissue imaging, multi-modal transcriptomics, longitudinal measurements with dropout" — these are all covered by the 9 items above. No need to add more.
+
+---
+
+## Visual Hierarchy — The Gradient Effect
+
+**Critical design goal:** The three columns should create an immediate visual gradient from left (green, many items) to right (red, fewer items but representing more of real work).
+
+**Reinforcement strategies:**
+1. **Column heights:** Left column is tallest (4 items), middle is medium (3 items), right is shorter (2 items) — BUT the message is that the 2 items on the right represent the majority of in vivo work
+2. **Color intensity:** Background tints get slightly more saturated from left to right (green is subtle, yellow is medium, red is noticeable)
+3. **Border weight:** Left border of each column gets slightly heavier from left to right (1.5 pt → 2 pt → 2.5 pt)
+4. **White space:** More padding inside cards in the right column to emphasize emptiness/absence
+
+---
+
+## Additional Visual Elements
+
+### Connecting annotation (optional)
+A subtle arrow or gradient bar beneath the three columns showing the spectrum from "Accessible" → "Partial" → "Inaccessible", with the label:
+
+"The lab automation ceiling: agents stop where in vivo biology begins" — 7 pt, italic, #999999
+
+Position: Centered below the three columns, 5 mm spacing from bottom of cards.
+
+### Alternative annotation (from manuscript quote):
+"No agent executes workflows spanning video processing, supervised learning, time-series engineering, and hypothesis testing" — 7 pt, italic, #999999
+
+Choose whichever feels more impactful given the visual layout.
 
 ---
 
 ## Legend
 
-Small legend box positioned **bottom-left** of the figure (approx 50 × 20 mm):
+Small legend box positioned **bottom-right** of the figure (approx 40 × 18 mm):
 
-**Title:** "Agent Capability" — 7 pt, SemiBold
+**Title:** "Agent Capability" — 7 pt, SemiBold, #555555
 
-| Symbol | Color Swatch | Label | Description |
-|--------|-------------|-------|-------------|
-| ✓ | Green dot (#228833) | Accessible | Native support, high reliability |
-| ◐ | Yellow dot (#CCBB44) | Partial | Requires preprocessing, limited reliability |
-| ✗ | Red dot (#EE6677) | Inaccessible | No meaningful processing capability |
+| Symbol | Color Swatch | Label |
+|--------|-------------|-------|
+| ✓ | Green circle (#228833) | Accessible |
+| ◐ | Yellow half-circle (#998822) | Partial |
+| ✗ | Red X (#CC4455) | Inaccessible |
 
-Each swatch is a small filled square (5 × 5 mm) followed by the symbol and label in 7 pt Regular.
-
----
-
-## Annotation (Below the Matrix)
-
-A single-sentence summary positioned **centered below the matrix**, 7 pt italic, #999999:
-
-"Current agents handle text and structured formats well but cannot process the messy biological data that dominates in vivo drug discovery."
-
-Or alternative:
-
-"The accessibility divide: 5 data types agents excel at vs 7 data types that define real biology."
+Each swatch is a 5 mm icon followed by the label in 7 pt Regular, #555555.
 
 ---
 
-## Visual Details — Cell Appearance
+## Alternative Layout Option — If Horizontal Doesn't Work
 
-Each cell in the matrix:
+If the three-column horizontal layout feels too cramped, use a **vertical gradient layout** instead:
 
-| Element | Specification |
-|---------|--------------|
-| Cell width | ~40 mm (matches column width) |
-| Cell height | ~9 mm (matches row height) |
-| Border | 1 pt, #DDDDDD (light gray grid lines) |
-| Fill | Color tint: #228833 (20% opacity), #CCBB44 (25% opacity), or #EE6677 (20% opacity) |
-| Symbol | Centered, 14-16 pt, darker shade of the fill color |
-| Padding | 1 mm internal padding |
+```
+┌────────────────────────────────────────────┐
+│  Data Type          Format      Capability │
+├────────────────────────────────────────────┤
+│  ✓ SMILES strings   Text        [green]   │
+│  ✓ Literature       Text        [green]   │
+│  ✓ PDB structures   Structured  [green]   │
+│  ✓ CSV assay data   Tabular     [green]   │
+│  ─────────────────────────────────────────  │
+│  ◐ Tissue imaging   Image       [yellow]  │
+│  ◐ Clinical traj.   Time-series [yellow]  │
+│  ◐ Clinical notes   Semi-struct [yellow]  │
+│  ─────────────────────────────────────────  │
+│  ✗ Behavioral vid.  Video       [red]     │
+│  ✗ RNA-seq data     FASTQ/BAM   [red]     │
+└────────────────────────────────────────────┘
+```
 
-**Color fill guidelines:**
-- Use tints, not saturated colors — cells should feel readable, not overpowering
-- Accessible: Very light green (#E8F5E9 or similar)
-- Partial: Very light yellow (#FFFBEA or similar)
-- Inaccessible: Very light red/pink (#FDECEA or similar)
+This creates a top-to-bottom gradient (green → yellow → red) that may be easier to scan than left-to-right columns.
 
-**Symbol weights:**
-- ✓: Bold/heavy checkmark, not thin
-- ◐: Half-filled circle (left or top half filled), clear boundary
-- ✗: Bold X with balanced stroke weight
+**Use this option if:**
+- The three-column layout feels too wide for the labels
+- Vertical scanning feels more natural for a "list of data types"
+- You want to emphasize the ordering (accessible at top, inaccessible at bottom)
+
+**Formatting for vertical layout:**
+- Each row: 10 mm height
+- Icon column: 10 mm width
+- Data type column: 50 mm width
+- Format column: 35 mm width
+- Capability indicator (colored bar or background): 15 mm width
+- Horizontal divider lines (1 pt, #DDDDDD) between the three groups
 
 ---
 
-## Axis Labels
+## What the Manuscript Says (Direct Quotes for Context)
 
-### Y-Axis (Left side)
-- **Main label:** "Data Types in Drug Discovery" — 8 pt, SemiBold, rotated 90° counterclockwise
-- Position: Centered vertically along the left edge of the matrix
+**Figure caption in LaTeX:**
+> "Matrix showing data types on the vertical axis and agent accessibility on the horizontal axis. Green checkmarks indicate data types current agents handle well (text, SMILES, PDB files, CSV data, literature). Red X marks denote data types agents struggle with (behavioral videos, clinical score trajectories, tissue imaging, multi-modal transcriptomics, longitudinal measurements with dropout). This visualization reveals the systematic exclusion of in vivo data modalities from current agent architectures."
 
-### X-Axis (Top)
-- **Main label:** "Agent Capabilities" — 8 pt, SemiBold
-- Position: Centered horizontally above the column headers
+**Key manuscript passages:**
+> "In vivo studies yield heterogeneous streams. Neurological injury evaluation includes behavioral assessments (motor coordination via beam walking, generating ordinal scores), tissue histology (cell proliferation requiring computer vision), RNA sequencing (high-dimensional gene expression needing differential expression and pathway enrichment), and clinical notes (semi-structured weight and adverse events). Current agents cannot integrate these modalities."
 
----
+> "Behavioral phenotyping via DeepLabCut tracks animal poses in videos, generating time-series keypoint coordinates. Computing behavioral metrics (inter-animal distance, contact time, grooming) requires training pose estimation, validating tracking, computing features, and statistical testing. No agent executes this workflow spanning video processing, supervised learning, time-series engineering, and hypothesis testing."
 
-## Alternative Accessibility Enhancement (Optional)
-
-If colorblind testing reveals ambiguity, add **pattern fills** to cells:
-
-| Accessibility | Pattern |
-|--------------|---------|
-| ✓ Accessible | Solid fill (no pattern) |
-| ◐ Partial | Diagonal stripe pattern (45° lines, 1 pt, spaced 2 mm) |
-| ✗ Inaccessible | Crosshatch pattern (both 45° and -45° lines) |
-
-Pattern color should match the symbol color (darker than fill).
+> "RNA-seq requires quality control, alignment, and quantification into expression matrices. Differential expression identifies treatment effects. Pathway enrichment maps genes to biological processes via KEGG or Gene Ontology. Upstream regulator analysis infers transcription factors driving changes. The FASTQ-to-hypothesis pipeline needs bioinformatics tools (STAR, HISAT2, DESeq2, edgeR, GSEA) that agents do not integrate."
 
 ---
 
 ## What NOT to Do
 
-- ❌ **Do not make the matrix too small to read** — each cell needs enough space for the symbol and a light background. If 48 cells don't fit legibly in 180 × 135 mm, adjust row/column counts (prioritize readability).
-- ❌ **Do not use red-green as the only distinction** — symbols (✓/◐/✗) are mandatory. Color + symbol together = accessible.
-- ❌ **Do not use ambiguous symbols** — ✓ must clearly be a checkmark, ✗ must clearly be an X, ◐ must clearly be half-filled.
-- ❌ **Do not vary symbol sizes within the matrix** — all checkmarks same size, all X's same size. Consistency is critical for scannability.
-- ❌ **Do not make the grid lines too prominent** — they should structure the matrix, not dominate it. 1 pt light gray (#DDDDDD) is sufficient.
-- ❌ **Do not fill cells with 100% saturated colors** — use light tints (20-25% opacity) so symbols remain visible and text is legible.
-- ❌ **Do not add extra columns or rows beyond the specified 4 × 12** — the matrix is intentionally compact to be scannable. More dimensions = less clarity.
-- ❌ **Do not forget row sublabels** — "Clinical Scores" alone is ambiguous; "Ordinal, subjective ratings" clarifies.
+- ❌ **Do not add data types not in the manuscript** — stick to the 9 items in Table 1
+- ❌ **Do not use a complex multi-axis matrix** — the manuscript describes a simple accessibility categorization, not a detailed capability breakdown
+- ❌ **Do not make the figure taller than 110 mm** — it needs to fit on the page with the table
+- ❌ **Do not use only color to distinguish categories** — symbols (✓/◐/✗) are mandatory
+- ❌ **Do not make symbols too small** — they must be visible when printed at 180 mm width
+- ❌ **Do not add proprietary examples** — use only the generic use cases from the table
+- ❌ **Do not forget the gradient effect** — the visual should make it obvious that most real work falls in the yellow/red zones
+- ❌ **Do not use ambiguous half-fill for ◐** — the left half or top half should be clearly filled, with a crisp boundary
+- ❌ **Do not crowd the layout** — white space is important for scannability
 
 ---
 
-## Spatial Precision — Cell Alignment
+## Key Message Reinforcement
 
-All cells must be:
-- **Perfectly aligned** — no offset rows or columns
-- **Equal cell dimensions within rows/columns** — no irregular sizing
-- **Grid lines continuous** — no gaps or overlaps in borders
+**The figure must make these points visually obvious:**
 
-Use alignment tools in vector software (Figma/Illustrator) to ensure pixel-perfect grid structure.
+1. **Agents handle 4 data types well** — all text-based or highly structured (SMILES, literature, PDB, CSV)
+2. **3 data types are partially accessible** — but require heavy preprocessing (imaging, time-series, semi-structured text)
+3. **2 data types are completely inaccessible** — and these represent the core of in vivo validation (videos, raw sequencing)
+4. **The ratio is damning** — 4 accessible vs. 5 inaccessible/partial, and the 5 represent where most drug discovery cost and risk lives
+
+**Visual strategy:** Make the green zone look clean and organized (agents excel here). Make the yellow zone look workable but demanding. Make the red zone feel sparse and unserved (this is the gap).
 
 ---
 
 ## Accessibility Checklist
 
 - [ ] Colorblind-safe (test with [Coblis simulator](https://www.color-blindness.com/coblis-color-blindness-simulator/))
-- [ ] Legible when printed in grayscale (symbols distinguishable even without color)
-- [ ] High-contrast text (dark text on light backgrounds)
-- [ ] All symbols use bold/heavy strokes for visibility
-- [ ] Legend clearly explains the three categories
-- [ ] Minimum 6.5 pt font size for sublabels
+- [ ] Legible when printed in grayscale (symbols must be distinguishable without color)
+- [ ] High-contrast text (dark text on light backgrounds throughout)
+- [ ] All data types have both color AND symbol (redundant encoding)
+- [ ] Symbols are bold/heavy weight for visibility
+- [ ] Minimum 6.5 pt font size for smallest text
 - [ ] No information conveyed by color alone
 
 ---
 
-## Testing the Figure — Key Questions
+## Testing the Figure
 
 After creating the figure, verify:
 
-1. **5-second test:** Can a reader immediately see the green-to-red gradient from top to bottom?
-2. **Scannability:** Can a reader quickly locate a specific data type (e.g., "Behavioral Videos") and see its accessibility profile across all 4 columns?
-3. **Message clarity:** Is it obvious that agents struggle with biological/in vivo data?
-4. **Grayscale test:** Print or convert to grayscale — are the three categories (✓/◐/✗) still distinguishable?
-5. **Colorblind test:** Run through deuteranopia and protanopia simulators — do green and red remain distinct?
+1. **3-second test:** Can a reader immediately see three distinct accessibility zones?
+2. **5-second test:** Can they identify which zone "behavioral videos" and "RNA-seq" fall into?
+3. **Scannability:** Can they quickly locate a specific data type (e.g., "PDB structures") and see its accessibility status?
+4. **Message clarity:** Is it obvious that agents struggle with in vivo biological data?
+5. **Grayscale test:** Print or convert to grayscale — are ✓/◐/✗ still distinguishable?
+6. **Colorblind test:** Run through deuteranopia and protanopia simulators — do the three zones remain distinct?
 
 ---
 
 ## Delivery Checklist
 
 - [ ] SVG (editable vector, all text as text objects not paths)
-- [ ] High-res PNG (300 DPI, for review)
+- [ ] High-res PNG (300 DPI, for review and manuscript submission)
 - [ ] Layered source file (Figma / Illustrator / Affinity Designer with named layers)
-- [ ] Grayscale version (verify all symbols/patterns are distinguishable)
+- [ ] Grayscale version (verify all symbols are distinguishable)
 - [ ] Colorblind simulation screenshots (deuteranopia, protanopia, tritanopia)
-- [ ] Confirmation that all cells are perfectly aligned (no gaps or misalignments)
+- [ ] Confirmation that data types match Table 1 exactly (9 items, no additions)
 
 ---
 
 ## Reference Style
 
-**Target aesthetic:** Nature Reviews data visualization — clean, scannable, information-dense but not cluttered. The matrix should feel like a practical reference chart, not a decorative infographic.
+**Target aesthetic:** Nature Reviews Drug Discovery data visualization — clean, scannable, information-dense but not cluttered. The figure should feel like a practical reference chart, not a decorative infographic.
 
-Inspiration: Gene expression heatmaps, clinical trial outcome tables, accessibility matrices in HCI papers.
+**Comparable figures to reference:**
+- Data accessibility matrices in bioinformatics papers
+- Tool capability comparison charts in software papers
+- Clinical trial outcome summary figures
 
-**The core message:** This figure is a tool for practitioners. A scientist should be able to glance at it during a project and think: "Can agents help me with this data type? Ah, no — it's in the red zone. I'll need a custom pipeline."
-
----
-
-## Usage Note for Practitioners
-
-This figure is designed to be **cited and reused**. When the paper is published, this matrix should become a reference chart that researchers bookmark and share. Prioritize:
-- Clarity over cleverness
-- Scannability over aesthetics
-- Practical utility over visual polish
-
-If a scientist can print this figure, tape it to their lab wall, and consult it weekly — it's working.
+**The core goal:** A practitioner should be able to print this figure, put it on their desk, and consult it when planning a project: "Can agents help me with this data type? Ah, no — it's in the red zone. I'll need a custom pipeline."
 
 ---
 
-*Brief version: 1.0 — 2026-02-05*
+## Usage Context
+
+This figure appears in the manuscript alongside Table 1, which provides the detailed data. The figure's role is to provide an **immediate visual understanding** of the accessibility divide. The table gives specifics; the figure gives the "at a glance" takeaway.
+
+**Relationship to other figures:**
+- **Figure 1** (Agent Reality Gap) — shows the conceptual divide between what agents do vs. what discovery needs
+- **Figure 2** (Small Molecule vs. Peptide Workflows) — shows complexity contrast in computational workflows
+- **Figure 3** (this figure) — shows the data type accessibility gap
+- Together, they build the case that current agents have fundamental blind spots
+
+---
+
+*Brief version: 2.0 — 2026-02-06 — Revised to match manuscript exactly*
