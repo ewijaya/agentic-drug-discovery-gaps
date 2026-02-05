@@ -4,15 +4,33 @@
 
 ---
 
+## Important Note: 2D vs 3D Design Decision
+
+**The manuscript figure caption currently says** "Three-dimensional scatter plot" — however, **this brief specifies a 2D design** with the third dimension (stability) encoded via **point size**. This is intentional:
+- 3D plots are difficult to read, don't print well, and require specific viewing angles
+- Encoding the third dimension as point size is standard practice for publication-quality multi-objective visualizations
+- **The manuscript caption will be updated** to match this design
+
+If you're an illustrator reading this: **follow this brief (2D design), not the current manuscript caption.**
+
+---
+
 ## Paper Context
 
-This figure appears in **Section 7 (Gap 5: Multi-Objective Navigation)** of a position paper titled *"What Drug Discovery AI Agents Still Can't Do."*
+This figure appears in **Section 6 (Blind Spot 5: Multi-Objective Navigation)** of a position paper titled *"What Drug Discovery AI Agents Still Can't Do."*
 
-**Core argument of this section:** Current AI agents optimize single objectives (e.g., maximize binding affinity) when real drug discovery requires balancing multiple conflicting goals simultaneously: efficacy, safety, stability, synthesizability, and cost. Real candidates lie on **Pareto frontiers** — where improving one property necessarily degrades another. Human decision-makers need interpretable trade-off visualizations to navigate these frontiers, not black-box "optimal" suggestions that ignore critical constraints.
+**Core argument of this section:** Drug discovery is multi-objective optimization. Candidates must simultaneously satisfy bioactivity, selectivity, safety, stability, manufacturability, and cost. These objectives **conflict**: potency improvements reduce selectivity, stability enhancements increase immunogenicity, high-purity synthesis is expensive. Navigating this requires understanding **Pareto frontiers** — candidates where improving one objective requires degrading another — and making decisions based on risk tolerance, development stage, and context.
 
-**Specific problem:** Most agent demonstrations report success when they find a compound with the highest predicted binding affinity. In reality, that compound might be toxic, unstable in solution, or impossible to synthesize at scale. Drug discovery practitioners must identify candidates that represent **acceptable compromises** across multiple competing objectives.
+**Current agent limitation:** Current agents optimize single objectives. ChemCrow optimizes binding affinity or synthetic accessibility. Coscientist targets synthesis yield. When handling multiple objectives, they collapse them to weighted sums: "Maximize 0.6×bioactivity + 0.4×drug-likeness." This **discards critical information**: which candidates are Pareto-optimal, how sensitive rankings are to weight changes, what trade-offs exist. Agents present single "optimal" solutions, obscuring the decision space.
 
-**The "single-metric trap":** AI agents are typically rewarded for maximizing a single score (e.g., "find the peptide with the lowest IC50"). This leads them to ignore safety-efficacy trade-offs, stability constraints, and practical synthesizability — all of which are deal-breakers in real drug development.
+**The "single-metric trap" (from manuscript):** Single-metric optimization mirrors ML training objectives (minimize loss, maximize accuracy). This works for unidimensional goals, but drug discovery is multidimensional and context-dependent. Optimality depends on indication, development stage, competitive landscape, and risk tolerance. No scalar objective captures this.
+
+**Real practitioner example (from manuscript):** In in vivo peptide development, safety-efficacy trade-offs dominated candidate selection:
+- **Peptide A:** Tenfold higher proliferation bioactivity but triggered hepatotoxicity at effective doses
+- **Peptide B:** Half the bioactivity but higher tolerated dosing, yielding comparable efficacy with better safety  
+- **Peptide C:** Intermediate bioactivity and safety but superior stability enabling less frequent dosing
+
+**"Optimal" depends on patient population, dosing regimen, and regulatory risk tolerance.** Agents cannot represent these trade-offs. They predict "A > B" but cannot articulate: "A is twice as potent but has a threefold narrower safety margin; choose A if dosing can be tightly controlled, choose B for robustness."
 
 **Audience:** AI researchers building drug discovery agents, medicinal chemists, computational biologists, biotech decision-makers. The figure must communicate both the mathematical concept (Pareto optimality) and the practical implications (why single-objective optimization fails).
 
@@ -196,12 +214,14 @@ Each point's diameter encodes a **stability metric** (e.g., peptide half-life in
 ### Visual Design
 A smooth curve connecting the Pareto-optimal points, representing the boundary of achievable trade-offs.
 
+**From manuscript:** "A candidate is Pareto-optimal if no other improves one objective without degrading another. The Pareto frontier is a curve (two objectives) or surface (three+)." Methods like **NSGA-II** and **multi-objective Bayesian optimization** construct this frontier — but current agents don't support these approaches.
+
 - **Path:** Smooth Bézier curve through the Sky Blue (#56B4E9) points
 - **Color:** Bluish Green (#009E73) 
 - **Style:** 2.5 pt solid line
-- **Start point:** Top-left (highest efficacy, moderate safety)
-- **End point:** Top-right (lower efficacy, highest safety)
-- **Shape:** Convex curve (bowed outward) — this is the mathematical property of Pareto frontiers
+- **Start point:** Left side (highest efficacy, moderate safety)
+- **End point:** Top-right (moderate efficacy, highest safety)
+- **Shape:** Convex curve (bowed outward/upward) — this is the mathematical property of Pareto frontiers. The curve should be "smooth and continuous," not jagged.
 
 ### Frontier Annotation
 Small text label near the curve (middle section):
@@ -209,6 +229,13 @@ Small text label near the curve (middle section):
 - Font: 8 pt SemiBold, #009E73 (matching curve color)
 - Position: Above the curve, centered horizontally
 - Optional: Small arrow pointing to the curve
+
+**Contrast with weighted sums (manuscript critique):** Agents that use "0.6×bioactivity + 0.4×drug-likeness" would collapse this 2D frontier into a single diagonal line. The Pareto curve reveals the true non-linear trade-off structure.
+
+**Manuscript insight on frontier shape:** "Steep regions require large sacrifices for modest gains; flat regions allow improvements with minimal cost." The curve should show this curvature variation:
+- **Steep section (left side):** Near high efficacy, improving safety much requires large efficacy sacrifice → steep downward slope as you move right
+- **Flat section (right side):** In the moderate efficacy zone, safety can be improved with less efficacy cost → gentler slope
+- This non-uniformity is why human judgment is essential — different contexts favor different regions
 
 ---
 
@@ -226,68 +253,73 @@ Four specific candidates are highlighted with **leader lines** and **text callou
 
 ### Callout Positions & Text
 
-#### Callout 1: "The Agent's Pick"
-- **Target point location:** Top-left zone (highest efficacy)
-  - IC50: ~1 nM
-  - TI: ~100
-  - Stability: SMALL point (low stability)
+**Note:** These callouts echo the real practitioner examples from the manuscript (peptides A, B, C with different bioactivity-safety-stability profiles).
+
+#### Callout 1: "High Potency, Narrow Margin"
+- **Target point location:** Left side of Pareto frontier (highest efficacy, moderate safety)
+  - IC50: ~2 nM (very potent)
+  - TI: ~150 (acceptable but not wide margin)
+  - Stability: LARGE point (high stability)
 - **Callout position:** Upper-left area, leader line pointing to the point
 - **Text:**
   ```
   Candidate A
-  "The Agent's Pick"
+  High Potency, Narrow Margin
   
-  Highest efficacy (1 nM IC50)
-  but unstable (t½ < 1 hr)
-  Agent optimized for potency only
+  10× more potent (2 nM IC50)
+  Moderate safety (TI = 150)
+  Stable — but narrow dosing window
+  Requires tight control
   ```
 
-#### Callout 2: "The Safe Bet"
-- **Target point location:** Right side of Pareto frontier (lower efficacy, highest safety)
-  - IC50: ~100 nM
-  - TI: ~900
-  - Stability: LARGE point (high stability)
+#### Callout 2: "Lower Efficacy, Robust Safety"
+- **Target point location:** Right side of Pareto frontier (moderate efficacy, highest safety)
+  - IC50: ~20 nM (half the potency of A)
+  - TI: ~800 (excellent safety margin)
+  - Stability: MEDIUM point (moderate stability)
 - **Callout position:** Upper-right area
 - **Text:**
   ```
   Candidate B
-  "The Safe Bet"
+  Lower Efficacy, Robust Safety
   
-  Moderate efficacy (100 nM IC50)
-  Excellent safety (TI = 900)
-  Stable (t½ > 6 hr)
+  Half A's potency (20 nM IC50)
+  but 5× wider safety margin (TI = 800)
+  Comparable efficacy via higher dosing
+  Preferred for broad patient populations
   ```
 
-#### Callout 3: "The Balanced Compromise"
-- **Target point location:** Middle of Pareto frontier
-  - IC50: ~10 nM
+#### Callout 3: "The Stability Winner"
+- **Target point location:** Middle-upper of Pareto frontier
+  - IC50: ~8 nM
   - TI: ~400
-  - Stability: MEDIUM point
-- **Callout position:** Right side, middle height
+  - Stability: LARGE point (highest stability — this is the key differentiator)
+- **Callout position:** Right side, upper-middle height
 - **Text:**
   ```
   Candidate C
-  "The Balanced Compromise"
+  The Stability Winner
   
-  Good efficacy (10 nM IC50)
+  Intermediate bioactivity (8 nM IC50)
   Good safety (TI = 400)
-  Moderate stability (t½ = 3 hr)
+  Superior stability (t½ > 12 hr)
+  Enables less frequent dosing
   ```
 
-#### Callout 4: "The Dominated Candidate"
-- **Target point location:** Lower-left, clearly below Pareto frontier (dominated)
+#### Callout 4: "Dominated — No Justification"
+- **Target point location:** Lower-middle, clearly below Pareto frontier (dominated)
   - IC50: ~50 nM
-  - TI: ~80
-  - Stability: MEDIUM point
+  - TI: ~100
+  - Stability: SMALL point (low stability)
 - **Callout position:** Lower-left area
 - **Text:**
   ```
   Candidate D
-  "Dominated — Avoid"
+  Dominated — No Justification
   
-  Worse than C in BOTH
-  efficacy and safety
-  No reason to choose this
+  Worse than C in efficacy AND safety
+  No compensating advantage
+  Strictly inferior choice
   ```
 
 ---
@@ -429,17 +461,21 @@ After generating all points:
 
 ## Key Visual Messages (What the Reader Should Understand)
 
-1. **Trade-offs are real:** The Pareto frontier shows that improving efficacy costs safety (and vice versa). There is no "free lunch."
+These messages directly support the manuscript's critiques of current agentic AI systems:
 
-2. **Single-objective agents fail:** The red arrow shows agents chase maximum efficacy, landing in a region with poor safety and/or stability.
+1. **Trade-offs are real and non-linear** (Manuscript: "Objectives conflict: potency improvements reduce selectivity, stability enhancements increase immunogenicity"): The Pareto frontier shows that improving efficacy costs safety (and vice versa). The curve's non-uniform shape shows these trade-offs are complex, not simple linear exchanges.
 
-3. **Pareto-optimal ≠ perfect:** Even Pareto-optimal candidates (Sky Blue) have trade-offs. Choosing among them requires human judgment about acceptable compromises.
+2. **Single-objective optimization misses the decision space** (Manuscript: "ChemCrow optimizes binding affinity... Coscientist targets synthesis yield"): The red horizontal arrow shows agents chase maximum efficacy, completely ignoring the safety dimension. They land in a narrow region when the full Pareto frontier offers diverse strategic choices.
 
-4. **Dominated candidates are easy to eliminate:** Orange points below the frontier are strictly worse — no reason to choose them.
+3. **Pareto-optimal ≠ "the answer"** (Manuscript: "Optimality depends on indication, development stage, competitive landscape, and risk tolerance"): Even Pareto-optimal candidates (Sky Blue) represent different trade-offs. Choosing among A (high potency, narrow margin), B (robust safety), or C (stability advantage) requires human judgment about context — which agents cannot provide.
 
-5. **Stability matters too:** Point size shows that some high-efficacy candidates (small circles) are unstable — agents that optimize efficacy only will miss this.
+4. **Dominated candidates are objectively inferior:** Orange points below the frontier are strictly worse — there exists a Pareto point that beats them on ALL objectives. These can be safely eliminated without human deliberation.
 
-6. **Dimensionality collapse:** The inset shows how agents flatten 2D (or higher) decision spaces into 1D rankings, losing critical information.
+5. **Hidden dimensions matter** (Manuscript: "Stability modifications can reduce affinity, increase aggregation, or complicate synthesis"): Point size (stability) shows that some high-efficacy candidates are unstable. An agent optimizing efficacy as a scalar would rank these highest, missing a deal-breaking constraint.
+
+6. **Weighted sums discard information** (Manuscript: "Multiple objectives collapse to weighted sums... This discards information"): The inset shows how agents flatten 2D+ decision spaces into 1D rankings. All context about trade-off structure, sensitivity to weights, and alternative strategies disappears.
+
+7. **The real problem: agents can't represent this** (Manuscript: "Agents do not visualize Pareto frontiers or sensitivity to weight changes"): This figure shows what practitioners need — and what current agent architectures cannot deliver.
 
 ---
 
@@ -468,17 +504,25 @@ After generating all points:
 
 ## Optional Enhancements (If Space/Time Permits)
 
-### Enhancement 1: Uncertainty Bands
+### Enhancement 1: Uncertainty Bands (Aligned with Manuscript § "Incorporating Uncertainty and Risk")
+The manuscript emphasizes prediction uncertainty: **"IC50 equals 10 nM might have a 95% interval of 5-20 nM or 1-100 nM. Ignoring uncertainty leads to poor decisions."**
+
 If showing predicted vs experimental candidates:
-- Add error bars or confidence ellipses around points
-- Use lighter shade of point color for uncertainty region
+- Add error bars or confidence ellipses around selected points (e.g., the 4 callout candidates)
+- Use lighter shade of point color for uncertainty region (e.g., faint orange halos around dominated points showing uncertainty overlap with frontier)
+- Label: "Prediction uncertainty (95% CI)" in legend
+- This would visually demonstrate that some "dominated" candidates might actually be on the frontier when uncertainty is accounted for
 
 ### Enhancement 2: Decision Region Shading
 - Shade regions of the plot by desirability:
-  - Green tint: High safety + high efficacy (top-left, above frontier)
+  - Green tint: High safety + high efficacy (top-left, above frontier — theoretically ideal but often infeasible)
   - Yellow tint: Acceptable trade-offs (near frontier)
   - Red tint: Unacceptable (low safety + low efficacy, bottom-right)
 - Use subtle transparency (20% opacity) so points remain visible
+
+**From manuscript on constraints:** "Constraints add complexity: synthesizability, solubility, permeability, absence of toxicophores. Constrained optimization identifies the Pareto frontier within feasible regions, which may be disjoint or conflicting." 
+
+Optionally, add a small shaded "infeasible region" (e.g., diagonal hatching in upper-left) labeled "High predicted performance but synthesis infeasible" to show that not everything above the frontier is actually achievable.
 
 ### Enhancement 3: Interactive Version (Web/Supplementary)
 If creating an interactive version for supplementary materials:
@@ -503,6 +547,17 @@ If creating an interactive version for supplementary materials:
 ## Technical Notes for Python/Matplotlib Implementation
 
 If generating this figure programmatically (recommended for reproducibility):
+
+### Context from Manuscript
+
+The manuscript discusses two multi-objective optimization methods that **construct Pareto frontiers** but are **not supported by current agents**:
+
+1. **NSGA-II (Non-dominated Sorting Genetic Algorithm II)**: "Maintains candidate populations and selects non-dominated solutions"
+2. **Multi-objective Bayesian optimization**: "Models objectives, selects candidates via acquisition functions balancing exploration and Pareto improvement"
+
+This figure illustrates what these methods produce — and what agents that use single-objective optimization or weighted sums cannot represent.
+
+### Python Implementation
 
 ```python
 import matplotlib.pyplot as plt
