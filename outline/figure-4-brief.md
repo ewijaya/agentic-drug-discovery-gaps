@@ -10,20 +10,21 @@ This figure appears in **Gap 3: Multi-Paradigm, Not Multi-Agent** of a position 
 
 **Core argument:** Current AI agents in drug discovery are built around a **single paradigm** — LLMs orchestrating tool APIs through text. This works for literature mining and synthesis planning but breaks down when drug discovery requires **machine learning training, reinforcement learning optimization, molecular dynamics simulations, and gradient-based optimization**. The field needs multi-paradigm orchestration frameworks, not just smarter chatbots.
 
-**Key insight:** Real drug discovery practitioners use 5+ computational paradigms in a single project:
-- Supervised learning (training bioactivity predictors on assay data)
-- Generative modeling (fine-tuning protein language models for peptide design)
-- Reinforcement learning (reward-guided sequence optimization)
-- Physics simulation (molecular dynamics, docking, pharmacokinetic modeling)
-- Classical optimization (Bayesian optimization, genetic algorithms, constrained search)
+**Key insight:** Real drug discovery practitioners use 6+ computational paradigms in a single project:
+- **Supervised learning:** Bioactivity prediction, toxicity modeling (XGBoost, neural nets, SVMs with cross-validation)
+- **Unsupervised learning:** Chemical space clustering, dimensionality reduction (k-means, DBSCAN, UMAP)
+- **Generative modeling:** De novo peptide design, fine-tuning protein language models (ProtGPT2, ProtBERT)
+- **Reinforcement learning:** Multi-objective optimization with reward models, proximal policy optimization (PPO), diversity penalties
+- **Simulation:** Molecular dynamics, docking, binding kinetics, pharmacokinetic modeling
+- **Classical optimization:** Bayesian optimization, experimental design, Pareto frontier navigation
 
-Current agent architectures only support **LLM reasoning + calling pre-trained model APIs**. They cannot manage training loops, hyperparameter search, or curriculum learning.
+Current agent architectures only support **LLM reasoning + calling pre-trained model APIs**. They cannot train models, incorporate new data, retrain with hyperparameters, validate on test sets, or coordinate these paradigms in closed loops.
 
 **This figure's job:** Show the architectural limitation of current LLM-centric designs and propose an alternative: a multi-paradigm orchestrator that coordinates computational workflows as first-class primitives.
 
 **Audience:** AI researchers building agent systems, drug discovery ML practitioners, computational biologists. Readers should immediately grasp why LLM-as-hub is limiting and what the alternative looks like.
 
-**Placement:** Section 5 (Gap 3). This is a systems architecture diagram — technical but must remain accessible to experimentalists.
+**Placement:** Section 5 (Gap 3). This is a systems architecture diagram — technical but must remain accessible to experimentalists. The section also includes Table 1 (Agent Capability Matrix) showing where current agents excel (literature review, SMILES generation, docking) versus where they fail (aggregation prediction, in vivo analysis, multi-objective optimization).
 
 ---
 
@@ -140,12 +141,12 @@ Arranged in a radial hub-and-spoke pattern around the LLM. All nodes same size a
 
 | # | Position | Label | Sub-label | Tiny Icon Inside |
 |---|----------|-------|-----------|-----------------|
-| 1 | Top-left | Calculator | Arithmetic | Simple "Σ" symbol |
-| 2 | Top | Web Search | RAG/retrieval | Magnifying glass over documents |
-| 3 | Top-right | Python REPL | Code execution | Terminal prompt ">>>" |
+| 1 | Top-left | Literature Search | PubMed/patents | Magnifying glass over documents |
+| 2 | Top | RDKit | Molecular descriptors | Benzene ring icon |
+| 3 | Top-right | Database Query | ChEMBL/PubChem | Database cylinder |
 | 4 | Bottom-right | Pre-trained Model API | Inference only | Neural network nodes (3 circles) |
 | 5 | Bottom | Docking Tool | Virtual screening | Protein shape + small molecule |
-| 6 | Bottom-left | Database Query | ChEMBL/PubChem | Database cylinder |
+| 6 | Bottom-left | Python REPL | Code execution | Terminal prompt ">>>" |
 
 ### Connections — All Go Through LLM
 **Every tool node has a bidirectional arrow to/from the LLM:**
@@ -160,7 +161,7 @@ Arranged in a radial hub-and-spoke pattern around the LLM. All nodes same size a
 A small callout (dashed red box, 1 pt stroke, #AA0000) positioned to the right of the LLM node:
 
 **Text inside callout:**
-"⚠ Problem: LLM cannot manage training loops, RL optimization, or gradient-based learning" (7 pt, italic, #AA0000)
+"⚠ Cannot train models, incorporate new data, retrain with hyperparameters, or coordinate paradigms in closed loops" (7 pt, italic, #AA0000)
 
 **Arrow:** A thin red dashed line (1 pt, #AA0000) pointing from the callout to the LLM node.
 
@@ -187,7 +188,7 @@ Colorful, distributed, parallel. The orchestrator coordinates but does not bottl
 - **Fill:** Orchestrator color (#56B4E9)
 - **Border:** 2 pt, #333333
 - **Label:** "Multi-Paradigm Orchestrator" (9 pt, Bold, white text)
-- **Sub-label:** "Workflow DAG • Resource allocation • Checkpointing" (6.5 pt, white text, centered below)
+- **Sub-label:** "Workflow DAG • Provenance tracking • Batch-mode execution" (6.5 pt, white text, centered below)
 
 ### Paradigm Nodes (5 total)
 Arranged in a **horizontal row** below the orchestrator, evenly spaced. Each represents a different computational paradigm.
@@ -203,11 +204,11 @@ Arranged in a **horizontal row** below the orchestrator, evenly spaced. Each rep
 
 | # | Position | Label | Sub-label | Fill Color | Tiny Icon Inside |
 |---|----------|-------|-----------|-----------|-----------------|
-| 1 | Far left | ML Training | Dataset → Train → Validate | Steel Blue (#4477AA) | Simple neural network (3 layers, nodes connected) |
-| 2 | Center-left | RL Optimization | Policy → Reward → Update | Warm Orange (#EE6677) | Circular arrow with "R" (reward) |
-| 3 | Center | PLM Fine-tuning | Transfer learning | Teal (#009988) | Protein helix icon (simplified α-helix) |
-| 4 | Center-right | CV Analysis | Image → Features → Insights | Purple (#AA3377) | Simplified microscope image (grid of circles) |
-| 5 | Far right | Physics Simulation | MD • PK modeling | Gold (#CCBB44) | Molecule with movement arrows (dynamics) |
+| 1 | Far left | Supervised Learning | XGBoost • Neural nets • Cross-validation | Steel Blue (#4477AA) | Simple neural network (3 layers, nodes connected) |
+| 2 | Center-left | RL Optimization | PPO • Reward models • Diversity penalties | Warm Orange (#EE6677) | Circular arrow with "R" (reward) |
+| 3 | Center | Generative Modeling | PLM fine-tuning • De novo design | Teal (#009988) | Protein helix icon (simplified α-helix) |
+| 4 | Center-right | Unsupervised Learning | Clustering • Dimensionality reduction | Purple (#AA3377) | Scatter plot with cluster circles |
+| 5 | Far right | Simulation & Optimization | MD • Docking • Bayesian opt | Gold (#CCBB44) | Molecule with movement arrows (dynamics) |
 
 ### Connections — Orchestrator ↔ Paradigms
 
@@ -227,7 +228,7 @@ Arranged in a **horizontal row** below the orchestrator, evenly spaced. Each rep
 Add subtle **horizontal dashed lines** (0.75 pt, #CCCCCC) connecting adjacent paradigms at their base (below the nodes). These suggest implicit coordination through shared results, not direct communication.
 
 **Label below these lines (centered, small):**
-"Paradigms execute independently, share results via orchestrator" (6.5 pt, italic, #666666)
+"Paradigms execute independently, coordinate through workflow DAG (cf. Airflow, Kubeflow, Nextflow)" (6.5 pt, italic, #666666)
 
 ### Data Flow Example (Optional Annotation)
 A small **workflow snippet** in a light background box (40 × 15 mm) positioned below the paradigm nodes:
@@ -238,16 +239,18 @@ A small **workflow snippet** in a light background box (40 × 15 mm) positioned 
 
 **Content (simple workflow DAG inside box):**
 ```
-PLM Fine-tuning → Candidate Sequences
+Generative Model (PLM) → Candidate Sequences
          ↓
-  ML Training (Bioactivity Predictor)
+  Supervised Learning (Bioactivity + Toxicity)
          ↓
-  RL Optimization (Reward-guided refinement)
+  RL Optimization (Multi-objective with diversity)
+         ↓
+  Bayesian Opt (Experimental design)
 ```
 
-Tiny arrows (0.75 pt) connecting the three stages. Use paradigm colors for each node label.
+Tiny arrows (0.75 pt) connecting the four stages. Use paradigm colors for each node label (Teal → Steel Blue → Warm Orange → Gold).
 
-**Box label (top-left inside):** "Example: Peptide Discovery Pipeline" (7 pt, italic, #666666)
+**Box label (top-left inside):** "Example: Integrated Peptide Pipeline" (7 pt, italic, #666666)
 
 ### Visual Properties
 - **Multi-color:** Each paradigm has its own distinct color (colorblind-safe Okabe-Ito)
@@ -280,7 +283,7 @@ The figure's message is communicated through deliberate contrast between top and
 
 ### Bottom Panel Annotation (Optional)
 A small checkmark (✓) in green (#009988) positioned near the orchestrator with text:
-"✓ Supports ML training, RL, simulation as first-class primitives" (7 pt, #009988)
+"✓ Paradigms as first-class primitives • Batch-mode execution • Provenance tracking" (7 pt, #009988)
 
 ### Divider Label
 Between the two panels, centered on the divider line:
@@ -346,17 +349,21 @@ Between the two panels, centered on the divider line:
 ## Context: Why This Figure Matters
 
 **Problem being solved:**  
-Current AI agent papers showcase LLMs calling tool APIs (ChemCrow, Coscientist, ChatInvent). This creates the impression that "agentic AI" = "LLM with plugins." But real drug discovery requires training ML models on proprietary data, running RL loops for peptide optimization, fine-tuning protein language models, running molecular dynamics simulations, and performing Bayesian optimization. LLMs cannot manage these workflows because they require gradient updates, multi-step training loops, and resource allocation — not just text-based reasoning.
+Current AI agent papers showcase LLMs calling tool APIs. ChemCrow calls RDKit and PubChem. ChatInvent retrieves literature. PharmAgents and MADD coordinate multiple LLM instances for target identification and docking. This creates the impression that "agentic AI" = "LLM with plugins." But real drug discovery requires training ML models on proprietary data, running RL loops for peptide optimization, fine-tuning protein language models, running molecular dynamics simulations, and performing Bayesian optimization. LLMs cannot manage these workflows because they require gradient updates, multi-step training loops, resource allocation, and artifact versioning — not just text-based reasoning.
 
 **What practitioners actually need:**  
-A system that can coordinate a workflow like:
-1. Fine-tune ProtBERT on peptide bioactivity data
-2. Use the fine-tuned model to generate 1,000 candidate sequences
-3. Train a multi-task predictor for stability + immunogenicity
-4. Run RL optimization with a reward function balancing bioactivity + safety
-5. Dock the top 50 candidates, cluster binding modes, return Pareto frontier
+A system that can coordinate workflows across multiple paradigms:
 
-This workflow requires 5 different computational paradigms (PLM fine-tuning, supervised learning, RL, physics simulation, multi-objective optimization) running in sequence and in parallel. Current LLM-centric agents cannot do this.
+**Example 1 — Peptide bioactivity prediction:**  
+Dataset preparation → ESM-2 embedding extraction → Train ensemble (XGBoost + neural net + random forest) → 5-fold cross-validation → Hyperparameter tuning → Model selection → Return Pareto frontier (AUC-ROC vs. calibration error)
+
+**Example 2 — RNA-seq analysis:**  
+Alignment → Normalization → Differential expression → Clustering → Pathway enrichment → Hypothesis generation → Report generation
+
+**Example 3 — RL-guided peptide optimization:**  
+Train reward model → Generate candidates via RL (PPO with diversity penalties) → Predict bioactivity + toxicity → Bayesian optimization for experimental batch selection → Update training data → Iterate
+
+These workflows require coordinating supervised learning, generative modeling, RL, simulation, and optimization in integrated pipelines. Current LLM-centric agents cannot express these workflows because they cannot train models, coordinate paradigms, or manage iterative closed loops.
 
 **What this figure shows:**  
 - **Top panel:** The current paradigm fails because everything must pass through the LLM, which cannot manage training loops or gradient-based optimization.
@@ -366,7 +373,7 @@ This workflow requires 5 different computational paradigms (PLM fine-tuning, sup
 "Oh, current agents are LLM-centric hub-and-spoke. That doesn't work for ML training. The proposed design has parallel paradigms coordinated by an orchestrator."
 
 **Reader takeaway (60 seconds):**  
-"I see why LLM-as-hub is limiting — it assumes text-based reasoning is sufficient. Drug discovery needs ML training, RL, simulation, and optimization as first-class operations. The orchestrator model makes sense: dispatch goals to paradigms, collect results, coordinate the workflow. This is what 'multi-paradigm orchestration' means."
+"I see why LLM-as-hub is limiting — it assumes text-based reasoning is sufficient. Drug discovery needs ML training, RL, simulation, and optimization as first-class operations. Real projects combine multiple paradigms: ESM-2 embeddings → gradient-boosted trees → cross-validation for peptide classification. RNA-seq needs alignment → differential expression → clustering → pathway enrichment. Bone formation analysis requires semantic segmentation models. RL peptide optimization needs reward models, PPO, and diversity penalties. The orchestrator model makes sense: dispatch goals to paradigms, collect results, coordinate integrated workflows. This is what 'multi-paradigm orchestration' means."
 
 ---
 
