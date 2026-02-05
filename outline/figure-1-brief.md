@@ -149,9 +149,9 @@ Five labels arranged vertically along the crack, as if they are missing bridge s
 | # | Label | Position |
 |---|-------|----------|
 | 1 | Peptides | Top |
-| 2 | In Vivo Data | Upper-middle |
-| 3 | ML Training | Center |
-| 4 | Small Biotech | Lower-middle |
+| 2 | In Vivo | Upper-middle |
+| 3 | Multi-Paradigm | Center |
+| 4 | Resources | Lower-middle |
 | 5 | Multi-Objective | Bottom |
 
 **Style for each label:**

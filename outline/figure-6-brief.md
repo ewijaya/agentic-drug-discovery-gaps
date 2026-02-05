@@ -297,19 +297,23 @@ Four specific candidates are highlighted with **leader lines** and **text callou
 A large, prominent arrow showing the failure mode of single-objective optimization.
 
 ### Visual Design
-- **Start point:** Bottom-center of plot
-- **End point:** Top-left corner (Zone 3 — highest efficacy)
+- **Start point:** Center-right of plot (moderate efficacy region, mid-height)
+- **End point:** Center-left of plot (highest efficacy region, SAME height — the arrow is roughly HORIZONTAL)
+- **Direction:** The arrow points LEFT (toward lower IC50 = higher potency), NOT upward. This is critical: the agent maximizes efficacy while IGNORING the Y-axis (safety) entirely. A diagonal arrow toward top-left would point toward the ideal region, which is wrong — the point is that agents move along one axis only.
 - **Arrow style:**
   - 4 pt wide line, Red (#CC3311)
   - Large arrowhead (8 mm length)
-  - Slightly curved (not perfectly straight) for visual interest
+  - Straight horizontal or very slightly curved
 - **Transparency:** 60% opacity (so it doesn't obscure points)
 
 ### Arrow Label
-- **Text:** "Typical Agent Behavior: Maximize Efficacy Only →"
-- **Position:** Along the arrow shaft, bottom third
+- **Text:** "← Typical Agent Behavior: Maximize Efficacy Only"
+- **Position:** Below the arrow shaft, centered
 - **Font:** 8 pt Bold Italic, Red (#CC3311)
 - **Background:** White semi-transparent box (80% opacity) so text is legible over points
+
+### Why Horizontal?
+The manuscript says agents "optimize single metrics" and "predict A > B but cannot articulate: 'A is twice as potent but has a threefold narrower safety margin.'" The horizontal arrow shows the agent moving along one dimension (efficacy) while completely ignoring the other (safety). If the arrow pointed diagonally toward top-left, it would suggest the agent seeks both high efficacy AND high safety — which would be good, not a failure mode.
 
 ---
 
