@@ -70,6 +70,20 @@ These are the real projects that inform each gap. Reference them by category, ne
 14. **RL for peptide generation** - GRPO variants with curriculum learning, diversity-aware rewards, KL regularization
 15. **Safety/toxicology modeling** - GLMM dose-response, multi-objective safety-efficacy trade-off analysis
 
+## Strategic Positioning
+
+This paper is NOT a rejoinder ("you're wrong"). It is a **complementary counterpoint**: "you showed us what you built; here's what you're not seeing."
+
+The tone is: **"The field is exciting and moving fast, but there are five blind spots that nobody is talking about, and I know because I've been trying to use these approaches in a setting very different from AstraZeneca's."**
+
+Think of it as the **field correction** that practitioners read and say "finally, someone said it." That's what makes position papers get cited: they articulate what everyone feels but nobody has written down.
+
+| Paper | Their message | Our response |
+|---|---|---|
+| He et al. (AZ) | "Here's our working agent at big pharma" | "Great, but it only works in your context" |
+| Seal et al. | "Here's everything that exists in the field" | "You cataloged the tools but missed the gaps" |
+| Lakhan | "Biopharma must embrace agentic AI" | "Agreed, but current agents aren't ready for most of us" |
+
 ## Key Competing Papers
 
 Position this paper AGAINST these three:
