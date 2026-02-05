@@ -6,7 +6,7 @@
 This conflates concepts. "Multi-agent" is multiple LLM instances with different tools. Practitioners need multi-paradigm orchestration: coordinating fundamentally different computational approaches (supervised learning, generative modeling, RL, simulation, optimization) within workflows. Current architectures support the former, not the latter, which is why most real pipelines still require manual glue code.
 \subsection{The LLM-as-Orchestrator Assumption}
 
-LLM-centric design treats the language model as central coordinator, invoking external tools via APIs. ChemCrow calls RDKit and PubChem \citep{bran2023chemcrow}. ChatInvent retrieves and synthesizes literature \citep{he2026chatinvent}. This works for text-based reasoning and stateless tools.
+LLM-centric design treats the language model as central coordinator, invoking external tools via APIs. ChemCrow calls RDKit and PubChem \citep{bran2024chemcrow}. ChatInvent retrieves and synthesizes literature \citep{he2026chatinvent}. This works for text-based reasoning and stateless tools.
 
 The paradigm breaks for tasks like training a multi-task neural network predicting peptide bioactivity across four endpoints using 300 sequences. The workflow: dataset preparation (stratified train-validation-test splits), feature extraction (ESM-2 embeddings), architecture selection, hyperparameter tuning, training with early stopping, validation with confidence intervals.
 

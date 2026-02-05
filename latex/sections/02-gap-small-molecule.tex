@@ -22,7 +22,7 @@ Practitioners encounter immediate friction. Peptides cannot encode as SMILES wit
 \label{fig:workflow-complexity}
 \end{figure}
 
-Protein language models define peptide design. ProtBERT \citep{elnaggar2021protbert}, ESM-2 \citep{lin2023esm2}, and ProGen \citep{madani2023progen} encode evolutionary and structural priors from millions of protein sequences. ESM-2 embeddings predict receptor types from sequence alone. ProtBERT fine-tuning enables transfer learning with fewer than 100 examples.
+Protein language models define peptide design. ProtBERT \citep{elnaggar2022protbert}, ESM-2 \citep{lin2023esm2}, and ProGen \citep{madani2023progen} encode evolutionary and structural priors from millions of protein sequences. ESM-2 embeddings predict receptor types from sequence alone. ProtBERT fine-tuning enables transfer learning with fewer than 100 examples.
 
 Building peptide workflows requires capabilities current agents lack. Developing a receptor binding classifier involves curating training sets, extracting ESM-2 embeddings, training supervised classifiers, validating performance, and iterating hyperparameters. This is gradient-based ML, not API calls. The work also depends on small, noisy datasets where careful cross-validation and calibration matter more than single headline metrics. Agents must expose these uncertainties clearly so biologists can prioritize synthesis and testing. Without that, the workflow reverts to manual triage and ad hoc heuristics.
 No agent executes this autonomously. LLM orchestrators assume models are black-box inference APIs. There is no fine-tuning support, dataset version control, or hyperparameter search. Agents retrieve embeddings but cannot adjust attention heads or train task-specific classifiers on proprietary data.
