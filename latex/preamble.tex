@@ -1,0 +1,35 @@
+% Preamble for Position Paper
+% Standard packages for formatting and layout
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{booktabs}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{amsmath,amssymb}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{cleveref}
+
+% Bibliography
+\usepackage[numbers,sort&compress]{natbib}
+\bibliographystyle{unsrtnat}
+
+% Line spacing
+\usepackage{setspace}
+\onehalfspacing
+
+% Section formatting
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+
+% Custom commands
+\newcommand{\gap}[1]{\textbf{\textcolor{RedOrange}{Gap #1}}}
+\newcommand{\keyword}[1]{\textit{#1}}
+
+% Figure path
+\graphicspath{{./figures/}}
+
+% Better list spacing
+\usepackage{enumitem}
+\setlist{nosep}

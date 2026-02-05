@@ -1,0 +1,94 @@
+\section{A Practitioner's Wishlist: What Would Actually Help}
+\label{sec:wishlist}
+
+The gaps identified in preceding sections are not isolated deficiencies but reflections of architectural assumptions that must be revisited. Building agent systems that serve practitioners beyond narrow demonstration contexts requires rethinking core design principles. This section proposes five principles for next-generation agents, grounded in the realities of peptide discovery, in vivo modeling, multi-paradigm workflows, resource-constrained biotechnology, and multi-objective decision-making.
+
+\subsection{Design Principles for Next-Generation Agents}
+
+\subsubsection{Principle 1: Multi-Paradigm Orchestration}
+
+Agent architectures must support machine learning training, reinforcement learning, simulation, and optimization as first-class computational primitives, not external tools accessed via API calls. The practitioner should be able to specify workflows declaratively: "Train an ensemble of bioactivity predictors using XGBoost, random forests, and neural networks with ESM-2 embeddings. Perform five-fold cross-validation with hyperparameter tuning via Bayesian optimization. Return the Pareto frontier of models trading off AUC-ROC and calibration error."
+
+The agent translates this specification into an executable workflow graph with typed nodes representing data loading, feature extraction, model training, evaluation, and visualization, and edges representing data dependencies. The graph supports parallelization across available compute resources, checkpointing for fault tolerance, and branching based on intermediate results (if validation performance is unsatisfactory, trigger additional hyperparameter search). Human-in-the-loop decision points are explicit: when multiple models achieve similar cross-validated performance but differ in interpretability or inference cost, the practitioner selects based on deployment context.
+
+This paradigm is not hypothetical. Workflow orchestration systems like Apache Airflow, Kubeflow, and Nextflow provide these abstractions for data engineering, machine learning, and bioinformatics. What is needed is integration with agent reasoning: the ability to inspect workflow results, diagnose failures, propose modifications, and learn from execution history to improve future workflow generation.
+
+\subsubsection{Principle 2: Modality-Aware Architectures}
+
+Agents must provide first-class support for peptides, proteins, and other therapeutic modalities, not just small molecules. This requires protein language model fine-tuning pipelines (dataset curation, training, validation), structural biology integration (AlphaFold structure prediction, flexible docking with conformational sampling, molecular dynamics for stability assessment), and peptide-specific property prediction (aggregation propensity, protease resistance, immunogenicity). The architecture should be extensible to antibodies, nucleic acids, and other biologics as these modalities gain prominence.
+
+Modality awareness affects every layer of the system. Data loaders must handle protein sequences, structures in PDB format, and multiple sequence alignments. Feature extractors must compute embeddings from protein language models, structural descriptors, and evolutionary conservation scores. Generative models must support autoregressive sequence generation, structure-conditioned design, and inverse folding. Evaluation metrics must assess biophysical properties (binding affinity, stability, solubility) alongside druglike properties (membrane permeability, metabolic stability).
+
+The system should automatically select appropriate tools based on modality. Given a peptide sequence, it should default to ESM-2 embeddings rather than molecular fingerprints. Given a protein structure, it should use structural alignment rather than SMILES-based similarity. This contextual tool selection requires the agent to understand data types and their implications, a form of semantic reasoning absent from current systems that treat all tool calls as equivalent.
+
+\subsubsection{Principle 3: In Vivo to In Silico Integration}
+
+Agents must support temporal modeling for longitudinal efficacy and safety data, multi-modal data fusion integrating behavioral scores, imaging, and transcriptomics, and causal inference for mechanistic hypothesis generation. This requires bioinformatics pipelines as architectural components (RNA-seq alignment, differential expression, pathway enrichment), computer vision for behavioral phenotyping and histological analysis, and statistical models for dose-response curves, survival analysis, and mixed-effects models.
+
+A key capability is predictive efficacy modeling: training models to forecast long-term in vivo outcomes from in vitro bioactivity and early in vivo markers. In practice, this involves feature engineering across heterogeneous data sources, temporal alignment of measurements taken at different schedules, handling missing data due to dropout or experimental variability, and validation strategies that respect temporal ordering (training on early timepoints, validating on later timepoints). The agent should orchestrate these steps, flagging data quality issues and suggesting validation strategies appropriate for temporal data.
+
+Mechanistic inference is another critical capability. Given differential gene expression data, pathway enrichment identifies biological processes affected by a treatment. Upstream regulator analysis infers which transcription factors or signaling molecules might mediate these effects. Network analysis identifies hub genes whose perturbation could explain observed phenotypes. These analyses require domain knowledge databases (KEGG, GO, Reactome) and inference algorithms (Fisher's exact test for enrichment, causal network reconstruction). The agent should integrate these resources, translate statistical results into biological hypotheses, and suggest validation experiments.
+
+\subsubsection{Principle 4: Data Efficiency and Transfer Learning}
+
+Agents must be optimized for few-shot adaptation to new assays with fewer than 100 examples, active learning loops to minimize experimental cost via uncertainty-aware candidate selection, and knowledge transfer across related tasks (from peptide-receptor binding to peptide-enzyme interactions). This requires meta-learning architectures that train on many small tasks to learn how to rapidly adapt to new tasks, Bayesian models that quantify epistemic uncertainty and propagate it into decisions, and transfer learning pipelines that compose public pre-training (on UniProt, PDB, ChEMBL) with private fine-tuning on proprietary data.
+
+The agent should recommend data-efficient strategies based on dataset size. With 500 training examples, deep neural networks are appropriate. With 50 examples, simpler models (logistic regression on pre-trained embeddings, gradient-boosted trees) generalize better. With 10 examples, few-shot methods or transfer from related tasks are necessary. The system should automatically diagnose overfitting via learning curves and suggest regularization strategies or architecture simplifications.
+
+Active learning should be integrated into experimental workflows. After training an initial model, the agent proposes a batch of candidates for synthesis and testing, selected to maximize information gain via acquisition functions that balance exploitation and exploration. Experimental results update the model, and the cycle repeats. The agent tracks uncertainty reduction over rounds, recommends stopping when marginal information gain is low, and transitions from exploration to exploitation as the model converges.
+
+\subsubsection{Principle 5: Multi-Objective, Risk-Aware Optimization}
+
+Agents must support Pareto optimization with constraint satisfaction, uncertainty quantification through Bayesian models or ensemble disagreement, sensitivity analysis showing how rankings change under model uncertainty or weight perturbations, and interactive trade-off visualization enabling practitioners to explore the Pareto frontier and select candidates based on context-specific priorities.
+
+The agent should present results as Pareto frontiers, not single optimal solutions. For each candidate, it should provide predicted values for all objectives with confidence intervals, constraint satisfaction status (feasible or violating which constraints), and sensitivity scores (how robust is this candidate's Pareto optimality to model uncertainty). The practitioner can interact with the visualization: filtering by constraint satisfaction, adjusting objective weights to see how the frontier shifts, or highlighting candidates with uncertainty below a threshold.
+
+Risk awareness means adapting recommendations to project stage and uncertainty. Early-stage projects benefit from diverse, high-risk candidates that explore design space; late-stage projects require robust, well-characterized candidates with narrow confidence intervals. The agent should support both modes, using contextual information (project timeline, prior validation results, strategic priorities) to modulate exploration-exploitation balance.
+
+\subsection{Concrete Use Cases}
+
+To make these principles concrete, we describe three representative use cases that current agents cannot handle but next-generation systems should support.
+
+\subsubsection{Use Case 1: Peptide Lead Optimization}
+
+\textbf{Input:} Fifty peptides with bioactivity data across four assays (proliferation, migration, secretion, toxicity), target receptor structure from AlphaFold, and synthesis feasibility constraints (exclude non-commercial amino acids).
+
+\textbf{Workflow:} Fine-tune ESM-2 on the 50 peptides, train a multi-task regressor predicting all four endpoints simultaneously, use the trained model as a reward function for reinforcement learning-based sequence generation with diversity penalties to avoid mode collapse, filter generated candidates by synthesis feasibility and predicted stability (protease resistance, aggregation propensity), perform flexible docking of top 100 candidates against the receptor structure with conformational sampling, cluster docking poses by binding site, correlate binding modes with predicted bioactivity, and present a Pareto frontier of activity versus safety with uncertainty estimates.
+
+\textbf{Output:} Ten candidates for synthesis with rationale (predicted bioactivity, safety profile, binding mode, structural novelty), confidence intervals on all predictions, and a ranked list based on multi-objective utility considering synthesis cost and timeline.
+
+\textbf{Human decisions:} Select among Pareto-optimal candidates based on strategic priorities (fast-to-clinic vs best-in-class), approve synthesis of candidates given budget constraints, and decide whether to proceed with the current batch or iterate the generation-filtering cycle.
+
+\subsubsection{Use Case 2: In Vivo Efficacy Prediction}
+
+\textbf{Input:} In vitro bioactivity data (proliferation, migration, secretion) and early in vivo markers (behavioral scores at days 3 and 7) for 20 peptides tested in a traumatic brain injury model. Goal: predict day 28 functional recovery.
+
+\textbf{Workflow:} Extract features from in vitro assays, normalize across different measurement scales, align temporal in vivo data with appropriate handling for missing values due to dropout, train regression models (linear, random forest, gradient boosting) predicting day 28 outcomes from combined in vitro and early in vivo features with cross-validation stratified by assay batch, identify temporal signatures (which early timepoints are most predictive), perform feature importance analysis to identify mechanistic drivers, and validate on held-out test set with confidence intervals.
+
+\textbf{Output:} Predicted day 28 scores for all 20 peptides with uncertainty estimates, identification of early markers most correlated with long-term efficacy, and mechanistic hypotheses (e.g., early inflammatory response at day 3 predicts long-term functional recovery).
+
+\textbf{Human decisions:} Interpret mechanistic hypotheses in light of biological knowledge, decide which peptides to advance to full 28-day validation studies, and determine whether additional early timepoints should be measured to improve predictions.
+
+\subsubsection{Use Case 3: Multi-Endpoint Assay Analysis}
+
+\textbf{Input:} Proliferation, migration, secretion, and toxicity data for 100 peptides. Goal: identify candidate subsets with distinct activity profiles and propose mechanistic explanations.
+
+\textbf{Workflow:} Normalize data across assays, perform unsupervised clustering (k-means, hierarchical clustering) in multi-endpoint space, validate cluster stability via bootstrapping, characterize each cluster by median activity profile and variance, extract sequence motifs enriched in each cluster, perform pathway enrichment on genes encoding peptide targets to generate mechanistic hypotheses, and visualize clusters in reduced dimensionality (PCA, UMAP) with annotations.
+
+\textbf{Output:} Candidate clusters (e.g., high proliferation and migration, low toxicity vs moderate proliferation, high secretion, moderate toxicity), sequence motifs defining each cluster, mechanistic hypotheses linking sequence features to activity profiles, and candidate selection recommendations for different therapeutic goals.
+
+\textbf{Human decisions:} Validate mechanistic hypotheses through literature review or targeted experiments, select which cluster aligns best with therapeutic objectives, and decide whether to focus on a single cluster or maintain diversity across clusters.
+
+\subsection{Infrastructure Needs}
+
+Realizing these capabilities requires infrastructure beyond current agent systems. API standards must cover protein language models (embedding extraction, fine-tuning endpoints, uncertainty estimation), structural biology tools (AlphaFold, docking, molecular dynamics), and bioinformatics pipelines (alignment, differential expression, pathway enrichment). Version-controlled datasets and model registries are essential for reproducibility: every workflow execution should log data versions, model checkpoints, hyperparameters, and results. Provenance tracking enables auditing, debugging, and validation: given a candidate recommendation, the practitioner should be able to trace back through the workflow to see which data, models, and decisions led to that recommendation.
+
+Organizational alignment is equally important. The system must accommodate small biotech budgets: modest compute costs, minimal data storage requirements, and lightweight deployment without dedicated IT infrastructure. Documentation and training must target non-ML-expert biologists: the practitioner should be able to specify what they want analyzed without needing to understand gradient descent, cross-validation strategies, or hyperparameter tuning mechanics. Integration with existing tools (GraphPad, FlowJo, ImageJ, R/Bioconductor) avoids forcing practitioners to abandon familiar workflows; the agent should ingest data from these tools and export results in formats they accept.
+
+\subsection{From Assistants to Partners}
+
+The vision is not autonomous agents that replace human expertise but computational partners that augment practitioner judgment. The agent handles the repetitive, error-prone, and computationally intensive aspects of drug discovery: data preprocessing, model training, hyperparameter tuning, workflow orchestration, and result visualization. The practitioner focuses on the irreducible cognitive core: formulating hypotheses, interpreting results in biological context, making strategic decisions under uncertainty, and designing experiments that test causal mechanisms. The division of labor respects the complementary strengths of humans and machines: human intuition, domain knowledge, and causal reasoning; machine systematicity, computational throughput, and quantitative rigor.
+
+This partnership requires bidirectional communication. The agent must explain its reasoning, expose its assumptions, and quantify its uncertainty. The practitioner must provide feedback, correct errors, and refine specifications. Over time, the agent learns from practitioner decisions: which trade-offs were prioritized, which mechanistic hypotheses proved correct, which models generalized to new data. This learning informs future recommendations, creating a virtuous cycle of improving utility.
+
+The measure of success is not benchmark performance or automation percentage but practitioner impact: faster identification of viable candidates, reduced experimental waste, better-informed decisions under uncertainty, and shorter times from hypothesis to validation. If next-generation agents embody these principles, they can transform drug discovery workflows. If they remain LLM-centric chatbots optimized for large pharma contexts, they will be footnotes in the history of computational drug discovery, impressive demonstrations that never scaled beyond their initial deployment.
