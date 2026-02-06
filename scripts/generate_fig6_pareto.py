@@ -4,12 +4,13 @@ This script implements the full PRD in scripts/PRD-fig6-pareto.md:
 - 100 random points + 4 explicit callout candidates
 - computed non-dominated sorting (no pre-assigned Pareto labels)
 - monotone Pareto frontier envelope that stays above all points
-- publication-quality figure with inset, legends, and callouts
+- publication-quality figure with legends and callouts (no inset panel)
 """
 
 from __future__ import annotations
 
 import time
+from itertools import combinations
 from pathlib import Path
 
 import matplotlib.lines as mlines
@@ -39,7 +40,6 @@ VERMILLION = "#D55E00"
 RED = "#CC3311"
 CHARCOAL = "#333333"
 MED_GRAY = "#888888"
-LIGHT_GRAY = "#DDDDDD"
 OFF_WHITE = "#FAFAFA"
 
 # Scatter sizes (points^2)
@@ -155,14 +155,14 @@ def clear_callout_neighborhoods(
     return log_ic50, ti
 
 
-def generate_random_points(rng: np.random.Generator) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+def generate_random_points(rng: np.random.Generator) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Generate 100 random points with requested distribution biases."""
     if N_FRONTIERISH + N_DOMINATED + N_AGENT_FAVORITES != N_RANDOM:
         raise ValueError("Random point counts must sum to 100.")
 
     # Near-frontier candidates with explicitly monotone trade-off shape.
     # This yields a realistic Pareto-rich band (30-40 points) by construction.
-    log_front = np.sort(rng.uniform(-9.0, -5.25, N_FRONTIERISH))
+    log_front = np.sort(rng.uniform(-9.0, -5.6, N_FRONTIERISH))
     ti_front_raw = trend_ti(log_front) + rng.normal(0, 14, N_FRONTIERISH)
     ti_front = np.clip(np.maximum.accumulate(ti_front_raw), 95, 1000)
 
@@ -198,11 +198,7 @@ def generate_random_points(rng: np.random.Generator) -> tuple[np.ndarray, np.nda
     high_eff_indices = np.where(high_eff)[0]
     sizes[high_eff_indices[forced]] = SIZE_SMALL
 
-    # Track the 10-point high-efficacy cluster for inset emphasis.
-    agent_mask = np.zeros(N_RANDOM, dtype=bool)
-    agent_mask[-N_AGENT_FAVORITES:] = True
-
-    return 10 ** log_ic50, ti, sizes, agent_mask
+    return 10 ** log_ic50, ti, sizes
 
 
 def build_monotone_frontier(
@@ -320,11 +316,91 @@ def validate_dataset(
     }
 
 
+def _bbox_overlap(a, b) -> bool:
+    return not (
+        a.x1 <= b.x0
+        or a.x0 >= b.x1
+        or a.y1 <= b.y0
+        or a.y0 >= b.y1
+    )
+
+
+def _fully_within(outer, inner) -> bool:
+    return (
+        inner.x0 >= outer.x0
+        and inner.y0 >= outer.y0
+        and inner.x1 <= outer.x1
+        and inner.y1 <= outer.y1
+    )
+
+
+def validate_layout(
+    fig: plt.Figure,
+    ax: plt.Axes,
+    callout_annotations: dict[str, plt.Annotation],
+    pareto_label_annotation: plt.Annotation,
+    arrow_label_text: plt.Text,
+    legends: list[plt.Legend],
+    ic50_all: np.ndarray,
+    ti_all: np.ndarray,
+) -> None:
+    """Validate PRD visual layout constraints for clipping/overlap."""
+    fig.canvas.draw()
+    renderer = fig.canvas.get_renderer()
+    figure_bbox = fig.bbox
+
+    callout_bboxes = {
+        name: ann.get_bbox_patch().get_window_extent(renderer).expanded(1.01, 1.04)
+        for name, ann in callout_annotations.items()
+    }
+    pareto_bbox = pareto_label_annotation.get_window_extent(renderer).expanded(1.01, 1.02)
+    arrow_bbox = arrow_label_text.get_window_extent(renderer).expanded(1.01, 1.03)
+    legend_bboxes = [leg.get_window_extent(renderer).expanded(1.01, 1.03) for leg in legends]
+
+    # Ensure all key text/legend elements are fully in frame.
+    for name, bb in callout_bboxes.items():
+        if not _fully_within(figure_bbox, bb):
+            raise AssertionError(f"Callout {name} is clipped by figure boundary.")
+    for i, bb in enumerate(legend_bboxes, start=1):
+        if not _fully_within(figure_bbox, bb):
+            raise AssertionError(f"Legend {i} is clipped by figure boundary.")
+    if not _fully_within(figure_bbox, pareto_bbox):
+        raise AssertionError("Pareto label is clipped by figure boundary.")
+    if not _fully_within(figure_bbox, arrow_bbox):
+        raise AssertionError("Arrow label is clipped by figure boundary.")
+
+    # No callout-to-callout overlap.
+    for a_name, b_name in combinations(CALL_OUT_ORDER, 2):
+        if _bbox_overlap(callout_bboxes[a_name], callout_bboxes[b_name]):
+            raise AssertionError(f"Callout overlap detected: {a_name} vs {b_name}.")
+
+    # No overlap: callouts vs legends.
+    for name, bb in callout_bboxes.items():
+        if any(_bbox_overlap(bb, leg_bb) for leg_bb in legend_bboxes):
+            raise AssertionError(f"Callout {name} overlaps a legend box.")
+
+    # No overlap: Pareto label / arrow label with callouts.
+    if any(_bbox_overlap(pareto_bbox, bb) for bb in callout_bboxes.values()):
+        raise AssertionError("Pareto label overlaps a callout.")
+    if any(_bbox_overlap(arrow_bbox, bb) for bb in callout_bboxes.values()):
+        raise AssertionError("Arrow label overlaps a callout.")
+
+    # Arrow label should not overlap any plotted point centers.
+    point_disp = ax.transData.transform(np.column_stack([ic50_all, ti_all]))
+    overlaps_points = (
+        (point_disp[:, 0] >= arrow_bbox.x0)
+        & (point_disp[:, 0] <= arrow_bbox.x1)
+        & (point_disp[:, 1] >= arrow_bbox.y0)
+        & (point_disp[:, 1] <= arrow_bbox.y1)
+    )
+    if np.any(overlaps_points):
+        raise AssertionError("Arrow label overlaps plotted points.")
+
+
 def draw_figure(
     ic50_random: np.ndarray,
     ti_random: np.ndarray,
     sizes_random: np.ndarray,
-    agent_mask: np.ndarray,
     ic50_all: np.ndarray,
     ti_all: np.ndarray,
     sizes_all: np.ndarray,
@@ -365,26 +441,27 @@ def draw_figure(
     curve_ic50 = 10 ** curve_log
     ax.plot(curve_ic50, curve_ti, color=BLUISH_GREEN, linewidth=2.5, zorder=4)
 
-    mid = int(0.56 * len(curve_log))
-    ax.annotate(
+    mid = int(np.argmin(np.abs(curve_ic50 - 8e-7)))
+    pareto_label_annotation = ax.annotate(
         "Pareto Frontier",
         xy=(curve_ic50[mid], curve_ti[mid]),
-        xytext=(curve_ic50[mid] * 5.8, curve_ti[mid] + 70),
+        xytext=(1.9e-6, 620),
         fontsize=8,
         fontweight="semibold",
         color=BLUISH_GREEN,
         arrowprops=dict(arrowstyle="-", color=BLUISH_GREEN, lw=0.9),
-        zorder=5,
+        zorder=9,
     )
 
     # Explicit candidate points with high-contrast vermillion ring.
     candidate_positions = {
-        "A": (1.2e-8, 260),
-        "B": (6.0e-7, 920),
-        "C": (3.0e-7, 500),
-        "D": (4.0e-7, 210),
+        "A": (5.5e-8, 265),
+        "B": (2.2e-7, 910),
+        "C": (1.6e-7, 555),
+        "D": (3.8e-7, 130),
     }
 
+    callout_annotations: dict[str, plt.Annotation] = {}
     for i, name in enumerate(CALL_OUT_ORDER):
         idx = N_RANDOM + i
         x = ic50_all[idx]
@@ -417,7 +494,7 @@ def draw_figure(
             f"Candidate {name}: {CALL_OUTS[name]['subtitle']}\n"
             + "\n".join(CALL_OUTS[name]["lines"])
         )
-        ax.annotate(
+        ann = ax.annotate(
             text,
             xy=(x, y),
             xytext=(text_x, text_y),
@@ -433,13 +510,14 @@ def draw_figure(
             arrowprops=dict(arrowstyle="-", color=VERMILLION, lw=1.1),
             zorder=10,
         )
+        callout_annotations[name] = ann
 
     # Typical agent behavior arrow and matching rightward text symbol.
-    arrow_y = 38
+    arrow_y = 20
     ax.annotate(
         "",
-        xy=(1.6e-9, arrow_y),
-        xytext=(4.5e-7, arrow_y),
+        xy=(1.7e-9, arrow_y),
+        xytext=(5.0e-7, arrow_y),
         arrowprops=dict(
             arrowstyle="-|>",
             color=RED,
@@ -447,11 +525,11 @@ def draw_figure(
             alpha=0.60,
             mutation_scale=20,
         ),
-        zorder=5,
+        zorder=8,
     )
-    ax.text(
-        4.0e-8,
-        arrow_y + 28,
+    arrow_label_text = ax.text(
+        7.0e-7,
+        12,
         "Typical Agent Behavior: Maximize Efficacy Only \u2192",
         fontsize=7.6,
         fontstyle="italic",
@@ -459,8 +537,8 @@ def draw_figure(
         color=RED,
         ha="center",
         va="bottom",
-        bbox=dict(facecolor="white", edgecolor="none", alpha=0.85, pad=1.2),
-        zorder=6,
+        bbox=dict(facecolor="white", edgecolor="none", alpha=0.95, pad=1.4),
+        zorder=12,
     )
 
     # Axes formatting.
@@ -483,58 +561,10 @@ def draw_figure(
     ax.set_xticks([1e-9, 1e-8, 1e-7, 1e-6, 1e-5])
     ax.set_xticklabels(["1 nM", "10 nM", "100 nM", "1 $\\mu$M", "10 $\\mu$M"])
     ax.tick_params(colors="#555555", labelsize=8)
-    ax.grid(True, linestyle=":", color=LIGHT_GRAY, linewidth=0.5)
+    ax.grid(True, linestyle=":", color="#DDDDDD", linewidth=0.5)
     for spine in ax.spines.values():
         spine.set_color(CHARCOAL)
         spine.set_linewidth(1.2)
-
-    # Inset: 1D efficacy view with density strip to highlight high-efficacy cluster.
-    inset = fig.add_axes([0.60, 0.64, 0.30, 0.20])
-    inset.set_facecolor(LIGHT_GRAY)
-    for spine in inset.spines.values():
-        spine.set_color(CHARCOAL)
-        spine.set_linewidth(1.0)
-
-    random_logs = np.log10(ic50_random)
-    hist_counts, hist_edges = np.histogram(random_logs, bins=np.linspace(-9, -5, 18))
-    hist_counts = hist_counts / max(hist_counts.max(), 1) * 0.52
-    centers = 10 ** ((hist_edges[:-1] + hist_edges[1:]) / 2)
-    widths = 10 ** hist_edges[1:] - 10 ** hist_edges[:-1]
-    inset.bar(centers, hist_counts, width=widths, color=BLUE, alpha=0.20, edgecolor="none", zorder=0)
-
-    jitter = np.random.default_rng(SEED + 1).uniform(-0.28, 0.14, N_RANDOM)
-    inset.scatter(ic50_random, jitter, s=8, c=BLUE, alpha=0.70, edgecolors="none", zorder=1)
-
-    # Subtle highlight around high-efficacy region where agent-favorite points cluster.
-    inset.axvspan(1e-9, 3e-9, color=BLUE, alpha=0.08, zorder=0)
-    cluster_x = np.median(ic50_random[agent_mask])
-    inset.annotate(
-        "Agent focuses\nhere",
-        xy=(cluster_x, 0.25),
-        xytext=(7e-9, 0.55),
-        fontsize=6.7,
-        fontstyle="italic",
-        color=BLUE,
-        ha="center",
-        arrowprops=dict(arrowstyle="->", color=BLUE, lw=0.9),
-        zorder=2,
-    )
-
-    inset.set_xscale("log")
-    inset.set_xlim(1e-9, 1e-5)
-    inset.invert_xaxis()
-    inset.set_ylim(-0.32, 0.62)
-    inset.set_xticks([1e-9, 1e-7, 1e-5])
-    inset.set_xticklabels(["1 nM", "100 nM", "10 $\\mu$M"], fontsize=6.5, color="#555555")
-    inset.set_yticks([])
-    inset.set_xlabel(
-        "Efficacy Only (What Agent Optimizes)",
-        fontsize=7,
-        fontweight="semibold",
-        color=CHARCOAL,
-        labelpad=1,
-    )
-    inset.set_title("What the Agent Sees (1D)", fontsize=7.6, fontweight="semibold", color=CHARCOAL, pad=2)
 
     # Legends.
     pareto_handle = mlines.Line2D(
@@ -574,7 +604,7 @@ def draw_figure(
         markeredgecolor=MED_GRAY, markersize=np.sqrt(SIZE_LARGE), label="> 6 hr"
     )
 
-    ax.legend(
+    leg2 = ax.legend(
         handles=[stab_small, stab_med, stab_large],
         title="Stability (Half-Life)",
         title_fontproperties={"weight": "semibold", "size": 8},
@@ -589,6 +619,16 @@ def draw_figure(
     fig.suptitle("The Pareto Frontier Agents Ignore", fontsize=12, fontweight="bold", color=CHARCOAL, y=0.98)
 
     plt.tight_layout(rect=[0, 0, 1, 0.95])
+    validate_layout(
+        fig=fig,
+        ax=ax,
+        callout_annotations=callout_annotations,
+        pareto_label_annotation=pareto_label_annotation,
+        arrow_label_text=arrow_label_text,
+        legends=[leg1, leg2],
+        ic50_all=ic50_all,
+        ti_all=ti_all,
+    )
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     fig.savefig(OUTPUT_JPEG, format="jpeg", dpi=300, bbox_inches="tight", pil_kwargs={"quality": 95})
@@ -619,7 +659,7 @@ def main() -> None:
     # Retry generation until all hard constraints are simultaneously satisfied.
     summary: dict[str, int] | None = None
     for _ in range(500):
-        ic50_random, ti_random, sizes_random, agent_mask = generate_random_points(rng)
+        ic50_random, ti_random, sizes_random = generate_random_points(rng)
 
         callout_ic50 = np.array([CALL_OUTS[k]["ic50"] for k in CALL_OUT_ORDER])
         callout_ti = np.array([CALL_OUTS[k]["ti"] for k in CALL_OUT_ORDER])
@@ -648,7 +688,6 @@ def main() -> None:
             ic50_random=ic50_random,
             ti_random=ti_random,
             sizes_random=sizes_random,
-            agent_mask=agent_mask,
             ic50_all=ic50_all,
             ti_all=ti_all,
             sizes_all=sizes_all,

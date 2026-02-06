@@ -38,10 +38,25 @@ These must all be fixed. Each is a visual inconsistency that undermines the figu
 - **Root cause:** Candidate C is placed at (8 nM, 400) which falls in a dense region. Randomly generated points land nearby.
 - **Fix:** Ensure the four callout candidates are plotted as distinct, explicitly placed points (not part of the random scatter). Give them a visually distinct marker style: larger vermillion ring, slightly higher z-order, and clear separation from nearby random points. Alternatively, clear a small radius around each callout point so no random point obscures it.
 
-### Bug 5: Inset panel density does not match annotation
-- **Problem:** The "Agent focuses here →" annotation in the inset points to the right (high efficacy end), but the 1D point density does not show obvious clustering there. The dominated points (60% of total) are spread across the left/middle, diluting the visual signal.
-- **Root cause:** All 100 points are plotted uniformly on the 1D axis. The 10 "agent favorite" points at the high-efficacy end are visually lost among 90 others.
-- **Fix:** Either (a) highlight the agent-favorite cluster with a different color or heavier opacity in the inset, or (b) add a subtle density shading/histogram behind the 1D points to show the concentration, or (c) add a bracket/brace annotation around the high-efficacy cluster.
+### Bug 5 (v2): "Pareto Frontier" label overlaps Candidate B callout
+- **Problem:** The green "Pareto Frontier" label text is partially hidden behind the Candidate B callout box.
+- **Root cause:** Both elements occupy the upper-middle region of the plot. The label position is computed relative to the curve midpoint, which falls near Candidate B's callout zone.
+- **Fix:** Place the "Pareto Frontier" label in a clear region along the curve, away from all callout boxes. Prefer the steep section of the curve (between candidates A and C) or use a position along the curve's lower-left portion where no callouts exist.
+
+### Bug 6 (v2): Candidate B callout text truncated
+- **Problem:** The Candidate B callout box clips the text "Robust S..." instead of showing "Robust Safety".
+- **Root cause:** The callout box width is auto-sized but the text extends beyond the figure boundary or is clipped by the inset panel.
+- **Fix:** With the inset panel removed (see Section 4.5), there is more space in the upper-right. Reposition Candidate B's callout so all text fits within the figure bounds.
+
+### Bug 7 (v2): Agent behavior arrow label obscured by data points
+- **Problem:** The words "Behavior:" and "Maximize" in the arrow label are partially hidden behind orange data points.
+- **Root cause:** The label's white background box has insufficient opacity or z-order, and the arrow is placed at a y-position where data points exist.
+- **Fix:** Increase the label background opacity to 95% and ensure z-order is above all scatter points. Alternatively, move the arrow to y < 30 where fewer data points exist.
+
+### Bug 8 (v2): Candidate A callout clipped at right edge
+- **Problem:** The Candidate A callout box extends beyond the right boundary of the figure.
+- **Root cause:** Candidate A is at 2 nM (far right on the inverted axis) and the callout is offset further right.
+- **Fix:** Offset Candidate A's callout to the left (toward higher IC50 in data coordinates) or above, so the entire box is within the figure bounds.
 
 ## 4. Functional Requirements
 
@@ -101,15 +116,9 @@ These are fixed, explicitly placed points (not drawn from the random distributio
 - Label: `"Typical Agent Behavior: Maximize Efficacy Only →"` placed below or above the arrow shaft, fully visible (no truncation or overlap with callout boxes).
 - The arrow must be in a clear region of the plot, not conflicting with any callout annotation.
 
-### 4.5 Inset Panel — "What the Agent Sees (1D)"
+### 4.5 Inset Panel
 
-- Position: upper-right area of the figure (using `fig.add_axes`), not overlapping main plot data.
-- Content: All 100 points projected onto a 1D horizontal efficacy axis with vertical jitter.
-- All points rendered in uniform blue (#0072B2), erasing the Pareto/dominated distinction. This is the point: agents lose trade-off information.
-- The high-efficacy cluster (right end, where the ~10 agent-favorite points sit) must be visually distinguishable. Use one of: (a) density shading, (b) bracket annotation, (c) slight color/opacity differentiation, or (d) a small histogram strip above the axis.
-- Label: "Agent focuses here" with arrow pointing toward the high-efficacy cluster.
-- Axis labels: "Efficacy Only (What Agent Optimizes)".
-- X-axis matches main plot orientation (inverted, high efficacy on right).
+**Removed.** The inset panel ("What the Agent Sees — 1D") from the original figure brief has been cut. The red "Typical Agent Behavior" arrow already communicates that agents optimize a single axis. The inset added clutter without sufficient additional insight, and the manuscript caption does not reference it. Removing it frees space for cleaner callout placement.
 
 ### 4.6 Legends
 
@@ -125,7 +134,7 @@ Two legend boxes:
 - Medium circle: "1-6 hr"
 - Large circle: "> 6 hr"
 
-Placement: in regions of low data density (e.g., upper-left for Pareto Status where low-efficacy/high-safety region has few points; lower-left for Stability). Must not overlap data points, callout boxes, or inset panel.
+Placement: in regions of low data density (e.g., upper-left for Pareto Status where low-efficacy/high-safety region has few points; lower-left for Stability). Must not overlap data points or callout boxes.
 
 ### 4.7 Axes and Formatting
 
@@ -149,12 +158,10 @@ Placement: in regions of low data density (e.g., upper-left for Pareto Status wh
 | Orange | #E69F00 | Dominated points |
 | Sky Blue | #56B4E9 | Pareto-optimal points |
 | Bluish Green | #009E73 | Pareto frontier curve |
-| Blue | #0072B2 | Inset panel points |
 | Vermillion | #D55E00 | Callout highlights |
 | Red | #CC3311 | Agent behavior arrow |
 | Charcoal | #333333 | Text, axes |
 | Medium Gray | #888888 | Grid, legend borders |
-| Light Gray | #DDDDDD | Inset background |
 | Off-White | #FAFAFA | Plot background |
 
 ## 5. Non-Functional Requirements
@@ -186,17 +193,17 @@ The figure passes review when ALL of the following are true:
 
 ### SC-3: Visual Consistency — No Contradictions
 - [ ] The red arrow direction and the text arrow symbol both point the same way (rightward, toward high efficacy on the inverted axis)
-- [ ] The "Typical Agent Behavior" label text is fully visible and not truncated or obscured by any other element
+- [ ] The "Typical Agent Behavior" label text is fully visible and not truncated or obscured by any other element (including data points; the label background must be opaque enough to remain legible)
 - [ ] Each callout leader arrow clearly connects its text box to the correct point, with no ambiguity about which point is being annotated
-- [ ] The inset panel's "Agent focuses here" annotation matches the visible density pattern (the high-efficacy end should show noticeably more points or a visual highlight)
+- [ ] All callout text is fully visible within the figure bounds (no clipping at edges)
 
 ### SC-4: No Element Overlap
 - [ ] Callout boxes do not overlap each other
 - [ ] Callout boxes do not overlap legend boxes
-- [ ] Callout boxes do not overlap the inset panel
 - [ ] The "Pareto Frontier" label does not overlap callout boxes
-- [ ] The agent behavior arrow label does not overlap callout boxes
+- [ ] The agent behavior arrow label does not overlap callout boxes or data points
 - [ ] Legend boxes are in low-density regions and do not obscure data
+- [ ] No element extends beyond the figure boundary (check all four edges)
 
 ### SC-5: Legibility at Print Size
 - [ ] All text is readable at 300 DPI on a 180 mm wide print
@@ -205,7 +212,7 @@ The figure passes review when ALL of the following are true:
 - [ ] Grid lines are subtle and do not compete with data
 
 ### SC-6: Message Clarity
-- [ ] A reader unfamiliar with the paper can look at this figure and understand: (a) there is a trade-off between efficacy and safety, (b) the green curve shows optimal trade-offs, (c) the red arrow shows that agents chase one axis only, (d) point size adds a hidden third dimension agents ignore, (e) the inset shows what agents actually see (1D ranking)
+- [ ] A reader unfamiliar with the paper can look at this figure and understand: (a) there is a trade-off between efficacy and safety, (b) the green curve shows optimal trade-offs, (c) the red arrow shows that agents chase one axis only, (d) point size adds a hidden third dimension agents ignore
 - [ ] The four callout candidates tell a coherent story: A is potent but risky, B is safe but less potent, C balances with stability, D is strictly worse
 
 ### SC-7: Output Files
