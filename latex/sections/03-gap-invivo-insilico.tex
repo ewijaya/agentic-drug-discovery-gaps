@@ -51,7 +51,7 @@ Behavioral phenotyping via DeepLabCut \citep{mathis2018deeplabcut} tracks animal
 
 RNA-seq requires quality control, alignment, and quantification into expression matrices. Differential expression identifies treatment effects. Pathway enrichment maps genes to biological processes via KEGG \citep{kanehisa2023kegg} or Gene Ontology. Upstream regulator analysis infers transcription factors driving changes. The FASTQ-to-hypothesis pipeline needs bioinformatics tools (STAR, HISAT2, DESeq2, edgeR, GSEA \citep{subramanian2005gsea}) that agents do not integrate.
 
-Integrating heterogeneous sources for predictive biomarkers is most valuable yet absent. Correlating in vitro bioactivity with in vivo efficacy required extracting features from multiple assays, normalizing across scales, aligning with temporal data (days 3, 7, 14, 28), and training regression models predicting long-term outcomes. This workflow involved feature engineering, imputation, stratified cross-validation, and model selection—ML workflows, not LLM reasoning.
+Integrating heterogeneous sources for predictive biomarkers is most valuable yet absent. Correlating in vitro bioactivity with in vivo efficacy required extracting features from multiple assays, normalizing across scales, aligning with temporal data (days 3, 7, 14, 28), and training regression models predicting long-term outcomes. This workflow involved feature engineering, imputation, stratified cross-validation, and model selection; these are ML workflows, not LLM reasoning.
 
 \subsection{Safety, Efficacy, and Translation}
 
@@ -61,6 +61,6 @@ Toxicology requires dose-response analysis via generalized linear mixed models a
 
 Species translation compounds uncertainty. Mouse pharmacokinetics extrapolate to humans via allometric scaling. Peptide stability varies by species protease expression. Rodent-tolerated peptides may provoke primate antibody responses. Mechanistic modeling quantifying and propagating uncertainties into clinical predictions exceeds agent capabilities.
 
-The most valuable support is not autonomous decisions but uncertainty quantification, sensitivity analysis, and Pareto exploration. Given candidates with efficacy and safety confidence intervals, which are Pareto-optimal? How sensitive are rankings to variability? Which experiments reduce uncertainty most? These require Bayesian optimization and value-of-information analysis beyond LLM tool-calling.
+The most valuable support lies in uncertainty quantification, sensitivity analysis, and Pareto exploration, rather than autonomous decisions. Given candidates with efficacy and safety confidence intervals, which are Pareto-optimal? How sensitive are rankings to variability? Which experiments reduce uncertainty most? These require Bayesian optimization and value-of-information analysis beyond LLM tool-calling.
 
 The in vivo to in silico bridge is a missing architectural layer for temporal modeling, multi-modal fusion, and mechanistic inference. Until agents ingest longitudinal scores, integrate transcriptomics, quantify dose-response uncertainty, and navigate multi-objective trade-offs under biological variability, utility remains confined to early hit identification. Most development cost and risk lies in translating in vitro activity to in vivo efficacy and safety.
