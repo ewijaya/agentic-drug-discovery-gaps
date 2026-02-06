@@ -6,7 +6,7 @@
 
 ## Paper Context
 
-This figure appears in **Gap 3: Multi-Paradigm, Not Multi-Agent** of a position paper titled *"What Drug Discovery AI Agents Still Can't Do."*
+This figure appears in **Gap 3: Multi-Paradigm, Not Multi-Agent** of a position paper titled *"The Blind Spots of Agentic Drug Discovery."*
 
 **Core argument:** Current AI agents in drug discovery are built around a **single paradigm** — LLMs orchestrating tool APIs through text. This works for literature mining and synthesis planning but breaks down when drug discovery requires **machine learning training, reinforcement learning optimization, molecular dynamics simulations, and gradient-based optimization**. The field needs multi-paradigm orchestration frameworks, not just smarter chatbots.
 

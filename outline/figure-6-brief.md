@@ -17,7 +17,7 @@ If you're an illustrator reading this: **follow this brief (2D design), not the 
 
 ## Paper Context
 
-This figure appears in **Section 6 (Blind Spot 5: Multi-Objective Navigation)** of a position paper titled *"What Drug Discovery AI Agents Still Can't Do."*
+This figure appears in **Section 6 (Blind Spot 5: Multi-Objective Navigation)** of a position paper titled *"The Blind Spots of Agentic Drug Discovery."*
 
 **Core argument of this section:** Drug discovery is multi-objective optimization. Candidates must simultaneously satisfy bioactivity, selectivity, safety, stability, manufacturability, and cost. These objectives **conflict**: potency improvements reduce selectivity, stability enhancements increase immunogenicity, high-purity synthesis is expensive. Navigating this requires understanding **Pareto frontiers** — candidates where improving one objective requires degrading another — and making decisions based on risk tolerance, development stage, and context.
 

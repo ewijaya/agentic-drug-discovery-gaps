@@ -1,6 +1,6 @@
 # Position Paper Outline
 
-Working Title: "What Drug Discovery AI Agents Still Can't Do: Lessons from Peptide Design, In Vivo Modeling, and Multi-Paradigm AI at a Small Biotech"
+Title: "The Blind Spots of Agentic Drug Discovery"
 
 Target: arXiv cs.AI (primary), Drug Discovery Today, Nature Machine Intelligence (perspective)
 

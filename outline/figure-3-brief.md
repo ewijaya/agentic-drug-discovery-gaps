@@ -6,7 +6,7 @@
 
 ## Paper Context
 
-This figure supports **Gap 2: The In Vivo–In Silico Bridge** in a position paper titled *"What Drug Discovery AI Agents Still Can't Do."*
+This figure supports **Gap 2: The In Vivo–In Silico Bridge** in a position paper titled *"The Blind Spots of Agentic Drug Discovery."*
 
 **The argument from the manuscript:** Current AI agents excel at in vitro automation (synthesis, screening, literature mining) but hit a hard ceiling at in vivo studies. Animal experiments generate fundamentally different data: longitudinal (days to months), multi-modal (behavioral scores, imaging, molecular profiling), noisy, low-throughput, and expensive. These characteristics make in vivo data the bottleneck, yet agents provide no pathway to incorporate it.
 

@@ -6,7 +6,7 @@
 
 ## Paper Context
 
-This figure supports **Gap 1: The Small Molecule Bias** in a position paper titled *"What Drug Discovery AI Agents Still Can't Do."*
+This figure supports **Gap 1: The Small Molecule Bias** in a position paper titled *"The Blind Spots of Agentic Drug Discovery."*
 
 **The argument:** Current AI agents in drug discovery are designed around small-molecule workflows — linear pipelines using SMILES strings, molecular fingerprints, and docking scores. Peptide drug discovery is fundamentally different: it requires protein language models, multiple parallel property assessments, and iterative redesign cycles. The visual contrast between the two workflows validates the claim that current agents are biased toward one modality.
 

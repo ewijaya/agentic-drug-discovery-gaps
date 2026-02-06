@@ -4,7 +4,7 @@
 
 This repository contains a **position paper** titled:
 
-**"What Drug Discovery AI Agents Still Can't Do: Lessons from Peptide Design, In Vivo Modeling, and Multi-Paradigm AI at a Small Biotech"**
+**"The Blind Spots of Agentic Drug Discovery"**
 
 Target word count: 6,000-8,000 words
 Target venues: arXiv cs.AI (primary), Drug Discovery Today, Nature Machine Intelligence (perspective piece)

@@ -6,7 +6,7 @@
 
 ## Paper Context
 
-This figure is the **hero/overview figure** for a position paper titled *"What Drug Discovery AI Agents Still Can't Do."*
+This figure is the **hero/overview figure** for a position paper titled *"The Blind Spots of Agentic Drug Discovery."*
 
 **Core argument:** Current AI "agents" in drug discovery are built for a narrow use case — small-molecule drug design at big pharmaceutical companies. They fail when applied to peptide drugs, animal study data, real ML training workflows, small biotech constraints, and multi-objective decisions.
 

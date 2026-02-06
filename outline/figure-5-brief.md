@@ -6,7 +6,7 @@
 
 ## Paper Context
 
-This figure appears in a position paper titled *"What Drug Discovery AI Agents Still Can't Do."*
+This figure appears in a position paper titled *"The Blind Spots of Agentic Drug Discovery."*
 
 **Core argument:** Current AI agent systems for drug discovery are designed with Big Pharma resources in mind. They assume massive datasets, large ML teams, extensive compute infrastructure, and months of runtime. Most drug discovery happens in small biotechs with 10-100x fewer resources. This figure quantifies that gap.
 
