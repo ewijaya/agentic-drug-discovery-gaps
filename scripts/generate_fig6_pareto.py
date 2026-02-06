@@ -456,10 +456,10 @@ def draw_figure(
 
     # Explicit candidate points with high-contrast vermillion ring.
     candidate_positions = {
-        "A": (5.5e-8, 265),
+        "A": (1.05e-8, 700),
         "B": (2.2e-7, 910),
         "C": (1.6e-7, 555),
-        "D": (3.8e-7, 130),
+        "D": (4.8e-6, 150),
     }
 
     callout_annotations: dict[str, plt.Annotation] = {}
@@ -492,18 +492,18 @@ def draw_figure(
 
         text_x, text_y = candidate_positions[name]
         text = (
-            f"Candidate {name}: {CALL_OUTS[name]['subtitle']}\n"
+            f"Candidate {name}:\n{CALL_OUTS[name]['subtitle']}\n"
             + "\n".join(CALL_OUTS[name]["lines"])
         )
         ann = ax.annotate(
             text,
             xy=(x, y),
             xytext=(text_x, text_y),
-            fontsize=6.7,
+            fontsize=6.1,
             color=CHARCOAL,
             va="center",
             bbox=dict(
-                boxstyle="round,pad=0.36",
+                boxstyle="round,pad=0.24",
                 facecolor="white",
                 edgecolor=VERMILLION,
                 linewidth=0.8,
