@@ -1,9 +1,9 @@
 \section{Blind Spot 3: Multi-Paradigm, Not Multi-Agent}
 \label{sec:multiparadigm}
 
-"Multi-agent" systems in drug discovery AI have multiple LLM-based agents collaborating \citep{seal2025aiagents}. PharmAgents deploys specialized agents for target identification and synthesis. MADD coordinates molecular design and docking. The pattern: an orchestrator LLM decomposes queries, delegates to modules, and synthesizes outputs.
+"Multi-agent" systems in drug discovery have multiple LLM-based agents collaborating \citep{seal2025aiagents}. PharmAgents deploys specialized agents for target identification and synthesis. MADD coordinates molecular design and docking. The pattern: an orchestrator LLM decomposes queries, delegates to modules, and synthesizes outputs.
 
-This conflates concepts. "Multi-agent" is multiple LLM instances with different tools. Practitioners need multi-paradigm orchestration: coordinating fundamentally different computational approaches (supervised learning, generative modeling, RL, simulation, optimization) within workflows. Current architectures support the former, not the latter, which is why most real pipelines still require manual glue code.
+This distinction matters. "Multi-agent" is multiple LLM instances with different tools. Practitioners need multi-paradigm orchestration: coordinating fundamentally different computational approaches (supervised learning, generative modeling, RL, simulation, optimization) within workflows. Current architectures support the former, not the latter, which is why most real pipelines still require manual glue code.
 \subsection{The LLM-as-Orchestrator Assumption}
 
 LLM-centric design treats the language model as central coordinator, invoking external tools via APIs. ChemCrow calls RDKit and PubChem \citep{bran2024chemcrow}. ChatInvent retrieves and synthesizes literature \citep{he2026chatinvent}. This works for text-based reasoning and stateless tools.
@@ -37,7 +37,7 @@ Multi-objective optimization & \texttimes & Yes & Hours to days \\
 \end{tabular}
 \end{table}
 
-Across 14 projects, most computational work involved these paradigms, not LLM reasoning. Peptide-receptor classifiers required ESM-2 embeddings, logistic regression, gradient-boosted trees, cross-validation, and AUC-ROC comparison. RNA-seq needed alignment, normalization, differential expression, clustering, and pathway enrichment. Bone formation quantification trained semantic segmentation models. Peptide optimization via RL required reward models, proximal policy optimization, and diversity penalties.
+Across our projects, most computational work involved these paradigms, not LLM reasoning. Peptide-receptor classifiers required ESM-2 embeddings, logistic regression, gradient-boosted trees, cross-validation, and AUC-ROC comparison. RNA-seq needed alignment, normalization, differential expression, clustering, and pathway enrichment. Bone formation quantification trained semantic segmentation models. Peptide optimization via RL required reward models, proximal policy optimization, and diversity penalties.
 
 Projects spanned paradigms in integrated pipelines: generative models produced sequences, supervised models predicted bioactivity, Bayesian optimization selected synthesis batches based on uncertainty, experimental results updated training sets, cycles repeated.
 
@@ -57,8 +57,8 @@ Multi-paradigm architectures treat ML training, RL, simulation, and optimization
 Workflow graphs have nodes (data loading, feature extraction, training, evaluation) and edges (data dependencies). They support parallelization (simultaneous hyperparameter configs), checkpointing (cached intermediate results), and branching (automatic hyperparameter search if validation fails), with clear provenance for every artifact.
 Workflow orchestration exists: Apache Airflow, Kubeflow, Nextflow provide task graphs, dependency resolution, resource allocation, and checkpointing. Missing is agent reasoning integration: inspecting results, diagnosing failures, proposing modifications, learning from executions (deprioritizing architectures that overfit).
 
-Interaction should be batch-mode, not chat. Bottlenecks are orchestrating end-to-end analyses, not formulating queries. Small biotechs managing 14 projects need automation: "Analyze eight RNA-seq samples, perform differential expression and pathway enrichment, generate report." Agents intervene only for human decisions (conflicting pathway interpretations).
+Interaction should be batch-mode, not chat. Bottlenecks are orchestrating end-to-end analyses, not formulating queries. Small biotechs managing dozens of projects need automation: "Analyze eight RNA-seq samples, perform differential expression and pathway enrichment, generate report." Agents intervene only for human decisions (conflicting pathway interpretations).
 
 Human-in-the-loop decision points are explicit and actionable. Agents present Pareto frontiers (accuracy-interpretability trade-offs), candidates with uncertainty estimates. Practitioners select based on context; agents structure decision spaces.
 
-The gap reflects misunderstanding computational drug discovery practice. The field needs systems coordinating paradigms in integrated workflows, batch-mode execution, explicit decision points, and version control for reproducibility, not LLMs chatting.
+The gap reflects a mismatch with computational drug discovery practice. The field needs systems coordinating paradigms in integrated workflows, batch-mode execution, explicit decision points, and version control for reproducibility, not LLMs chatting.
