@@ -409,7 +409,8 @@ def draw_figure(
     curve_ti: np.ndarray,
 ) -> None:
     """Render and save final figure."""
-    fig, ax = plt.subplots(figsize=(180 / 25.4, 140 / 25.4))
+    # Slightly larger canvas plus manual margins to create more negative space.
+    fig, ax = plt.subplots(figsize=(190 / 25.4, 150 / 25.4))
     fig.patch.set_facecolor("white")
     ax.set_facecolor(OFF_WHITE)
 
@@ -608,7 +609,8 @@ def draw_figure(
         handles=[stab_small, stab_med, stab_large],
         title="Stability (Half-Life)",
         title_fontproperties={"weight": "semibold", "size": 8},
-        loc="lower left",
+        loc="upper right",
+        bbox_to_anchor=(0.985, 0.985),
         fontsize=7,
         frameon=True,
         fancybox=True,
@@ -616,9 +618,10 @@ def draw_figure(
         facecolor="white",
     )
 
-    fig.suptitle("The Pareto Frontier Agents Ignore", fontsize=12, fontweight="bold", color=CHARCOAL, y=0.98)
+    fig.suptitle("The Pareto Frontier Agents Ignore", fontsize=12, fontweight="bold", color=CHARCOAL, y=0.93)
 
-    plt.tight_layout(rect=[0, 0, 1, 0.95])
+    # More whitespace around axes and title than tight_layout.
+    fig.subplots_adjust(left=0.11, right=0.96, bottom=0.15, top=0.86)
     validate_layout(
         fig=fig,
         ax=ax,
@@ -631,8 +634,8 @@ def draw_figure(
     )
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUTPUT_JPEG, format="jpeg", dpi=300, bbox_inches="tight", pil_kwargs={"quality": 95})
-    fig.savefig(OUTPUT_SVG, format="svg", bbox_inches="tight")
+    fig.savefig(OUTPUT_JPEG, format="jpeg", dpi=300, pil_kwargs={"quality": 95})
+    fig.savefig(OUTPUT_SVG, format="svg")
     plt.close(fig)
 
 
