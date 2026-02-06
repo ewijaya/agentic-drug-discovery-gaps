@@ -1,7 +1,7 @@
 \section{Blind Spot 3: Multi-Paradigm, Not Multi-Agent}
 \label{sec:multiparadigm}
 
-"Multi-agent" systems in drug discovery have multiple LLM-based agents collaborating \citep{seal2025aiagents}. PharmAgents deploys specialized agents for target identification and synthesis. MADD coordinates molecular design and docking. The pattern: an orchestrator LLM decomposes queries, delegates to modules, and synthesizes outputs.
+"Multi-agent" systems in drug discovery have multiple LLM-based agents collaborating \citep{seal2025aiagents}. PharmAgents deploys specialized agents for target identification and synthesis. MADD coordinates molecular design and docking \citep{madd2025}. BioPlanner benchmarks LLM-driven protocol planning \citep{bioplanner2023}, and ChemToolAgent evaluates chemistry tool integration \citep{chemtoolagent2024}. The pattern: an orchestrator LLM decomposes queries, delegates to modules, and synthesizes outputs.
 
 This distinction matters. "Multi-agent" is multiple LLM instances with different tools. Practitioners need multi-paradigm orchestration: coordinating fundamentally different computational approaches (supervised learning, generative modeling, RL, simulation, optimization) within workflows. Current architectures support the former, not the latter, which is why most real pipelines still require manual glue code.
 \subsection{The LLM-as-Orchestrator Assumption}
@@ -16,7 +16,7 @@ The limitation extends beyond supervised learning. Generative modeling, reinforc
 
 \subsection{The Missing Paradigms}
 
-Absent paradigms define modern drug discovery: supervised learning (bioactivity prediction, toxicity modeling), unsupervised learning (chemical space clustering), generative modeling (de novo design), reinforcement learning (multi-objective optimization), simulation (binding kinetics), and optimization (experimental design).
+Absent paradigms define modern drug discovery \citep{schneider2020generative}: supervised learning (bioactivity prediction \citep{stokes2020ml}, toxicity modeling), unsupervised learning (chemical space clustering), generative modeling (de novo design \citep{grisoni2021synthesis}), reinforcement learning (multi-objective optimization \citep{tan2022rl}), simulation (binding kinetics), and optimization (experimental design).
 
 \begin{table}[htbp]
 \centering
