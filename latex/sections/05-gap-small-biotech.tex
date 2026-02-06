@@ -18,7 +18,7 @@ Data scarcity is the first constraint. Large pharma accumulates millions of test
 
 Agents assume abundant data, recommending deep neural networks with millions of parameters, hundreds of hyperparameter configs, and dozens of ensemble models. On 100 sequences, deep networks overfit catastrophically. 5-fold cross-validation leaves only 20 examples for evaluation. Ensembles offer no benefit on small datasets.
 
-Small biotechs need data efficiency: models generalizing from few examples via transfer learning, quantifying uncertainty for experimental design. ESM-2 pre-trained on millions of protein sequences enables fine-tuning lightweight classifiers on 50-200 examples. Active learning reduced assays 30-40% by prioritizing uncertain predictions \citep{reker2017activelearning}. Both require workflows agents do not support.
+Small biotechs need data efficiency: models generalizing from few examples via transfer learning, quantifying uncertainty for experimental design. ESM-2 pre-trained on millions of protein sequences enables fine-tuning lightweight classifiers on 50-200 examples. Active learning can substantially reduce experimental burden by prioritizing uncertain predictions \citep{reker2017activelearning}; in our peptide projects, this reduced required assays by approximately one-third. Both require workflows agents do not support.
 
 Computational constraints compound scarcity. Small biotechs have 1-2 GPUs, sparse cloud credits, no HPC. RL, molecular dynamics, and docking are expensive. Agents recommend intensive methods without considering infrastructure, ignoring efficiency optimizations (parallelization, caching, cheaper approximations). Resource-aware agents would propose: "Given one GPU and 24 hours: 100 high-precision docking runs or 1,000 fast approximations?"
 
@@ -32,7 +32,7 @@ Transfer learning leverages public data for small proprietary tasks. Protein lan
 
 Effective transfer learning requires selecting models (ESM-2, ProtBERT, ProGen), choosing fine-tuning layers (freezing early layers is data-efficient), setting learning rates (avoiding catastrophic forgetting or slow convergence), and implementing regularization. These are experimental decisions requiring domain knowledge.
 
-Few-shot learning extends transfer to extreme scarcity. Prototypical networks achieved 60-70% accuracy on peptide-receptor binding with only 20 examples per type, sufficient for initial prioritization. Agents provide no few-shot pathways, meta-learning support, or confidence interval quantification. A 70% prediction with ±5% confidence is actionable; ±30% is not. Uncertainty quantification is critical yet absent.
+Few-shot learning extends transfer to extreme scarcity. In our experience, prototypical networks achieved 60-70\% accuracy on peptide-receptor binding classification with only 20 examples per type, sufficient for initial screening prioritization though dependent on the number of receptor classes and baseline rates. Agents provide no few-shot pathways, meta-learning support, or confidence interval quantification. A 70% prediction with ±5% confidence is actionable; ±30% is not. Uncertainty quantification is critical yet absent.
 
 Active learning selects which data to acquire next, prioritizing experiments reducing uncertainty. Acquisition functions (expected improvement, upper confidence bound) balance exploitation and exploration. Developing peptide bioactivity predictors, active learning reduced assays by one-third. Round one: 20 diverse peptides. Round two: 15 targeting high uncertainty. Round three: exploiting predicted best candidates. This iterative loop between models, acquisition functions, and feedback exceeds agent capabilities.
 
@@ -48,4 +48,4 @@ Parallelization is essential. Given 100 peptide docking jobs, agents should auto
 
 Current agents support minimal batch capabilities, designed for interactive queries not unsupervised analyses. They lack checkpointing, parallelization, and error handling, assuming interactive debugging impractical for overnight jobs.
 
-Small biotech is not large pharma with fewer resources but a fundamentally different mode requiring data-efficient learning, transfer/few-shot adaptation, active learning, batch automation, and resource-aware optimization. Agents are optimized for AstraZeneca. The biotech sector where significant innovation happens is left behind.
+Small biotech is not large pharma with fewer resources but a fundamentally different mode requiring data-efficient learning, transfer/few-shot adaptation, active learning, batch automation, and resource-aware optimization. Current agents are designed for large pharma contexts. The biotech sector, which accounts for a growing share of therapeutic innovation, remains underserved.

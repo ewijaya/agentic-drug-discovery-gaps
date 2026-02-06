@@ -1,12 +1,12 @@
 \section{Blind Spot 3: Multi-Paradigm, Not Multi-Agent}
 \label{sec:multiparadigm}
 
-"Multi-agent" systems in drug discovery have multiple LLM-based agents collaborating \citep{seal2025aiagents}. PharmAgents deploys specialized agents for target identification and synthesis. MADD coordinates molecular design and docking \citep{madd2025}. BioPlanner benchmarks LLM-driven protocol planning \citep{bioplanner2023}, and ChemToolAgent evaluates chemistry tool integration \citep{chemtoolagent2024}. The pattern: an orchestrator LLM decomposes queries, delegates to modules, and synthesizes outputs.
+The in vivo data integration challenge from the previous section illustrates a deeper architectural limitation: agents are not merely missing specific tools, they lack the capacity to orchestrate diverse computational paradigms. "Multi-agent" systems in drug discovery have multiple LLM-based agents collaborating \citep{seal2025aiagents}. PharmAgents deploys specialized agents for target identification and synthesis. MADD coordinates molecular design and docking \citep{madd2025}. BioPlanner benchmarks LLM-driven protocol planning \citep{bioplanner2023}, and ChemToolAgent evaluates chemistry tool integration \citep{chemtoolagent2024}. The pattern: an orchestrator LLM decomposes queries, delegates to modules, and synthesizes outputs.
 
 This distinction matters. "Multi-agent" is multiple LLM instances with different tools. Practitioners need multi-paradigm orchestration: coordinating fundamentally different computational approaches (supervised learning, generative modeling, RL, simulation, optimization) within workflows. Current architectures support the former, not the latter, which is why most real pipelines still require manual glue code.
 \subsection{The LLM-as-Orchestrator Assumption}
 
-LLM-centric design treats the language model as central coordinator, invoking external tools via APIs. ChemCrow calls RDKit and PubChem \citep{bran2024chemcrow}. ChatInvent retrieves and synthesizes literature \citep{he2026chatinvent}. This works for text-based reasoning and stateless tools.
+LLM-centric design treats the language model as central coordinator, invoking external tools via APIs. ChemCrow calls RDKit and PubChem \citep{bran2024chemcrow}. ChatInvent supports molecular design and synthesis planning \citep{he2026chatinvent}. This works for text-based reasoning and stateless tools.
 
 The paradigm breaks for tasks like training a multi-task neural network predicting peptide bioactivity across four endpoints using 300 sequences. The workflow: dataset preparation (stratified train-validation-test splits), feature extraction (ESM-2 embeddings), architecture selection, hyperparameter tuning, training with early stopping, validation with confidence intervals.
 
@@ -31,9 +31,10 @@ Literature review & \checkmark & No & Minutes \\
 SMILES generation & \checkmark & Yes & Seconds \\
 Docking (small molecules) & \checkmark & Yes & Hours \\
 Aggregation prediction & \texttimes & Yes & Days \\
-In vivo analysis & \texttimes & Yes & Days to weeks \\
+In vivo analysis & \texttimes & Yes & Days to weeks$^*$ \\
 Multi-objective optimization & \texttimes & Yes & Hours to days \\
 \hline
+\multicolumn{4}{l}{\footnotesize $^*$Runtime includes experimental turnaround, not just computation.} \\
 \end{tabular}
 \end{table}
 
@@ -42,6 +43,8 @@ Across our projects, most computational work involved these paradigms, not LLM r
 Projects spanned paradigms in integrated pipelines: generative models produced sequences, supervised models predicted bioactivity, Bayesian optimization selected synthesis batches based on uncertainty, experimental results updated training sets, cycles repeated.
 
 Agents cannot express these workflows. Orchestrators call models for inference but cannot train models, incorporate new data, retrain with hyperparameters, validate on test sets, or coordinate generative, predictive, and experimental design algorithms in closed loops. They assume pre-trained models and inference-only tasks, which is the opposite of how discovery actually proceeds.
+
+Recent systems have begun addressing single-paradigm ML automation. Agentomics \citep{agentomics2026} achieves autonomous ML experimentation, surpassing human-engineered state-of-the-art on 11 of 20 biomedical benchmark datasets across protein engineering, drug discovery, and regulatory genomics. ML-Agent \citep{mlagent2025} uses reinforcement learning to train LLM agents for autonomous ML engineering. These demonstrate that agents can automate individual ML workflows. However, neither orchestrates multi-paradigm pipelines: concurrent RL-based generation, supervised bioactivity prediction, Bayesian batch selection, and structural simulation in closed loops. The gap is cross-paradigm integration, not single-paradigm automation.
 
 \subsection{What Multi-Paradigm Orchestration Looks Like}
 
@@ -61,4 +64,4 @@ Interaction should be batch-mode, not chat. Bottlenecks are orchestrating end-to
 
 Human-in-the-loop decision points are explicit and actionable. Agents present Pareto frontiers (accuracy-interpretability trade-offs), candidates with uncertainty estimates. Practitioners select based on context; agents structure decision spaces.
 
-The gap reflects a mismatch with computational drug discovery practice. The field needs systems coordinating paradigms in integrated workflows, batch-mode execution, explicit decision points, and version control for reproducibility, not LLMs chatting.
+The gap reflects a mismatch with computational drug discovery practice. The field needs systems coordinating paradigms in integrated workflows, batch-mode execution, explicit decision points, and version control for reproducibility, not LLM-to-LLM delegation.
