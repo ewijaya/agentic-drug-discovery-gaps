@@ -19,6 +19,8 @@
 | Srijit Seal | University of Cambridge | srijit@understanding.bio | Seal et al. 2025 (AI Agents survey) | 2026-02-07 | Waiting |
 | Bowen Gao | Tsinghua University (PhD) | billgao0111@gmail.com | PharmAgents (Gao et al. 2025) | 2026-02-07 | Waiting |
 | Botao Yu | Ohio State University (PhD) | btyu@foxmail.com | ChemToolAgent (Yu et al. 2024) | 2026-02-07 | Waiting |
+| Huan Sun | Ohio State University (Prof) | sun.397@osu.edu | ChemToolAgent (Yu et al. 2024) | 2026-02-07 | Waiting |
+| Yanyan Lan | Tsinghua University (Prof) | lanyanyan@air.tsinghua.edu.cn | PharmAgents (Gao et al. 2025) | 2026-02-07 | Waiting |
 
 ## Backup endorser (if none of the above reply)
 
