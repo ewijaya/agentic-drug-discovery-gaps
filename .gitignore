@@ -11,6 +11,9 @@
 *.lof
 *.lot
 
+# Original figures (pre-compression backups)
+latex/figures/originals/
+
 # Python
 __pycache__/
 
