@@ -12,18 +12,18 @@
 - Manual endorsement required for cs.AI category
 - Once endorsed for cs.AI, no future endorsement needed for that category
 
-## Endorsement request sent
+## Endorsement requests sent
 
 | Who | Affiliation | Email | Paper we cite | Date sent | Status |
 |---|---|---|---|---|---|
 | Srijit Seal | University of Cambridge | srijit@understanding.bio | Seal et al. 2025 (AI Agents survey) | 2026-02-07 | Waiting |
+| Bowen Gao | Tsinghua University (PhD) | billgao0111@gmail.com | PharmAgents (Gao et al. 2025) | 2026-02-07 | Waiting |
+| Botao Yu | Ohio State University (PhD) | btyu@foxmail.com | ChemToolAgent (Yu et al. 2024) | 2026-02-07 | Waiting |
 
-## Backup endorsers (contact if no reply within 3-5 days)
+## Backup endorser (if none of the above reply)
 
 | Who | Affiliation | Email | Paper we cite |
 |---|---|---|---|
-| Bowen Gao | Tsinghua University (PhD) | billgao0111@gmail.com | PharmAgents (Gao et al. 2025) |
-| Botao Yu | Ohio State University (PhD) | btyu@foxmail.com | ChemToolAgent (Yu et al. 2024) |
 | Andres Bran | EPFL | (find via arXiv page) | ChemCrow (Bran et al. 2024) |
 
 ## Submission package
