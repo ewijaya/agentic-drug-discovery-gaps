@@ -21,8 +21,11 @@
 | Botao Yu | Ohio State University (PhD) | btyu@foxmail.com | ChemToolAgent (Yu et al. 2024) | 2026-02-07 | Waiting |
 | Huan Sun | Ohio State University (Prof) | sun.397@osu.edu | ChemToolAgent (Yu et al. 2024) | 2026-02-07 | Waiting |
 | Yanyan Lan | Tsinghua University (Prof) | lanyanyan@air.tsinghua.edu.cn | PharmAgents (Gao et al. 2025) | 2026-02-07 | Waiting |
+| Philippe Schwaller | EPFL (Asst Prof) | philippe.schwaller@epfl.ch | ChemCrow (Bran et al. 2024) | 2026-02-08 | Waiting |
+| Gabe Gomes | CMU (Asst Prof) | gdgomes@andrew.cmu.edu | Coscientist (Boiko et al. 2023) | 2026-02-08 | Waiting |
+| Andrew White | U of Rochester (Assoc Prof) | andrew.white@rochester.edu | ChemCrow (Bran et al. 2024) | 2026-02-08 | Waiting |
 
-## Backup endorser (if none of the above reply)
+## Backup endorser (last resort)
 
 | Who | Affiliation | Email | Paper we cite |
 |---|---|---|---|
