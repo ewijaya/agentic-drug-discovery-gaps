@@ -1,33 +1,33 @@
 \section{Design Requirements for Next-Generation Frameworks}
 \label{sec:requirements}
 
-The gaps identified in the preceding analysis reflect architectural assumptions that must be revisited. This section synthesizes five design requirements derived from the gap analysis and illustrates them with concrete use cases.
+The gaps identified in the preceding analysis reflect architectural assumptions that limit current frameworks. This section synthesizes five design requirements derived from the gap analysis and illustrates them with concrete use cases.
 
 \subsection{Requirements Derived from Gap Analysis}
 
 \subsubsection{Requirement 1: Multi-Paradigm Orchestration}
 
-Agents must support ML training, RL, simulation, and optimization as first-class primitives. Practitioners should specify workflows declaratively and receive an executable workflow graph that supports parallelization, checkpointing, and branching when validation fails. Human-in-the-loop decision points must be explicit when models trade off accuracy, calibration, or interpretability. Workflow orchestration systems (Airflow, Kubeflow, Nextflow) already provide these abstractions; what is missing is tight integration with agent reasoning and iterative improvement.
+Closing Gap 3 requires support for ML training, RL, simulation, and optimization as first-class primitives. Effective frameworks would allow practitioners to specify workflows declaratively and receive an executable workflow graph supporting parallelization, checkpointing, and branching when validation fails. Human-in-the-loop decision points need to be explicit when models trade off accuracy, calibration, or interpretability. Workflow orchestration systems (Airflow, Kubeflow, Nextflow) already provide these abstractions; what is missing is tight integration with agent reasoning and iterative improvement.
 
 \subsubsection{Requirement 2: Modality-Aware Representations}
 
-Agents must provide first-class support for peptides, proteins, and other modalities, not just small molecules. This requires PLM fine-tuning pipelines, structural biology integration (AlphaFold, flexible docking, molecular dynamics), and peptide-specific property prediction (aggregation, protease resistance, immunogenicity). Modality awareness must flow through data loaders, feature extractors, generative models, and evaluation metrics. Tool selection should be contextual: peptides default to ESM-2 embeddings, protein structures to structural alignment, not SMILES-based similarity.
+Closing Gap 1 requires first-class support for peptides, proteins, and other modalities, not just small molecules. This entails PLM fine-tuning pipelines, structural biology integration (AlphaFold, flexible docking, molecular dynamics), and peptide-specific property prediction (aggregation, protease resistance, immunogenicity). Modality awareness would flow through data loaders, feature extractors, generative models, and evaluation metrics. Contextual tool selection would default peptides to ESM-2 embeddings and protein structures to structural alignment, rather than SMILES-based similarity.
 
 \subsubsection{Requirement 3: In Vivo-In Silico Data Fusion}
 
-Agents must support temporal modeling for longitudinal efficacy and safety data, multi-modal fusion (behavior, imaging, transcriptomics), and causal inference for mechanistic hypotheses. This requires bioinformatics pipelines (RNA-seq alignment, differential expression, pathway enrichment), computer vision, and statistical models for dose-response and mixed effects. Predictive efficacy modeling should align heterogeneous timepoints, handle missing data, and validate on temporally ordered splits. Mechanistic inference should integrate KEGG, GO, and Reactome to translate results into hypotheses and validation experiments.
+Closing Gap 2 requires temporal modeling for longitudinal efficacy and safety data, multi-modal fusion (behavior, imaging, transcriptomics), and causal inference for mechanistic hypotheses. This entails bioinformatics pipelines (RNA-seq alignment, differential expression, pathway enrichment), computer vision, and statistical models for dose-response and mixed effects. Predictive efficacy modeling would align heterogeneous timepoints, handle missing data, and validate on temporally ordered splits. Mechanistic inference would integrate KEGG, GO, and Reactome to translate results into hypotheses and validation experiments.
 
 \subsubsection{Requirement 4: Data-Efficient Learning}
 
-Agents must optimize for few-shot adaptation, active learning, and knowledge transfer across related tasks. This requires meta-learning, Bayesian uncertainty quantification, and transfer pipelines combining public pre-training (UniProt, PDB, ChEMBL) with private fine-tuning. Agents should recommend strategies based on dataset size: deep nets for 500 examples, simpler models for 50, few-shot for 10. Active learning loops should select candidates via acquisition functions, update models with experimental feedback, and signal when marginal information gain is low.
+Closing Gap 4 requires optimization for few-shot adaptation, active learning, and knowledge transfer across related tasks. This entails meta-learning, Bayesian uncertainty quantification, and transfer pipelines combining public pre-training (UniProt, PDB, ChEMBL) with private fine-tuning. Effective frameworks would recommend strategies based on dataset size: deep nets for 500 examples, simpler models for 50, few-shot for 10. Active learning loops would select candidates via acquisition functions, update models with experimental feedback, and signal when marginal information gain is low.
 
 \subsubsection{Requirement 5: Multi-Objective, Risk-Aware Optimization}
 
-Agents must support Pareto optimization with constraints, uncertainty quantification, sensitivity analysis, and interactive trade-off visualization. Results should be Pareto frontiers with confidence intervals, constraint status, and robustness scores. Practitioners should filter by feasibility, adjust objective weights, and highlight low-uncertainty candidates. Risk awareness should adapt recommendations to stage: early exploration versus late-stage de-risking.
+Closing Gap 5 requires Pareto optimization with constraints, uncertainty quantification, sensitivity analysis, and interactive trade-off visualization. Results would take the form of Pareto frontiers with confidence intervals, constraint status, and robustness scores. Practitioners would filter by feasibility, adjust objective weights, and highlight low-uncertainty candidates. Risk-aware systems would adapt recommendations to stage: early exploration versus late-stage de-risking.
 
 \subsection{Illustrative Use Cases}
 
-These requirements imply a shift from chat-first tooling to workflow-first systems. Agents should maintain state across iterations, log decisions, and make assumptions explicit so practitioners can audit results and reproduce outcomes. This is essential for regulated environments and for teams that revisit decisions months later, often under new personnel or budget constraints.
+These requirements imply a shift from chat-first tooling to workflow-first systems. Agents would maintain state across iterations, log decisions, and make assumptions explicit so practitioners can audit results and reproduce outcomes. This is a standard requirement in regulated environments and for teams that revisit decisions months later, often under new personnel or budget constraints.
 
 To make these requirements concrete, we describe three representative use cases that current agents cannot handle but next-generation systems should support.
 
@@ -86,6 +86,6 @@ Workflow checkpointing & Low & Low & All & Medium \\
 \end{tabular}
 \end{table}
 
-Realizing these capabilities requires infrastructure beyond current agents. API standards must cover PLMs (embedding extraction, fine-tuning, uncertainty), structural biology tools (AlphaFold, docking, molecular dynamics), and bioinformatics pipelines (alignment, differential expression, pathway enrichment). Version-controlled datasets, model registries, and provenance tracking are essential for reproducibility and auditability.
+Realizing these capabilities requires infrastructure beyond current agents. API standards would need to cover PLMs (embedding extraction, fine-tuning, uncertainty), structural biology tools (AlphaFold, docking, molecular dynamics), and bioinformatics pipelines (alignment, differential expression, pathway enrichment). Version-controlled datasets, model registries, and provenance tracking are standard requirements for reproducibility and auditability.
 
-Organizational alignment matters. Systems must fit small biotech budgets with modest compute, minimal storage, and lightweight deployment. Documentation should target non-ML-expert biologists. Integration with existing tools (GraphPad, FlowJo, ImageJ, R/Bioconductor) avoids workflow disruption.
+Organizational alignment matters. Systems targeting small biotech contexts would need to fit modest compute budgets, minimal storage, and lightweight deployment. Documentation targeting non-ML-expert biologists would lower adoption barriers. Integration with existing tools (GraphPad, FlowJo, ImageJ, R/Bioconductor) avoids workflow disruption.

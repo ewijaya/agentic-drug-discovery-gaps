@@ -56,7 +56,7 @@ Recent systems have begun addressing single-paradigm ML automation. Agentomics \
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{figures/fig4-multi-paradigm-architecture.jpeg}
-\caption{From LLM-Centric to Multi-Paradigm Orchestration. Top: Current LLM-centric architecture where a central language model orchestrates all tools through API calls. Bottom: Proposed multi-paradigm architecture where an orchestrator coordinates fundamentally different computational paradigms (ML training pipelines, RL optimization loops, PLM fine-tuning, CV analysis, physics simulations) that execute independently with results aggregated for decision-making.}
+\caption{From LLM-Centric to Multi-Paradigm Orchestration. Top: Current LLM-centric architecture where a central language model orchestrates all tools through API calls. Bottom: Multi-paradigm architecture addressing the identified orchestration gap, where a coordinator manages fundamentally different computational paradigms (ML training pipelines, RL optimization loops, PLM fine-tuning, CV analysis, physics simulations) that execute independently with results aggregated for decision-making.}
 \label{fig:multi-paradigm}
 \end{figure}
 
@@ -65,8 +65,8 @@ Multi-paradigm architectures treat ML training, RL, simulation, and optimization
 Workflow graphs have nodes (data loading, feature extraction, training, evaluation) and edges (data dependencies). They support parallelization (simultaneous hyperparameter configs), checkpointing (cached intermediate results), and branching (automatic hyperparameter search if validation fails), with clear provenance for every artifact.
 Workflow orchestration exists: Apache Airflow, Kubeflow, Nextflow provide task graphs, dependency resolution, resource allocation, and checkpointing. Missing is agent reasoning integration: inspecting results, diagnosing failures, proposing modifications, learning from executions (deprioritizing architectures that overfit).
 
-Interaction should be batch-mode, not chat. Bottlenecks are orchestrating end-to-end analyses, not formulating queries. Small biotechs managing dozens of projects need automation: "Analyze eight RNA-seq samples, perform differential expression and pathway enrichment, generate report." Agents intervene only for human decisions (conflicting pathway interpretations).
+Effective interaction would be batch-mode, not chat. Bottlenecks are orchestrating end-to-end analyses, not formulating queries. Small biotechs managing dozens of projects require automation: "Analyze eight RNA-seq samples, perform differential expression and pathway enrichment, generate report," with agents intervening only for human decisions (conflicting pathway interpretations).
 
 Human-in-the-loop decision points are explicit and actionable. Agents present Pareto frontiers (accuracy-interpretability trade-offs), candidates with uncertainty estimates. Practitioners select based on context; agents structure decision spaces.
 
-The gap reflects a mismatch with computational drug discovery practice. The field needs systems coordinating paradigms in integrated workflows, batch-mode execution, explicit decision points, and version control for reproducibility, not LLM-to-LLM delegation.
+The gap reflects a mismatch with computational drug discovery practice. Current practice relies on systems coordinating paradigms in integrated workflows, batch-mode execution, explicit decision points, and version control for reproducibility, which is absent from current LLM-to-LLM delegation architectures.

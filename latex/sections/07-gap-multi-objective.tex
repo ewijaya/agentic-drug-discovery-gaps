@@ -3,7 +3,7 @@
 
 \subsubsection{Findings}
 
-All frameworks optimize single objectives or use fixed weighted sums. No framework supports Pareto optimization, constraint satisfaction, or uncertainty-aware candidate selection. Task class 15 (safety/toxicology modeling with multi-objective trade-offs) has zero coverage across all six frameworks.
+All frameworks optimize single objectives or use fixed weighted sums. No framework supports Pareto optimization, constraint satisfaction, or uncertainty-aware candidate selection. Task class 15 (safety/toxicology modeling with multi-objective trade-offs) receives only partial coverage: five of six frameworks provide adjacent capabilities (toxicophore flagging, ADMET prediction) but none supports multi-objective trade-off reasoning, Pareto optimization, or dose-response modeling.
 
 \subsubsection{Analysis}
 
@@ -42,11 +42,11 @@ Constraints add complexity: synthesizability, solubility, permeability, absence 
 
 \subsubsection{Incorporating Uncertainty and Risk}
 
-Predictions include uncertainty. IC50 equals 10 nM might have a 95% interval of 5-20 nM or 1-100 nM. Ignoring uncertainty leads to poor decisions: selecting high predicted activity with wide uncertainty and failing in validation. Incorporating uncertainty into multi-objective decisions is essential but absent.
+Predictions include uncertainty. IC50 equals 10 nM might have a 95% interval of 5-20 nM or 1-100 nM. Ignoring uncertainty leads to poor decisions: selecting high predicted activity with wide uncertainty and failing in validation. Incorporating uncertainty into multi-objective decisions is a standard requirement in Bayesian decision theory but is absent from current agents.
 
-Bayesian optimization handles uncertainty via Gaussian processes providing means and variances. Acquisition functions (expected improvement, upper confidence bound) balance exploitation and exploration. Over rounds, uncertainty shrinks in explored regions and stays high elsewhere. Agents should visualize uncertainty to guide exploration versus exploitation.
+Bayesian optimization handles uncertainty via Gaussian processes providing means and variances. Acquisition functions (expected improvement, upper confidence bound) balance exploitation and exploration. Over rounds, uncertainty shrinks in explored regions and stays high elsewhere. Visualizing uncertainty to guide exploration versus exploitation is a key capability gap.
 
-Risk profiles vary by stage. Early discovery tolerates high-risk, high-reward candidates. Late-stage demands well-characterized properties and high confidence. Agents should adapt recommendations accordingly.
+Risk profiles vary by stage. Early discovery tolerates high-risk, high-reward candidates. Late-stage demands well-characterized properties and high confidence. Effective frameworks would adapt recommendations accordingly.
 
 In peptide pipelines, early rounds prioritized diversity, middle rounds balanced exploration and exploitation, final rounds focused on de-risking. This requires dynamic acquisition functions and explicit risk management absent from agents.
 
@@ -54,4 +54,4 @@ Sensitivity analysis is missing. How robust are rankings to model error? If bioa
 
 \subsubsection{Derived Requirements}
 
-Closing this gap requires multi-objective Bayesian optimization with constraint handling, Pareto frontier visualization with interactive filtering, uncertainty quantification providing epistemic uncertainty in bioactivity prediction and dose-response confidence bands, and risk-aware candidate selection that adapts recommendations to development stage. Agents must represent Pareto frontiers, quantify uncertainty, support risk-aware decisions, and structure decision spaces, not output single optima.
+Closing this gap requires multi-objective Bayesian optimization with constraint handling, Pareto frontier visualization with interactive filtering, uncertainty quantification providing epistemic uncertainty in bioactivity prediction and dose-response confidence bands, and risk-aware candidate selection that adapts recommendations to development stage. The gap analysis identifies Pareto frontier representation, uncertainty quantification, risk-aware decision support, and structured decision spaces as design requirements, replacing the current pattern of outputting single optima.

@@ -28,7 +28,7 @@ Computational constraints compound scarcity. Small biotechs have 1-2 GPUs, spars
 
 Team structure is the third constraint. Large pharma has specialized roles (ML engineers, chemists, biologists, data engineers). Small biotechs have one person doing everything: peptide design, ML modeling, experimental analysis. No dedicated infrastructure support.
 
-This demands tools for generalists handling infrastructure complexity (dependencies, environments, memory, debugging). Practitioners specify what, not how. Current agents assume infrastructure exists; generated code assumes installed libraries, formatted data, available resources. For small biotechs, these assumptions fail.
+This context demands tools for generalists handling infrastructure complexity (dependencies, environments, memory, debugging), where practitioners specify what, not how. Current agents assume infrastructure exists; generated code assumes installed libraries, formatted data, available resources. For small biotechs, these assumptions fail.
 
 \subsubsection{Transfer Learning and Few-Shot Adaptation}
 
@@ -46,12 +46,12 @@ Interactive chat assumes time for conversational interaction. This works for spe
 
 Small biotechs need batch-mode automation: "Analyze eight RNA-seq samples, identify differentially expressed genes, perform pathway enrichment, generate report." Agents execute autonomously overnight, intervening only for human decisions (which mechanism aligns with biological knowledge?).
 
-Batch-mode requires robustness. If RNA-seq alignment fails (memory limits), agents should adjust parameters (reduce threads) or flag issues without losing progress. Checkpointing, fault tolerance, and version control enable reproducibility.
+Batch-mode requires robustness. If RNA-seq alignment fails (memory limits), effective frameworks would adjust parameters (reduce threads) or flag issues without losing progress. Checkpointing, fault tolerance, and version control enable reproducibility.
 
-Parallelization is essential. Given 100 peptide docking jobs, agents should automatically parallelize across available resources (eight CPU cores, GPU acceleration), optimizing throughput without manual scheduling.
+Parallelization is a standard requirement for computational drug discovery. Given 100 peptide docking jobs, effective frameworks would automatically parallelize across available resources (eight CPU cores, GPU acceleration), optimizing throughput without manual scheduling.
 
 Current agents support minimal batch capabilities, designed for interactive queries not unsupervised analyses. They lack checkpointing, parallelization, and error handling, assuming interactive debugging impractical for overnight jobs.
 
 \subsubsection{Derived Requirements}
 
-Small biotech is not large pharma with fewer resources. It is a different operating mode requiring few-shot learning modules for rapid adaptation to new assays, active learning loops with acquisition functions balancing exploration and exploitation, transfer learning pipelines composing public pre-training with private fine-tuning, and batch-mode orchestration enabling unsupervised overnight analyses. Resource-aware agents should propose strategies matched to available infrastructure rather than assuming cluster-scale compute. The biotech sector, which accounts for a growing share of therapeutic innovation, remains underserved by current agent architectures designed for large pharma contexts.
+Small biotech is not large pharma with fewer resources. It is a different operating mode requiring few-shot learning modules for rapid adaptation to new assays, active learning loops with acquisition functions balancing exploration and exploitation, transfer learning pipelines composing public pre-training with private fine-tuning, and batch-mode orchestration enabling unsupervised overnight analyses. Resource-aware frameworks would propose strategies matched to available infrastructure rather than assuming cluster-scale compute. The biotech sector, which accounts for a growing share of therapeutic innovation, remains underserved by current agent architectures designed for large pharma contexts.
