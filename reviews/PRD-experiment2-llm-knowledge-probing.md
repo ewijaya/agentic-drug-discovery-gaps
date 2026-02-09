@@ -95,7 +95,48 @@ answer = response.message.content
 
 If rate-limited on the free tier, the Pro plan ($20/month) covers this with margin.
 
-### 3.5 Rate Limiting Strategy
+### 3.5 Claude CLI (LLM-as-Judge)
+
+Scoring uses Claude via the local CLI in print mode. Verified on 2026-02-09.
+
+| Component | Value |
+|---|---|
+| Binary | `/home/ubuntu/.local/bin/claude` |
+| Mode | `-p` (print: non-interactive, stdout only) |
+| Model | `--model sonnet` (Claude Sonnet 4.5) |
+| Auth | Existing Claude subscription (no additional cost) |
+| Invocation | `echo "<prompt>" \| claude -p --model sonnet` |
+
+**Why Claude as judge (not one of the 4 test models):**
+- Completely independent from all 4 evaluated models (Anthropic vs Moonshot/DeepSeek/Alibaba/Google)
+- Best-in-class rubric-following and nuanced evaluation
+- No additional cost (existing subscription)
+- No API key management (CLI handles auth)
+- Fast (~2s per call)
+
+**Code pattern:**
+
+```python
+import subprocess
+
+def claude_judge(question, response, reference, key_concepts, score_rubric):
+    prompt = f"""{score_rubric}
+
+Question: {question}
+Reference answer: {reference}
+Key concepts expected: {', '.join(key_concepts)}
+Model's answer: {response}
+
+Reply with ONLY the integer score (0, 1, 2, or 3)."""
+
+    result = subprocess.run(
+        ["/home/ubuntu/.local/bin/claude", "-p", "--model", "sonnet"],
+        input=prompt, capture_output=True, text=True, timeout=30
+    )
+    return int(result.stdout.strip())
+```
+
+### 3.6 Rate Limiting Strategy
 
 Ollama Cloud free tier has unspecified "light usage" limits. To stay within bounds:
 - Insert a 3-second delay between API calls (`time.sleep(3)`)
@@ -208,7 +249,9 @@ The file contains an array of 100 question objects. The author writes this file 
 scripts/experiment2/
 ├── questions.json              # 100 questions (50 matched pairs)
 ├── run_probing.py              # Main execution script
-├── score_responses.py          # Scoring script (manual + optional LLM-judge)
+├── score_responses.py          # Claude CLI automated scoring (all 400)
+├── prepare_expert_subset.py    # Stratified sampling + blind export for expert validation
+├── merge_scores.py             # Merge Claude + expert scores, compute agreement
 ├── analyze_results.py          # Statistical analysis + figure generation
 ├── validate_questions.py       # Question file validation
 ├── config.py                   # Model tags, API config, constants
@@ -218,7 +261,10 @@ scripts/experiment2/
 │   ├── qwen3-next-80b.jsonl
 │   └── gemini-3-flash.jsonl
 ├── scores/                     # Scored responses
-│   └── scores.csv
+│   ├── claude_scores.csv
+│   ├── expert_scores.csv
+│   ├── agreement_analysis.json
+│   └── final_scores.csv
 ├── results/                    # Analysis outputs
 │   ├── summary_table.csv
 │   ├── statistical_tests.json
@@ -251,6 +297,12 @@ RETRY_BASE_SECONDS = 10
 TEMPERATURE = 0.3          # Low temperature for consistency
 MAX_TOKENS = 1024          # Cap response length
 RANDOM_SEED = 42           # For question ordering randomization
+
+# Claude CLI judge config
+CLAUDE_CLI = "/home/ubuntu/.local/bin/claude"
+CLAUDE_MODEL = "sonnet"    # Claude Sonnet 4.5
+CLAUDE_DELAY_SECONDS = 1   # Delay between CLI calls
+EXPERT_SUBSET_FRACTION = 0.2  # 20% stratified sample for expert validation
 ```
 
 ### 5.3 `run_probing.py` — Execution Logic
@@ -291,9 +343,24 @@ Before running the experiment, validate:
 
 ## 6. Scoring Methodology
 
-### 6.1 Primary: Expert Manual Scoring
+### 6.1 Hybrid Approach (Option C)
 
-The author (a domain expert with 14+ projects across both modalities) scores all 400 responses on a 0-3 scale:
+Scoring uses a two-layer approach: Claude CLI scores all 400 responses automatically, the domain expert validates a stratified 20% subset, and inter-rater agreement validates the automated scores.
+
+| Layer | Who | Responses Scored | Purpose |
+|---|---|---|---|
+| **Primary** | Claude Sonnet 4.5 via CLI | All 400 | Full coverage, reproducible |
+| **Validation** | Expert (author) | 80 (20% stratified) | Ground truth calibration |
+| **Agreement** | Cohen's kappa computation | 80 overlapping | Credibility metric |
+
+**Why hybrid, not fully manual:**
+- Scoring 400 responses manually takes 3-4 hours and is prone to fatigue drift
+- LLM-as-judge is increasingly accepted in evaluation literature (Zheng et al., 2023)
+- Expert validation on a stratified subset provides ground truth without full manual effort
+- If agreement is high (kappa > 0.7), the Claude scores are credible as primary data
+- If agreement is low (kappa < 0.5), fall back to full manual scoring and report the discrepancy
+
+### 6.2 Scoring Rubric (Shared by Both Scorers)
 
 | Score | Label | Criteria |
 |---|---|---|
@@ -302,35 +369,98 @@ The author (a domain expert with 14+ projects across both modalities) scores all
 | 2 | Correct | Accurate and reasonably complete; a competent scientist would accept this answer |
 | 3 | Expert-Level | Correct with domain-expert nuance, specific quantitative details, or insight beyond textbook knowledge |
 
-### 6.2 Blind Scoring Protocol
+### 6.3 Claude CLI Scoring (All 400 Responses)
 
-To prevent bias:
-1. Export all 400 responses into a single CSV with columns: `response_id`, `category`, `question_text`, `response_text`
-2. **Strip model identity and domain labels** from the scoring spreadsheet
-3. **Randomize row order** with a fixed seed
-4. Score in batches of ~50 (avoid fatigue-induced drift)
-5. After scoring, re-merge with metadata (model, domain, pair_id) for analysis
-
-This ensures the scorer does not know which model produced which answer or whether the question was small-molecule or peptide when assigning scores.
-
-### 6.3 Secondary: LLM-as-Judge (Calibration Check)
-
-As a calibration check (not primary data):
-- Use Claude (via API) as an automated scorer with the same 0-3 rubric
-- Provide the `reference_answer` and `key_concepts` as scoring context
-- Compute inter-rater agreement (Cohen's kappa) between expert scores and LLM-judge scores
-- Report agreement in the paper as evidence of scoring reliability
-- If kappa > 0.7 (substantial agreement), note this strengthens the methodology
-
-This is optional but adds methodological rigor. The expert scores remain the primary data.
-
-### 6.4 Scoring Storage
+`score_responses.py` iterates over all 400 responses and calls Claude via CLI:
 
 ```
-scripts/experiment2/scores/scores.csv
+For each response in responses/*.jsonl:
+  1. Load the matching question (reference_answer, key_concepts) from questions.json
+  2. Construct scoring prompt with rubric + question + reference + model response
+  3. Call: echo "<prompt>" | claude -p --model sonnet
+  4. Parse integer score (0-3) from stdout
+  5. On parse failure: retry once, then flag for manual review
+  6. Append to scores/claude_scores.csv
+  7. Sleep 1 second between calls (avoid overloading CLI)
 ```
 
-Columns: `response_id, question_id, pair_id, category, domain, model, expert_score, llm_judge_score (optional), notes`
+**Scoring prompt template:**
+
+```
+You are an expert pharmaceutical scientist evaluating an AI model's answer
+about drug discovery. Score the answer on a 0-3 scale:
+
+0 = Wrong or hallucinated: factually incorrect, fabricated data, or nonsensical
+1 = Partially correct: some correct elements but missing key nuance or significant errors
+2 = Correct: accurate and reasonably complete
+3 = Expert-level: correct with domain-expert nuance, specific quantitative details
+
+Question: {question}
+Reference answer: {reference_answer}
+Key concepts that should be covered: {key_concepts}
+
+Model's answer to evaluate:
+{model_response}
+
+Reply with ONLY a single integer (0, 1, 2, or 3). No explanation.
+```
+
+### 6.4 Expert Validation (80-Response Stratified Subset)
+
+The author scores 80 responses (20% of 400) selected by stratified sampling:
+
+**Stratification:** 2 responses per cell in a (4 models x 5 categories x 2 domains) grid = 80 responses. This ensures every combination of model, category, and domain is represented in the validation set.
+
+**Blind protocol for the 80-response subset:**
+1. Export the 80 selected responses with columns: `response_id`, `category`, `question_text`, `response_text`
+2. **Strip model identity and domain labels**
+3. **Randomize row order** with fixed seed
+4. Expert scores without knowing which model or domain produced the response
+5. After scoring, re-merge with metadata for agreement analysis
+
+**Effort:** ~80 responses at ~30 seconds each = ~40 minutes.
+
+### 6.5 Inter-Rater Agreement
+
+Compute on the 80 overlapping responses:
+
+```python
+from sklearn.metrics import cohen_kappa_score
+
+kappa = cohen_kappa_score(expert_scores, claude_scores, weights="quadratic")
+```
+
+**Quadratic-weighted kappa** is appropriate because the 0-3 scale is ordinal (a 0-vs-3 disagreement is worse than a 1-vs-2 disagreement).
+
+| Kappa Range | Interpretation | Action |
+|---|---|---|
+| > 0.8 | Almost perfect agreement | Use Claude scores as primary data with high confidence |
+| 0.6 - 0.8 | Substantial agreement | Use Claude scores as primary data, note agreement level |
+| 0.4 - 0.6 | Moderate agreement | Report both scores; use expert scores for main analysis |
+| < 0.4 | Poor agreement | Discard Claude scores; fall back to full manual scoring |
+
+**Report in the paper:** "Inter-rater agreement between expert and automated scoring (quadratic-weighted Cohen's kappa = X.XX) on a stratified 20% subset (N=80)."
+
+### 6.6 Scoring Storage
+
+```
+scripts/experiment2/scores/
+├── claude_scores.csv          # All 400 Claude-scored responses
+├── expert_scores.csv          # 80 expert-scored responses (validation subset)
+├── agreement_analysis.json    # Kappa, confusion matrix, disagreement cases
+└── final_scores.csv           # Merged: Claude scores + expert overrides where disagreed
+```
+
+**`claude_scores.csv` columns:**
+`response_id, question_id, pair_id, category, domain, model, claude_score, parse_success, timestamp`
+
+**`expert_scores.csv` columns:**
+`response_id, question_id, pair_id, category, domain, model, expert_score, notes`
+
+**`final_scores.csv` columns:**
+`response_id, question_id, pair_id, category, domain, model, final_score, score_source`
+
+Where `score_source` is `claude` (for the 320 non-validated responses) or `expert` (for the 80 validated responses, using expert score as ground truth regardless of agreement).
 
 ---
 
@@ -411,7 +541,10 @@ Report effect size `r = Z / sqrt(N)` where Z is the Wilcoxon Z-statistic and N i
 For reproducibility (included in arXiv supplementary or GitHub repo):
 - `questions.json` (all 100 questions with reference answers)
 - `responses/*.jsonl` (raw model outputs)
-- `scores/scores.csv` (expert scores)
+- `scores/claude_scores.csv` (automated scores for all 400)
+- `scores/expert_scores.csv` (expert validation scores for 80)
+- `scores/agreement_analysis.json` (inter-rater agreement metrics)
+- `scores/final_scores.csv` (merged final scores used in analysis)
 - `results/statistical_tests.json` (all test statistics)
 - `README.md` (reproduction instructions)
 
@@ -424,7 +557,8 @@ For reproducibility (included in arXiv supplementary or GitHub repo):
 | Ollama Cloud rate-limits free tier mid-experiment | Medium | Medium | Incremental save + resumption. Split across 2 days. Upgrade to Pro ($20) if needed. |
 | One model refuses to answer drug questions (safety filter) | Low | Low | Log refusals as data (score 0). A refusal is itself evidence of the bias. |
 | The gap is smaller than expected (< 10%) | Medium | High | Report the actual result honestly. Even a small systematic gap across 4 models is publishable. Shift framing to "models are improving but gaps persist in specific categories." |
-| Scoring subjectivity undermines results | Medium | Medium | Blind scoring protocol + LLM-judge calibration check. Report inter-rater reliability. |
+| Claude CLI judge disagrees with expert (kappa < 0.4) | Low-Medium | High | Fall back to full manual scoring (3-4 hours). Report the discrepancy as a finding about LLM evaluation limitations. |
+| Claude CLI rate-limited or unavailable | Low | Medium | Batch scoring across multiple sessions. CLI uses existing subscription, no separate quota. |
 | A model produces very long responses that are hard to score | Low | Low | Cap at MAX_TOKENS=1024. Instruct models to be concise in system prompt. |
 | Ollama Cloud deprecates a model tag before paper review | Low | Medium | Pin exact model tags in paper. Archive all raw responses. Results are reproducible from archived data even if models become unavailable. |
 
@@ -437,8 +571,10 @@ For reproducibility (included in arXiv supplementary or GitHub repo):
 | Day 1 | Write 50 matched question pairs with reference answers | `questions.json` |
 | Day 1 | Implement `config.py`, `validate_questions.py`, `run_probing.py` | Scripts ready |
 | Day 2 | Run experiment: all 4 models x 100 questions | `responses/*.jsonl` |
-| Day 2 | Implement `score_responses.py` (blind scoring prep) | Scoring spreadsheet |
-| Day 3 | Expert scoring of 400 responses (blind, randomized) | `scores/scores.csv` |
+| Day 2 | Implement `score_responses.py` (Claude CLI judge) | Scoring script ready |
+| Day 2 | Run Claude CLI scoring on all 400 responses (~15 min) | `scores/claude_scores.csv` |
+| Day 2 | Run `prepare_expert_subset.py`, expert scores 80 responses (~40 min) | `scores/expert_scores.csv` |
+| Day 3 | Run `merge_scores.py`, compute agreement (kappa) | `scores/final_scores.csv` |
 | Day 3 | Implement `analyze_results.py`, generate figures and tables | Final outputs |
 | Day 3 | Write results subsection for paper (~500-700 words) | LaTeX section |
 
@@ -466,11 +602,15 @@ For reproducibility (included in arXiv supplementary or GitHub repo):
 
 ### SC-3: Scoring Integrity
 
-- [ ] All 400 responses are scored by the domain expert
-- [ ] Scoring is blind (model identity and domain stripped during scoring)
-- [ ] Scoring order is randomized with a fixed seed
-- [ ] Inter-rater reliability (expert vs LLM-judge) reported if LLM-judge is used
-- [ ] No score is assigned without reading the full response
+- [ ] All 400 responses are scored by Claude CLI (`scores/claude_scores.csv` has 400 rows)
+- [ ] Claude score parse success rate > 95% (fewer than 20 parse failures out of 400)
+- [ ] 80 stratified responses are scored by the domain expert (`scores/expert_scores.csv` has 80 rows)
+- [ ] Expert scoring is blind (model identity and domain stripped during scoring)
+- [ ] Expert scoring order is randomized with a fixed seed
+- [ ] Quadratic-weighted Cohen's kappa is computed on the 80 overlapping responses
+- [ ] If kappa >= 0.6: Claude scores used as primary data (report kappa in paper)
+- [ ] If kappa < 0.4: fall back to full manual scoring of all 400 responses
+- [ ] Agreement analysis is saved to `scores/agreement_analysis.json`
 
 ### SC-4: The Central Finding Holds
 
@@ -502,9 +642,10 @@ If the central finding does **not** hold (peptide scores are comparable to or hi
 
 - [ ] All code, questions, and raw data are committed to the repository
 - [ ] `README.md` in `scripts/experiment2/` contains step-by-step reproduction instructions
-- [ ] A reviewer can reproduce the experiment by: (1) creating an Ollama account, (2) setting `OLLAMA_API_KEY`, (3) running `python run_probing.py`, (4) running `python analyze_results.py`
-- [ ] Random seed is fixed for question ordering and statistical bootstrapping
-- [ ] No proprietary data, tools, or access is required
+- [ ] A reviewer can reproduce the probing phase by: (1) creating an Ollama account, (2) setting `OLLAMA_API_KEY`, (3) running `python run_probing.py`
+- [ ] A reviewer can reproduce the scoring phase by: (1) having a Claude subscription, (2) running `python score_responses.py`, or (3) using the archived `scores/claude_scores.csv` directly
+- [ ] A reviewer without Claude access can still reproduce analysis from archived scores: `python analyze_results.py`
+- [ ] Random seed is fixed for question ordering, stratified sampling, and statistical bootstrapping
 
 ### SC-8: Paper Integration
 
@@ -518,7 +659,7 @@ If the central finding does **not** hold (peptide scores are comparable to or hi
 ## 12. Out of Scope
 
 The following are explicitly **not** part of this experiment:
-- Testing proprietary models (GPT-4, Claude, etc.) — addressed by the "4 independent training pipelines" argument
+- Testing proprietary models (GPT-4, Claude, etc.) as subjects — addressed by the "4 independent training pipelines" argument. Note: Claude is used as a *judge*, not as a test subject, so there is no conflict.
 - Fine-tuning or retraining any model
 - Testing models on actual drug design tasks (that is Experiment #8)
 - Building a benchmark dataset for community use (future work)
