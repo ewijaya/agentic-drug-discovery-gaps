@@ -17,7 +17,7 @@ Current agents optimize single objectives. ChemCrow optimizes binding affinity o
 
 Single-metric optimization mirrors ML training objectives: minimize loss, maximize accuracy. This works for unidimensional goals, but drug discovery is multidimensional and context-dependent. Optimality depends on indication, development stage, competitive landscape, and risk tolerance.
 
-Peptide stability illustrates the trap. A peptide that degrades rapidly in serum has no value. Stability modifications (D-amino acids, non-natural residues, cyclization) improve half-life but can reduce affinity, increase aggregation, or complicate synthesis. The balance depends on route of administration, therapeutic window, and development timeline.
+Peptide stability illustrates the trap. The stability-activity trade-offs described in \S\ref{sec:small-molecule} create a multidimensional decision space where the balance depends on route of administration, therapeutic window, and development timeline.
 
 Agents cannot represent these trade-offs. They predict A $>$ B but cannot articulate: "A is twice as potent but has a threefold narrower safety margin; choose A if dosing can be tightly controlled, choose B for robustness." They do not visualize Pareto frontiers or sensitivity to weight changes.
 
@@ -44,7 +44,7 @@ Constraints add complexity: synthesizability, solubility, permeability, absence 
 
 Predictions include uncertainty. IC50 equals 10 nM might have a 95% interval of 5-20 nM or 1-100 nM. Ignoring uncertainty leads to poor decisions: selecting high predicted activity with wide uncertainty and failing in validation. Incorporating uncertainty into multi-objective decisions is a standard requirement in Bayesian decision theory but is absent from current agents.
 
-Bayesian optimization handles uncertainty via Gaussian processes providing means and variances. Acquisition functions (expected improvement, upper confidence bound) balance exploitation and exploration. Over rounds, uncertainty shrinks in explored regions and stays high elsewhere. Visualizing uncertainty to guide exploration versus exploitation is a key capability gap.
+Bayesian optimization handles uncertainty via Gaussian processes providing means and variances. Acquisition functions balance exploitation and exploration (see \S\ref{sec:smallbiotech} for detailed discussion). Visualizing uncertainty to guide exploration versus exploitation is a key capability gap.
 
 Risk profiles vary by stage. Early discovery tolerates high-risk, high-reward candidates. Late-stage demands well-characterized properties and high confidence. Effective frameworks would adapt recommendations accordingly.
 

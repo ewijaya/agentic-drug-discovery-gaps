@@ -11,7 +11,7 @@ All six frameworks use LLM-as-orchestrator architecture: LLM reasoning combined 
 
 \subsubsection{The LLM-as-Orchestrator Limitation}
 
-LLM-centric design treats the language model as central coordinator, invoking external tools via APIs. ChemCrow calls RDKit and PubChem \citep{bran2024chemcrow}. ChatInvent supports molecular design and synthesis planning \citep{he2026chatinvent}. This works for text-based reasoning and stateless tools.
+LLM-centric design treats the language model as central coordinator, invoking external tools via APIs. This works for text-based reasoning and stateless tools.
 
 The paradigm breaks for tasks like training a multi-task neural network predicting peptide bioactivity across four endpoints using 300 sequences. The workflow: dataset preparation (stratified train-validation-test splits), feature extraction (ESM-2 embeddings), architecture selection, hyperparameter tuning, training with early stopping, validation with confidence intervals.
 
@@ -25,7 +25,7 @@ Absent paradigms define modern drug discovery \citep{schneider2020generative}: s
 
 \begin{table}[htbp]
 \centering
-\caption{Agent Capability Matrix}
+\caption{Computational Task Types: Agent Support vs Practitioner Need}
 \label{tab:agent-capability}
 \small
 \begin{tabular}{lccc}
@@ -67,7 +67,7 @@ Multi-paradigm architectures treat ML training, RL, simulation, and optimization
 Workflow graphs have nodes (data loading, feature extraction, training, evaluation) and edges (data dependencies). They support parallelization (simultaneous hyperparameter configs), checkpointing (cached intermediate results), and branching (automatic hyperparameter search if validation fails), with clear provenance for every artifact.
 Workflow orchestration exists: Apache Airflow, Kubeflow, Nextflow provide task graphs, dependency resolution, resource allocation, and checkpointing. Missing is agent reasoning integration: inspecting results, diagnosing failures, proposing modifications, learning from executions (deprioritizing architectures that overfit).
 
-Effective interaction would be batch-mode, not chat. Bottlenecks are orchestrating end-to-end analyses, not formulating queries. Small biotechs managing dozens of projects require automation: "Analyze eight RNA-seq samples, perform differential expression and pathway enrichment, generate report," with agents intervening only for human decisions (conflicting pathway interpretations).
+Effective interaction would be batch-mode, not chat. Bottlenecks are orchestrating end-to-end analyses, not formulating queries. Small biotechs managing dozens of projects require batch-mode automation with agents intervening only for human decisions (see \S\ref{sec:smallbiotech}).
 
 Human-in-the-loop decision points are explicit and actionable. Agents present Pareto frontiers (accuracy-interpretability trade-offs), candidates with uncertainty estimates. Practitioners select based on context; agents structure decision spaces.
 
