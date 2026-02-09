@@ -1,0 +1,113 @@
+\section{Task Class Descriptions}
+\label{sec:appendix-a}
+
+This appendix provides full descriptions of the 15 task classes used in our evaluation, including representative inputs, outputs, computational requirements, and evaluation criteria. Task classes are derived from real-world drug discovery workflows spanning peptide therapeutics, in vivo pharmacology, and computational biology.
+
+\begin{enumerate}[leftmargin=*, label=\textbf{T\arabic*.}]
+
+\item \textbf{ML bioactivity prediction (multi-endpoint regression).}
+Train supervised models predicting multiple biological endpoints (e.g., proliferation, migration, secretion, toxicity) from peptide features. \\
+\textit{Inputs:} Peptide sequences or descriptors (50--500 compounds), multi-endpoint assay measurements. \\
+\textit{Outputs:} Predictive models with per-endpoint performance metrics and uncertainty estimates. \\
+\textit{Requirements:} Feature extraction (sequence-based or PLM embeddings), stratified cross-validation, hyperparameter tuning, multi-task or multi-output regression, calibration. \\
+\textit{Evaluation:} Per-endpoint $R^2$, RMSE, calibration error, cross-validated confidence intervals.
+
+\item \textbf{Generative peptide design (PLM fine-tuning).}
+Fine-tune protein language models on therapeutic sequences for conditional de novo peptide generation. \\
+\textit{Inputs:} Training set of therapeutic peptide sequences (50--500), target property constraints. \\
+\textit{Outputs:} Novel peptide sequences satisfying property constraints with diversity metrics. \\
+\textit{Requirements:} PLM fine-tuning (ProtGPT2, ProtBERT), transfer learning, sampling with temperature control, property filtering, novelty and diversity assessment. \\
+\textit{Evaluation:} Validity, novelty, diversity, predicted property distributions, KL divergence from training set.
+
+\item \textbf{Peptide-receptor binding site analysis and clustering.}
+Analyze peptide-receptor interactions through flexible docking, cluster by binding region, and correlate with bioactivity. \\
+\textit{Inputs:} Peptide sequences, receptor structure (experimental or AlphaFold-predicted), bioactivity data. \\
+\textit{Outputs:} Binding mode clusters, per-cluster activity profiles, key interacting residues. \\
+\textit{Requirements:} Conformational sampling, flexible docking, interaction fingerprinting, clustering, statistical correlation with bioactivity. \\
+\textit{Evaluation:} Cluster separation (silhouette score), activity-cluster correlation (ANOVA), docking score convergence.
+
+\item \textbf{In vivo recovery modeling (longitudinal clinical scores).}
+Model longitudinal clinical outcomes from animal studies to identify temporal efficacy signatures and classify treatment responses. \\
+\textit{Inputs:} Time-series clinical scores (e.g., motor coordination assessments at days 1, 3, 7, 14, 28), treatment groups, covariates. \\
+\textit{Outputs:} Temporal efficacy profiles, responder/non-responder classification, predictive early markers. \\
+\textit{Requirements:} Mixed-effects models, time-series classification, missing data imputation, temporal feature engineering, bootstrap confidence intervals. \\
+\textit{Evaluation:} Classification accuracy (responder vs non-responder), prediction of late outcomes from early markers ($R^2$, AUC).
+
+\item \textbf{Peptide-enzyme interaction modeling for stability optimization.}
+Predict protease cleavage sites and design modifications that improve serum stability while preserving bioactivity. \\
+\textit{Inputs:} Peptide sequences, known half-life measurements, protease specificity data. \\
+\textit{Outputs:} Predicted cleavage sites, suggested stabilizing modifications, stability-activity trade-off analysis. \\
+\textit{Requirements:} Sequence-based cleavage prediction across protease families, molecular modeling of modifications (D-amino acids, cyclization, PEGylation), multi-objective balancing of stability and affinity. \\
+\textit{Evaluation:} Cleavage site prediction accuracy, correlation of predicted vs measured half-life, activity retention after modification.
+
+\item \textbf{Protein language model-based receptor type prediction.}
+Classify peptide sequences by receptor type using PLM embeddings and supervised learning. \\
+\textit{Inputs:} Peptide sequences with receptor type labels (50--200 labeled examples), pre-trained PLM (ESM-2). \\
+\textit{Outputs:} Multi-class classifier with per-class probabilities and uncertainty estimates. \\
+\textit{Requirements:} PLM embedding extraction, layer selection, classifier training (logistic regression, gradient-boosted trees), cross-validation, calibration. \\
+\textit{Evaluation:} Multi-class AUC-ROC, precision-recall per class, calibration curves, confusion matrix.
+
+\item \textbf{Monte Carlo optimization for peptide landscape exploration.}
+Explore peptide sequence space using stochastic optimization to balance exploitation of known active regions with exploration of novel regions. \\
+\textit{Inputs:} Initial peptide set, fitness function (bioactivity predictor), sequence constraints. \\
+\textit{Outputs:} Optimized peptide set with diversity metrics, landscape topology characterization. \\
+\textit{Requirements:} Metropolis-Hastings sampling, acceptance criteria tuning, fitness landscape estimation, convergence diagnostics, diversity maintenance. \\
+\textit{Evaluation:} Best fitness achieved, sequence diversity (edit distance distribution), convergence rate, landscape coverage.
+
+\item \textbf{RNA sequencing and single-cell transcriptomics analysis.}
+Process bulk or single-cell RNA-seq data to identify differentially expressed genes, cell-type compositions, and treatment-responsive pathways. \\
+\textit{Inputs:} FASTQ files or count matrices, experimental design (treatment vs control, time points). \\
+\textit{Outputs:} Differentially expressed gene lists, pathway enrichment results, cell-type annotations (scRNA-seq), pseudotime trajectories. \\
+\textit{Requirements:} Read alignment (STAR, HISAT2), quantification, normalization (DESeq2, edgeR), dimensionality reduction (UMAP, t-SNE), clustering, trajectory inference, pathway enrichment (GSEA, KEGG, GO). \\
+\textit{Evaluation:} Alignment rates, library complexity, differential expression FDR control, biological coherence of enriched pathways.
+
+\item \textbf{Digital image processing for tissue quantification.}
+Extract quantitative morphometric features from tissue imaging (histology, digital tomosynthesis) for treatment efficacy assessment. \\
+\textit{Inputs:} Tissue images, region-of-interest annotations, treatment group labels. \\
+\textit{Outputs:} Quantified tissue features (area, density, gap measurements), statistical comparisons across treatment groups. \\
+\textit{Requirements:} Image preprocessing (contrast normalization, artifact removal), segmentation (thresholding or learned), feature extraction, automated ROI detection, statistical testing. \\
+\textit{Evaluation:} Segmentation accuracy (Dice coefficient), inter-rater agreement, effect size and statistical significance of treatment differences.
+
+\item \textbf{Immune response profiling (pathway analysis).}
+Characterize immune modulation by analyzing pathway activation, upstream regulators, and inflammatory scoring from transcriptomic or proteomic data. \\
+\textit{Inputs:} Expression data (genes or proteins), treatment conditions, reference pathway databases. \\
+\textit{Outputs:} Activated/suppressed pathways, upstream regulator predictions, inflammatory response scores. \\
+\textit{Requirements:} Pathway enrichment (GSEA, IPA-style analysis), upstream regulator inference, network construction, scoring metrics for inflammatory vs anti-inflammatory balance. \\
+\textit{Evaluation:} Pathway enrichment FDR, consistency across methods, biological plausibility of upstream regulators.
+
+\item \textbf{Functional annotation and pathway enrichment.}
+Annotate gene or protein lists with functional categories (GO terms, KEGG pathways) and identify statistically enriched biological processes. \\
+\textit{Inputs:} Gene/protein lists from differential expression or clustering, background gene set, annotation databases. \\
+\textit{Outputs:} Enriched GO terms and KEGG pathways with p-values, gene network visualizations. \\
+\textit{Requirements:} GO/KEGG annotation retrieval, hypergeometric or Fisher enrichment testing, multiple testing correction, network construction (STRING, Cytoscape). \\
+\textit{Evaluation:} Enrichment significance after correction, semantic coherence of enriched terms, overlap with known biology.
+
+\item \textbf{Computer vision for behavioral phenotyping.}
+Apply pose estimation and tracking to animal behavioral videos to quantify treatment effects on social behavior, motor function, or anxiety-like phenotypes. \\
+\textit{Inputs:} Behavioral videos (multiple animals per session), body part definitions, treatment group assignments. \\
+\textit{Outputs:} Tracked keypoint trajectories, derived behavioral metrics (inter-animal distance, contact duration, locomotion speed), statistical comparisons. \\
+\textit{Requirements:} Pose estimation model training (DeepLabCut), tracking validation, time-series feature engineering, behavioral metric computation, statistical testing with repeated measures. \\
+\textit{Evaluation:} Tracking accuracy (pixel error), behavioral metric reliability (test-retest), effect size and significance of treatment differences.
+
+\item \textbf{Predictive modeling bridging in vivo and in vitro endpoints.}
+Develop composite efficacy metrics that correlate in vitro bioactivity with long-term in vivo outcomes to enable early candidate prioritization. \\
+\textit{Inputs:} In vitro assay data (multiple endpoints), early and late in vivo measurements, compound identifiers. \\
+\textit{Outputs:} Predictive efficacy model, feature importance rankings, predicted long-term outcomes with confidence intervals. \\
+\textit{Requirements:} Multi-source feature extraction, temporal alignment, imputation, regression or classification modeling, stratified cross-validation on temporally ordered splits. \\
+\textit{Evaluation:} Prediction accuracy ($R^2$, AUC for classification), early marker predictive power, model stability across cross-validation folds.
+
+\item \textbf{Reinforcement learning for de novo peptide generation.}
+Optimize peptide sequences using RL with multi-objective reward functions combining bioactivity, stability, and diversity. \\
+\textit{Inputs:} Pre-trained generative model (ProtGPT2), reward model(s) for bioactivity and stability, diversity constraints. \\
+\textit{Outputs:} Optimized peptide sequences with reward decomposition, diversity statistics, training curves. \\
+\textit{Requirements:} Policy optimization (PPO, GRPO variants), reward model training, KL regularization against reference policy, curriculum learning (staged reward introduction), diversity penalties. \\
+\textit{Evaluation:} Mean reward, reward component distributions, sequence diversity, KL divergence from reference, mode collapse indicators.
+
+\item \textbf{Safety and toxicology modeling (dose-response, multi-objective trade-offs).}
+Model dose-response relationships accounting for repeated measures and time-dependent effects, and navigate safety-efficacy trade-offs for candidate selection. \\
+\textit{Inputs:} Dose-response data (multiple doses, time points, endpoints), efficacy measurements, compound properties. \\
+\textit{Outputs:} Dose-response curves with confidence bands, therapeutic window estimates, Pareto frontier of safety vs efficacy. \\
+\textit{Requirements:} Generalized linear mixed models, repeated measures analysis, LD50/ED50 estimation with confidence intervals, multi-objective optimization, Pareto frontier construction, species translation modeling. \\
+\textit{Evaluation:} Model fit (AIC/BIC), confidence interval coverage, Pareto frontier hypervolume, robustness of therapeutic window estimates.
+
+\end{enumerate}

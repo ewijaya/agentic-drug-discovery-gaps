@@ -1,0 +1,35 @@
+Table~\ref{tab:capability-matrix} presents the core result of our evaluation: a capability matrix mapping 15 task classes against six agentic AI frameworks. Coverage is sparse. No framework fully supports any of the 15 task classes. Partial support, where a framework provides adjacent functionality that does not address the task-specific requirements, appears in only a few cases. The five gaps identified in the following subsections emerge directly from this matrix: clusters of zero-coverage task classes that share underlying architectural limitations.
+
+\begin{table}[htbp]
+\centering
+\caption{Capability Matrix: Six Frameworks Evaluated Against 15 Task Classes. \fsup\ = supported, \psup\ = partial (adjacent capability exists but does not meet task requirements), \nsup\ = not supported. Coverage scores count \fsup\ as 1 and \psup\ as 0.5. CC = ChemCrow, CS = Coscientist, PA = PharmAgents, CI = ChatInvent, MA = MADD, DV = DiscoVerse.}
+\label{tab:capability-matrix}
+\small
+\begin{tabular}{clccccccc}
+\toprule
+\textbf{\#} & \textbf{Task Class} & \textbf{CC} & \textbf{CS} & \textbf{PA} & \textbf{CI} & \textbf{MA} & \textbf{DV} & \textbf{Gap} \\
+\midrule
+1 & ML bioactivity prediction & \nsup & \nsup & \psup & \nsup & \psup & \psup & 3 \\
+2 & Generative peptide design & \nsup & \nsup & \nsup & \nsup & \nsup & \nsup & 1 \\
+3 & Peptide-receptor binding & \psup & \nsup & \psup & \nsup & \psup & \nsup & 1 \\
+4 & In vivo recovery modeling & \nsup & \nsup & \nsup & \nsup & \nsup & \nsup & 2 \\
+5 & Peptide-enzyme stability & \nsup & \nsup & \nsup & \nsup & \nsup & \nsup & 1 \\
+6 & PLM receptor prediction & \nsup & \nsup & \nsup & \nsup & \nsup & \nsup & 1 \\
+7 & Monte Carlo optimization & \nsup & \nsup & \nsup & \nsup & \nsup & \nsup & 1,3 \\
+8 & RNA-seq / scRNA-seq & \nsup & \nsup & \nsup & \nsup & \nsup & \nsup & 2 \\
+9 & Image-based quantification & \nsup & \nsup & \nsup & \nsup & \nsup & \nsup & 2 \\
+10 & Immune response profiling & \nsup & \nsup & \psup & \psup & \nsup & \psup & 2 \\
+11 & Functional annotation & \nsup & \nsup & \psup & \psup & \nsup & \psup & 2 \\
+12 & Behavioral phenotyping & \nsup & \nsup & \nsup & \nsup & \nsup & \nsup & 2 \\
+13 & In vivo/in vitro bridging & \nsup & \nsup & \nsup & \nsup & \nsup & \nsup & 2 \\
+14 & RL peptide generation & \nsup & \nsup & \nsup & \nsup & \nsup & \nsup & 1,3 \\
+15 & Safety/toxicology (multi-obj) & \psup & \nsup & \psup & \psup & \psup & \psup & 5 \\
+\midrule
+\multicolumn{2}{l}{\textbf{Coverage (\%)}} & \textbf{6.7} & \textbf{0.0} & \textbf{16.7} & \textbf{10.0} & \textbf{10.0} & \textbf{13.3} & \\
+\bottomrule
+\end{tabular}
+\vspace{4pt}
+
+\footnotesize
+\textbf{Partial support notes:} Task 1: frameworks invoke pre-trained predictors but cannot train, validate, or tune models on proprietary data. Task 3: small-molecule docking tools exist but do not handle peptide conformational flexibility. Tasks 10--11: knowledge graph queries or literature synthesis provide pathway-level information but not computational enrichment pipelines (GSEA, upstream regulator analysis). Task 15: toxicophore flagging or ADMET prediction for small molecules; no multi-objective trade-off reasoning or dose-response modeling.
+\end{table}

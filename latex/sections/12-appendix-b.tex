@@ -1,0 +1,170 @@
+\section{Detailed Capability Matrix}
+\label{sec:appendix-b}
+
+This appendix extends the capability matrix (Table~\ref{tab:capability-matrix}) with per-dimension assessments for each framework. Each framework is evaluated across the five dimensions defined in \S\ref{sec:methods}: molecular representation (D1), computational paradigm support (D2), data modality integration (D3), resource assumptions (D4), and optimization framework (D5). Assessments are based on published documentation, available source code, and demonstrated use cases as of early 2026.
+
+\subsection{ChemCrow}
+
+ChemCrow \citep{bran2024chemcrow} orchestrates 18 chemistry tools via GPT-4, including RDKit for molecular property calculation, PubChem for compound lookup, and reaction prediction APIs for retrosynthesis.
+
+\begin{table}[htbp]
+\centering
+\caption{ChemCrow: Per-Dimension Assessment}
+\label{tab:chemcrow-detail}
+\small
+\begin{tabular}{lcp{8cm}}
+\toprule
+\textbf{Dimension} & \textbf{Rating} & \textbf{Evidence and Notes} \\
+\midrule
+D1: Molecular repr. & \psup & Supports SMILES and molecular fingerprints via RDKit. No peptide sequence representations, PLM embeddings, or conformational sampling. \\
+D2: Comp. paradigm & \nsup & Tool invocation only (stateless API calls). No ML training, RL, or simulation orchestration. \\
+D3: Data modality & \nsup & Text and SMILES inputs only. No imaging, time-series, transcriptomics, or behavioral data support. \\
+D4: Resource assumptions & \psup & Lightweight tool calls; does not require HPC. However, no few-shot, active learning, or transfer learning support. \\
+D5: Optimization & \nsup & Single-objective property optimization. No Pareto frontiers, constraint satisfaction, or uncertainty quantification. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Partial support details.} Task 3 (peptide-receptor binding): ChemCrow includes docking tools designed for small-molecule rigid-body screening; these do not handle peptide conformational flexibility or induced-fit binding. Task 15 (safety/toxicology): includes toxicophore detection and basic ADMET prediction for small molecules but lacks dose-response modeling, mixed-effects analysis, or multi-objective trade-off reasoning.
+
+\subsection{Coscientist}
+
+Coscientist \citep{boiko2023coscientist} autonomously plans and executes chemical syntheses by interfacing with laboratory automation, web search, and code execution.
+
+\begin{table}[htbp]
+\centering
+\caption{Coscientist: Per-Dimension Assessment}
+\label{tab:coscientist-detail}
+\small
+\begin{tabular}{lcp{8cm}}
+\toprule
+\textbf{Dimension} & \textbf{Rating} & \textbf{Evidence and Notes} \\
+\midrule
+D1: Molecular repr. & \nsup & Designed for small-molecule organic synthesis. No peptide or protein representations. \\
+D2: Comp. paradigm & \nsup & Code execution capability exists but is used for synthesis protocol generation, not ML training or RL. \\
+D3: Data modality & \nsup & Text and structured chemical data only. No in vivo, imaging, or transcriptomic data handling. \\
+D4: Resource assumptions & \psup & Operates with standard compute but assumes access to automated laboratory equipment (Emerald Cloud Lab). \\
+D5: Optimization & \nsup & Optimizes synthesis yield as a single objective. No multi-objective framework. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Coverage: 0/15 task classes.} Coscientist's strength lies in closed-loop synthesis execution, a capability orthogonal to the 15 task classes evaluated here, which focus on computational modeling rather than laboratory automation.
+
+\subsection{PharmAgents}
+
+PharmAgents \citep{gao2025pharmagents} deploys specialized LLM agents for target identification, compound screening, and interaction prediction, coordinated through a multi-agent architecture with knowledge graph integration.
+
+\begin{table}[htbp]
+\centering
+\caption{PharmAgents: Per-Dimension Assessment}
+\label{tab:pharmagents-detail}
+\small
+\begin{tabular}{lcp{8cm}}
+\toprule
+\textbf{Dimension} & \textbf{Rating} & \textbf{Evidence and Notes} \\
+\midrule
+D1: Molecular repr. & \psup & Supports SMILES and molecular graphs. Knowledge graph includes protein targets but no PLM-based peptide representations. \\
+D2: Comp. paradigm & \psup & Invokes pre-trained predictors for property estimation. No model training, fine-tuning, or RL support. \\
+D3: Data modality & \psup & Structured databases and knowledge graphs. Pathway-level information available but not computational enrichment pipelines. \\
+D4: Resource assumptions & \nsup & Assumes large compound libraries and knowledge graph infrastructure typical of large pharma. \\
+D5: Optimization & \nsup & Rank-based compound selection. No Pareto optimization or uncertainty quantification. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Partial support details.} Task 1 (ML bioactivity): can invoke pre-trained models for single-endpoint prediction but cannot train multi-endpoint regressors on proprietary data. Tasks 10--11 (immune profiling, functional annotation): knowledge graph queries return pathway-level information but do not perform computational enrichment analysis (GSEA, hypergeometric testing). Task 15 (safety): includes ADMET prediction modules for small molecules.
+
+\subsection{ChatInvent}
+
+ChatInvent \citep{he2026chatinvent} was deployed at AstraZeneca over 13 months for literature-driven molecular design and synthesis planning, with access to institutional databases and computational infrastructure.
+
+\begin{table}[htbp]
+\centering
+\caption{ChatInvent: Per-Dimension Assessment}
+\label{tab:chatinvent-detail}
+\small
+\begin{tabular}{lcp{8cm}}
+\toprule
+\textbf{Dimension} & \textbf{Rating} & \textbf{Evidence and Notes} \\
+\midrule
+D1: Molecular repr. & \psup & Supports SMILES-based molecular design and literature-based structure analysis. No peptide-specific representations or PLMs. \\
+D2: Comp. paradigm & \nsup & LLM reasoning over literature and molecular design tools. No ML training, RL, or simulation. \\
+D3: Data modality & \psup & Literature text, molecular structures, and internal databases. No in vivo data, imaging, or transcriptomics. \\
+D4: Resource assumptions & \nsup & Designed for AstraZeneca-scale resources: institutional literature access, HPC, large proprietary databases, specialized teams. \\
+D5: Optimization & \nsup & Literature-guided hypothesis generation. No formal multi-objective optimization or uncertainty quantification. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Partial support details.} Tasks 10--11 (immune profiling, functional annotation): literature synthesis can surface pathway-level knowledge but does not perform computational analysis. Task 15 (safety): can retrieve safety-related literature and flag known liabilities from text; no quantitative dose-response modeling.
+
+\subsection{MADD}
+
+MADD \citep{madd2025} coordinates multiple LLM agents for molecular design, property prediction, and docking in a multi-agent collaboration framework.
+
+\begin{table}[htbp]
+\centering
+\caption{MADD: Per-Dimension Assessment}
+\label{tab:madd-detail}
+\small
+\begin{tabular}{lcp{8cm}}
+\toprule
+\textbf{Dimension} & \textbf{Rating} & \textbf{Evidence and Notes} \\
+\midrule
+D1: Molecular repr. & \psup & Supports SMILES-based molecular generation and property prediction. No peptide or protein representations. \\
+D2: Comp. paradigm & \psup & Multi-agent coordination for design-predict-dock cycles. Agents invoke tools but do not train models or run RL. \\
+D3: Data modality & \nsup & Molecular structures and predicted properties only. No in vivo, imaging, or transcriptomic data. \\
+D4: Resource assumptions & \psup & Moderate compute requirements for docking. Does not assume pharma-scale databases but lacks few-shot or active learning. \\
+D5: Optimization & \nsup & Iterative design refinement toward single objectives. No Pareto optimization or constraint satisfaction. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Partial support details.} Task 1 (ML bioactivity): prediction agents can estimate properties but from pre-trained models, not trained on proprietary data. Task 3 (peptide-receptor binding): includes docking workflows designed for small molecules. Task 15 (safety): property prediction agents can flag liabilities but without multi-objective reasoning.
+
+\subsection{DiscoVerse}
+
+DiscoVerse \citep{discoverse2025} provides multi-agent pharmaceutical workflow automation with traceable reasoning, developed by Roche-affiliated researchers.
+
+\begin{table}[htbp]
+\centering
+\caption{DiscoVerse: Per-Dimension Assessment}
+\label{tab:discoverse-detail}
+\small
+\begin{tabular}{lcp{8cm}}
+\toprule
+\textbf{Dimension} & \textbf{Rating} & \textbf{Evidence and Notes} \\
+\midrule
+D1: Molecular repr. & \psup & Supports small-molecule representations and reverse translation workflows. Limited protein or peptide support. \\
+D2: Comp. paradigm & \psup & Workflow automation with traceability. Orchestrates existing tools but does not support model training or RL. \\
+D3: Data modality & \psup & Integrates multiple data sources including clinical and preclinical information. Limited in vivo temporal modeling or imaging. \\
+D4: Resource assumptions & \nsup & Designed for large pharma infrastructure and data availability. \\
+D5: Optimization & \nsup & Workflow-driven decision support. No formal multi-objective optimization framework. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Partial support details.} Task 1 (ML bioactivity): workflow automation may include prediction steps using pre-trained models. Tasks 10--11 (immune profiling, functional annotation): reverse translation capability includes pathway-level reasoning from clinical observations. Task 15 (safety): clinical-preclinical integration provides safety context but lacks quantitative multi-objective optimization.
+
+\subsection{Cross-Framework Summary}
+
+Table~\ref{tab:dimension-summary} summarizes per-dimension coverage across all six frameworks. The sparsest dimensions, computational paradigm support (D2) and optimization framework (D5), reflect the deepest architectural limitations: LLM-as-orchestrator designs cannot support gradient-based training or multi-objective reasoning without fundamental changes.
+
+\begin{table}[htbp]
+\centering
+\caption{Cross-Framework Dimension Coverage Summary. Fraction of frameworks providing full (\fsup) or partial (\psup) support per evaluation dimension.}
+\label{tab:dimension-summary}
+\small
+\begin{tabular}{lccl}
+\toprule
+\textbf{Dimension} & \textbf{Full} & \textbf{Partial} & \textbf{Primary Limitation} \\
+\midrule
+D1: Molecular representation & 0/6 & 5/6 & No PLM or peptide-native support \\
+D2: Computational paradigm & 0/6 & 3/6 & No ML training, RL, or simulation \\
+D3: Data modality & 0/6 & 3/6 & No in vivo, imaging, or omics pipelines \\
+D4: Resource assumptions & 0/6 & 3/6 & No few-shot, active learning, or transfer \\
+D5: Optimization framework & 0/6 & 0/6 & No multi-objective or uncertainty support \\
+\bottomrule
+\end{tabular}
+\end{table}
