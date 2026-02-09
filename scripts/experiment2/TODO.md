@@ -110,3 +110,19 @@ For the current execution request, stop after:
 Do not run:
 - `python scripts/experiment2/merge_scores.py`
 - `python scripts/experiment2/analyze_results.py`
+
+---
+
+## Handy one-liners
+
+Check whether probing is still running:
+
+```bash
+pgrep -af "python .*scripts/experiment2/run_probing.py"
+```
+
+Relaunch probing safely in background (with API key passthrough):
+
+```bash
+nohup env OLLAMA_API_KEY="$OLLAMA_API_KEY" python -u scripts/experiment2/run_probing.py > scripts/experiment2/responses/run_probing.log 2>&1 &
+```
