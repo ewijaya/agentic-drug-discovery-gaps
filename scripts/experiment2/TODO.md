@@ -6,6 +6,15 @@
 - [x] Implement all pipeline scripts
 - [x] Fix empty response bug in run_probing.py
 - [ ] Run run_probing.py to completion (currently running)
+- [ ] Run score_responses.py (after probing completes)
+- [ ] Run prepare_expert_subset.py (after scoring completes)
+- [ ] STOP here (do not run merge_scores.py or analyze_results.py yet)
+
+### Live snapshot (update as needed)
+
+- Active probing PID: `39271`
+- Current progress:
+  - `kimi-k2.5.jsonl`: `success=9`, `failed=13`
 
 ---
 
@@ -14,16 +23,22 @@
 ### Step 1: Verify responses
 
 ```bash
-python3 -c "
-import json
-for f in ['kimi-k2.5','deepseek-v3.2','qwen3-next-80b','gemini-3-flash']:
-    lines = open(f'scripts/experiment2/responses/{f}.jsonl').readlines()
-    empties = sum(1 for l in lines if json.loads(l)['response_text'] == '')
-    print(f'{f}: {len(lines)} responses, {empties} empty')
-"
+python - <<'PY'
+import json,glob,os
+for p in sorted(glob.glob("scripts/experiment2/responses/*.jsonl")):
+    s=f=0
+    with open(p) as fh:
+        for line in fh:
+            r=json.loads(line)
+            if r.get("success") is True:
+                s+=1
+            else:
+                f+=1
+    print(f"{os.path.basename(p)} success={s} failed={f}")
+PY
 ```
 
-**Pass criteria:** 400 total responses, < 20 empty (PRD SC-1: failure rate < 5%)
+**Pass criteria:** each model file has `success=100` (4 files total). Failed attempts may be non-zero and are expected with retry logging.
 
 ### Step 2: Run Claude CLI scoring
 
@@ -80,6 +95,18 @@ python scripts/experiment2/analyze_results.py
 
 ## Decision Points
 
-- **After Step 1:** If > 20 empty responses, investigate and re-run affected models
+- **After Step 1:** If any model has `success < 100`, re-run `run_probing.py` until all four reach 100 successes
 - **After Step 5:** If kappa < 0.4, fall back to full manual scoring of all 400 responses
 - **After Step 6:** If fewer than 2 models show significant gap (p < 0.0125), adjust claim strength in paper
+
+---
+
+## Current run scope guard
+
+For the current execution request, stop after:
+1. `python scripts/experiment2/score_responses.py`
+2. `python scripts/experiment2/prepare_expert_subset.py`
+
+Do not run:
+- `python scripts/experiment2/merge_scores.py`
+- `python scripts/experiment2/analyze_results.py`
