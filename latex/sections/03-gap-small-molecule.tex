@@ -1,9 +1,13 @@
-\section{Blind Spot 1: The Small Molecule Bias}
+\subsection{Gap 1: Small-Molecule Representation Bias}
 \label{sec:small-molecule}
 
 Current agentic systems are architected around small molecules: SMILES strings, docking scores, synthetic accessibility metrics, and retrosynthesis planning. This works for medicinal chemistry but breaks down for peptide therapeutics requiring fundamentally different computational approaches.
 
-\subsection{The Peptide-Specific Challenge Space}
+\subsubsection{Findings}
+
+All six frameworks evaluated assume small-molecule representations (SMILES strings, molecular fingerprints, docking scores). Task classes 2, 3, 5, 6, and 7 (peptide-specific workflows) receive zero coverage across all frameworks. No framework supports protein language models (ProtBERT, ESM-2, ProGen) as first-class components for sequence-based therapeutics design.
+
+\subsubsection{The Peptide-Specific Challenge Space}
 
 Therapeutic peptides (2 to 50 amino acids) bridge small molecules and biologics. Unlike rigid small molecules, peptides are conformationally flexible, sampling diverse structural states. They achieve high selectivity through induced-fit binding but face aggregation, protease degradation, and permeability barriers. These challenges extend beyond peptides to biologics broadly: antibodies require CDR loop modeling, nanobodies need single-domain folding, and fusion proteins demand multi-domain interaction prediction. The small-molecule bias is a biologics-wide limitation.
 
@@ -13,7 +17,7 @@ Current agents provide no pathway for these requirements. ChemCrow includes RDKi
 
 Practitioners encounter immediate friction. SMILES encoding of peptides is error-prone, risking loss of stereochemical and conformational information, particularly for non-natural amino acids. Standard molecular fingerprints (Morgan, MACCS) perform poorly on peptides, which lack equivalent standard representations. Rigid-molecule docking produces unreliable scores. Retrosynthesis metrics are meaningless. Even data storage becomes awkward: sequence variants, post-translational modifications, and assay metadata rarely fit small-molecule databases designed for single canonical structures.
 
-\subsection{Protein Language Models vs Molecular Fingerprints}
+\subsubsection{Protein Language Models vs Molecular Fingerprints}
 
 \begin{figure}[htbp]
 \centering
@@ -33,7 +37,7 @@ Generative modeling extends this gap. ProtGPT2 \citep{ferruz2022protgpt2} fine-t
 
 The gap reflects a missing paradigm, not a missing tool. Protein language models are the foundation of peptide discovery, demanding first-class support for training and fine-tuning. Without this, agents cannot support the core workflows practitioners use to move from sequence space exploration to experimentally validated leads.
 
-\subsection{What Peptide-Aware Agents Would Need}
+\subsubsection{Derived Requirements}
 
 Peptide-aware architectures require protein language models as core components, not external APIs. First, fine-tuning pipelines: dataset curation, train-validation-test splits, learning rate scheduling, early stopping, checkpointing. Agents should fine-tune ProtBERT on 200 sequences and return calibrated classifiers with uncertainty estimates.
 

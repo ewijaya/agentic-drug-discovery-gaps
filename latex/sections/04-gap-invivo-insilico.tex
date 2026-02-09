@@ -1,11 +1,15 @@
-\section{Blind Spot 2: The In Vivo to In Silico Bridge}
+\subsection{Gap 2: Absence of In Vivo-In Silico Integration}
 \label{sec:invivo}
 
 The absence of in vivo modeling is a fundamental gap. Current agents excel at in vitro automation: Coscientist plans syntheses \citep{boiko2023coscientist}, ChemCrow screens compound libraries, ChatInvent mines literature. But critical validation happens in vivo, where candidates confront pharmacokinetics, biodistribution, metabolism, toxicology, and long-term efficacy unpredictable from binding affinity.
 
 Animal studies generate a distinct class of data: longitudinal (days to months), multi-modal (behavioral scores, imaging, molecular profiling), noisy (biological variability dwarfs plate assay precision), low-throughput (tens of compounds, not thousands), and expensive. These characteristics make in vivo the bottleneck, yet agents provide no pathway to incorporate this data.
 
-\subsection{The Lab Automation Ceiling}
+\subsubsection{Findings}
+
+Task classes 4, 9, 12, and 13 (in vivo and imaging tasks) receive zero coverage across all six frameworks. All frameworks terminate at in vitro automation or literature-based hypothesis generation. No framework supports longitudinal data modeling, multi-modal fusion, or causal inference from animal study data.
+
+\subsubsection{The Lab Automation Ceiling}
 
 Lab automation reaches a hard ceiling at in vivo studies. Synthesis platforms and high-throughput screening test thousands of compounds daily. But animal experiments cannot be scaled or automated, requiring specialized facilities, personnel, ethical oversight, and weeks of time.
 
@@ -15,7 +19,7 @@ In vivo studies yield heterogeneous streams. Neurological injury evaluation incl
 
 Developing composite efficacy metrics exposed this gap. A peptide increasing cell proliferation threefold in vitro shows temporal in vivo dynamics: inflammatory response (days 1-3), progenitor proliferation (days 7-10), functional recovery (day 28). Predicting sustained benefit requires temporal modeling, dataset curation, feature engineering, and validation outside LLM tool-calling scope.
 
-\subsection{Multi-Modal, Longitudinal Data Integration}
+\subsubsection{Multi-Modal, Longitudinal Data Integration}
 
 \begin{figure}[htbp]
 \centering
@@ -53,10 +57,12 @@ RNA-seq requires quality control, alignment, and quantification into expression 
 
 Integrating heterogeneous sources for predictive biomarkers is valuable yet absent. Correlating in vitro bioactivity with in vivo efficacy required extracting features from multiple assays, normalizing across scales, aligning with temporal data (days 3, 7, 14, 28), and training regression models predicting long-term outcomes. This workflow involved feature engineering, imputation, stratified cross-validation, and model selection; these are ML workflows, not LLM reasoning.
 
-\subsection{Safety, Efficacy, and Translation}
+\subsubsection{Safety, Efficacy, and Translation}
 
 In vivo models surface safety-efficacy trade-offs that in silico screens miss. Tenfold bioactivity increases may trigger immune activation or hepatotoxicity. Stability modifications (D-amino acids, cyclization) may reduce affinity or increase aggregation.
 
 Toxicology requires dose-response analysis via generalized linear mixed models accounting for repeated measures and time-dependent effects. Identifying therapeutic windows where efficacy plateaus but toxicity remains acceptable is essential. Species translation compounds this: mouse pharmacokinetics extrapolate to humans via allometric scaling, but peptide stability varies by species protease expression and rodent-tolerated peptides may provoke primate antibody responses. Agents cannot construct dose-response curves, compute LD50 confidence intervals, or model cross-species translation uncertainties. We return to the broader multi-objective trade-offs these challenges imply in \S\ref{sec:multiobjective}.
 
-The in vivo to in silico bridge is a missing architectural layer for temporal modeling, multi-modal fusion, and mechanistic inference. Until agents ingest longitudinal scores, integrate transcriptomics, quantify dose-response uncertainty, and navigate multi-objective trade-offs under biological variability, utility remains confined to early hit identification. Most development cost and risk lies in translating in vitro activity to in vivo efficacy and safety \citep{dimasi2016costs}.
+\subsubsection{Derived Requirements}
+
+Closing the in vivo-in silico gap requires three capabilities absent from current frameworks. First, temporal state-space models for longitudinal in vivo trajectories that capture treatment dynamics across days to weeks. Second, causal inference tools (do-calculus, counterfactual reasoning) to separate correlation from mechanism in complex biological systems. Third, multi-modal data fusion integrating clinical scores, imaging, transcriptomics, and behavioral data into unified predictive models. Until agents ingest longitudinal scores, integrate transcriptomics, quantify dose-response uncertainty, and navigate multi-objective trade-offs under biological variability, utility remains confined to early hit identification. Most development cost and risk lies in translating in vitro activity to in vivo efficacy and safety \citep{dimasi2016costs}.

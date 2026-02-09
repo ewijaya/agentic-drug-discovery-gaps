@@ -1,10 +1,15 @@
-\section{Blind Spot 3: Multi-Paradigm, Not Multi-Agent}
+\subsection{Gap 3: Limited Computational Paradigm Support}
 \label{sec:multiparadigm}
 
 The in vivo data integration challenge from the previous section illustrates a deeper architectural limitation: agents are not missing specific tools so much as they lack the capacity to orchestrate diverse computational paradigms. "Multi-agent" systems in drug discovery have multiple LLM-based agents collaborating \citep{seal2025aiagents}. PharmAgents deploys specialized agents for target identification and synthesis. MADD coordinates molecular design and docking \citep{madd2025}. BioPlanner benchmarks LLM-driven protocol planning \citep{bioplanner2023}, and ChemToolAgent evaluates chemistry tool integration \citep{chemtoolagent2024}. The pattern: an orchestrator LLM decomposes queries, delegates to modules, and synthesizes outputs.
 
 This distinction matters. "Multi-agent" is multiple LLM instances with different tools. Practitioners need multi-paradigm orchestration: coordinating fundamentally different computational approaches (supervised learning, generative modeling, RL, simulation, optimization) within workflows. Current architectures support the former, not the latter, which is why most real pipelines still require manual glue code.
-\subsection{The LLM-as-Orchestrator Assumption}
+
+\subsubsection{Findings}
+
+All six frameworks use LLM-as-orchestrator architecture: LLM reasoning combined with tool API calls. Task classes requiring model training (1, 2, 6, 14), reinforcement learning (7, 14), or simulation receive no support. No framework supports gradient-based optimization, hyperparameter search, or curriculum learning as first-class primitives.
+
+\subsubsection{The LLM-as-Orchestrator Limitation}
 
 LLM-centric design treats the language model as central coordinator, invoking external tools via APIs. ChemCrow calls RDKit and PubChem \citep{bran2024chemcrow}. ChatInvent supports molecular design and synthesis planning \citep{he2026chatinvent}. This works for text-based reasoning and stateless tools.
 
@@ -14,7 +19,7 @@ LLMs cannot orchestrate this via API calls. It requires gradient-based ML with e
 
 The limitation extends beyond supervised learning. Generative modeling, reinforcement learning, Monte Carlo sampling, molecular dynamics, and Bayesian optimization all require iterative optimization with intermediate states, convergence monitoring, branching logic, resource management (GPU allocation, parallelization, checkpointing), and artifact versioning (models, hyperparameters, trajectories). None fit stateless API calls.
 
-\subsection{The Missing Paradigms}
+\subsubsection{The Missing Paradigms}
 
 Absent paradigms define modern drug discovery \citep{schneider2020generative}: supervised learning (bioactivity prediction \citep{stokes2020ml}, toxicity modeling), unsupervised learning (chemical space clustering), generative modeling (de novo design \citep{grisoni2021synthesis}), reinforcement learning (multi-objective optimization \citep{tan2022rl}), simulation (binding kinetics), and optimization (experimental design).
 
@@ -46,7 +51,7 @@ Agents cannot express these workflows. Orchestrators call models for inference b
 
 Recent systems have begun addressing single-paradigm ML automation. Agentomics \citep{agentomics2026} achieves autonomous ML experimentation, surpassing human-engineered state-of-the-art on 11 of 20 biomedical benchmark datasets across protein engineering, drug discovery, and regulatory genomics. ML-Agent \citep{mlagent2025} uses reinforcement learning to train LLM agents for autonomous ML engineering. These demonstrate that agents can automate individual ML workflows. However, neither orchestrates multi-paradigm pipelines: concurrent RL-based generation, supervised bioactivity prediction, Bayesian batch selection, and structural simulation in closed loops. The gap is cross-paradigm integration, not single-paradigm automation.
 
-\subsection{What Multi-Paradigm Orchestration Looks Like}
+\subsubsection{Derived Requirements}
 
 \begin{figure}[htbp]
 \centering

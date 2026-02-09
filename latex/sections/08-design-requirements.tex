@@ -1,35 +1,35 @@
-\section{A Practitioner's Wishlist: What Would Actually Help}
-\label{sec:wishlist}
+\section{Design Requirements for Next-Generation Frameworks}
+\label{sec:requirements}
 
-The gaps above reflect architectural assumptions that must be revisited. This section proposes five principles for next-generation agents grounded in peptide discovery, in vivo modeling, multi-paradigm workflows, resource constraints, and multi-objective decisions.
+The gaps identified in the preceding analysis reflect architectural assumptions that must be revisited. This section synthesizes five design requirements derived from the gap analysis and illustrates them with concrete use cases.
 
-\subsection{Design Principles for Next-Generation Agents}
+\subsection{Requirements Derived from Gap Analysis}
 
-\subsubsection{Principle 1: Multi-Paradigm Orchestration}
+\subsubsection{Requirement 1: Multi-Paradigm Orchestration}
 
 Agents must support ML training, RL, simulation, and optimization as first-class primitives. Practitioners should specify workflows declaratively and receive an executable workflow graph that supports parallelization, checkpointing, and branching when validation fails. Human-in-the-loop decision points must be explicit when models trade off accuracy, calibration, or interpretability. Workflow orchestration systems (Airflow, Kubeflow, Nextflow) already provide these abstractions; what is missing is tight integration with agent reasoning and iterative improvement.
 
-\subsubsection{Principle 2: Modality-Aware Architectures}
+\subsubsection{Requirement 2: Modality-Aware Representations}
 
 Agents must provide first-class support for peptides, proteins, and other modalities, not just small molecules. This requires PLM fine-tuning pipelines, structural biology integration (AlphaFold, flexible docking, molecular dynamics), and peptide-specific property prediction (aggregation, protease resistance, immunogenicity). Modality awareness must flow through data loaders, feature extractors, generative models, and evaluation metrics. Tool selection should be contextual: peptides default to ESM-2 embeddings, protein structures to structural alignment, not SMILES-based similarity.
 
-\subsubsection{Principle 3: In Vivo to In Silico Integration}
+\subsubsection{Requirement 3: In Vivo-In Silico Data Fusion}
 
 Agents must support temporal modeling for longitudinal efficacy and safety data, multi-modal fusion (behavior, imaging, transcriptomics), and causal inference for mechanistic hypotheses. This requires bioinformatics pipelines (RNA-seq alignment, differential expression, pathway enrichment), computer vision, and statistical models for dose-response and mixed effects. Predictive efficacy modeling should align heterogeneous timepoints, handle missing data, and validate on temporally ordered splits. Mechanistic inference should integrate KEGG, GO, and Reactome to translate results into hypotheses and validation experiments.
 
-\subsubsection{Principle 4: Data Efficiency and Transfer Learning}
+\subsubsection{Requirement 4: Data-Efficient Learning}
 
 Agents must optimize for few-shot adaptation, active learning, and knowledge transfer across related tasks. This requires meta-learning, Bayesian uncertainty quantification, and transfer pipelines combining public pre-training (UniProt, PDB, ChEMBL) with private fine-tuning. Agents should recommend strategies based on dataset size: deep nets for 500 examples, simpler models for 50, few-shot for 10. Active learning loops should select candidates via acquisition functions, update models with experimental feedback, and signal when marginal information gain is low.
 
-\subsubsection{Principle 5: Multi-Objective, Risk-Aware Optimization}
+\subsubsection{Requirement 5: Multi-Objective, Risk-Aware Optimization}
 
 Agents must support Pareto optimization with constraints, uncertainty quantification, sensitivity analysis, and interactive trade-off visualization. Results should be Pareto frontiers with confidence intervals, constraint status, and robustness scores. Practitioners should filter by feasibility, adjust objective weights, and highlight low-uncertainty candidates. Risk awareness should adapt recommendations to stage: early exploration versus late-stage de-risking.
 
-\subsection{Concrete Use Cases}
+\subsection{Illustrative Use Cases}
 
-These principles imply a shift from chat-first tooling to workflow-first systems. Agents should maintain state across iterations, log decisions, and make assumptions explicit so practitioners can audit results and reproduce outcomes. This is essential for regulated environments and for teams that revisit decisions months later, often under new personnel or budget constraints.
+These requirements imply a shift from chat-first tooling to workflow-first systems. Agents should maintain state across iterations, log decisions, and make assumptions explicit so practitioners can audit results and reproduce outcomes. This is essential for regulated environments and for teams that revisit decisions months later, often under new personnel or budget constraints.
 
-To make these principles concrete, we describe three representative use cases that current agents cannot handle but next-generation systems should support.
+To make these requirements concrete, we describe three representative use cases that current agents cannot handle but next-generation systems should support.
 
 \subsubsection{Use Case 1: Peptide Lead Optimization}
 
@@ -61,12 +61,12 @@ To make these principles concrete, we describe three representative use cases th
 
 \textbf{Human decisions:} Validate hypotheses and decide whether to focus on a single cluster or maintain diversity.
 
-\subsection{Infrastructure Needs}
+\subsection{Infrastructure Considerations}
 
 \begin{table}[htbp]
 \centering
-\caption{Practitioner's Wishlist: Priority Matrix for Next-Generation Agent Features}
-\label{tab:wishlist-priority}
+\caption{Gap-to-Requirement Mapping: Priority Matrix for Next-Generation Agent Features}
+\label{tab:requirement-priority}
 \small
 \begin{tabular}{lcccp{3cm}}
 \hline
@@ -89,11 +89,3 @@ Workflow checkpointing & Low & Low & All & Medium \\
 Realizing these capabilities requires infrastructure beyond current agents. API standards must cover PLMs (embedding extraction, fine-tuning, uncertainty), structural biology tools (AlphaFold, docking, molecular dynamics), and bioinformatics pipelines (alignment, differential expression, pathway enrichment). Version-controlled datasets, model registries, and provenance tracking are essential for reproducibility and auditability.
 
 Organizational alignment matters. Systems must fit small biotech budgets with modest compute, minimal storage, and lightweight deployment. Documentation should target non-ML-expert biologists. Integration with existing tools (GraphPad, FlowJo, ImageJ, R/Bioconductor) avoids workflow disruption.
-
-\subsection{From Assistants to Partners}
-
-These systems should augment practitioner judgment, not replace it. Agents handle repetitive computation: preprocessing, training, tuning, orchestration, visualization. Practitioners focus on hypotheses, mechanistic interpretation, and strategic decisions under uncertainty.
-
-Partnership requires bidirectional communication. Agents must explain reasoning, expose assumptions, and quantify uncertainty. Practitioners provide feedback and correct errors. Over time, agents learn which trade-offs matter and which models generalize.
-
-Success is practitioner impact: faster lead identification, reduced experimental waste, better decisions under uncertainty. If agents embody these principles, they can transform workflows. If they remain LLM-centric tools designed for large pharma, they will not scale.

@@ -1,11 +1,15 @@
-\section{Blind Spot 4: The Small Biotech Reality}
+\subsection{Gap 4: Misalignment with Small-Biotech Constraints}
 \label{sec:smallbiotech}
 
 ChatInvent's deployment at AstraZeneca \citep{he2026chatinvent} accessed institutional databases, HPC clusters, and proprietary libraries built over decades, with specialized teams (medicinal chemists, computational chemists, biologists, data scientists). This large pharma context defines current agent design assumptions but is not representative.
 
 Small biotechs face different constraints: 50-100 employees, single wet labs, limited computational infrastructure, modest funding. Proprietary datasets have hundreds of compounds, not millions. One person designs experiments, analyzes results, and manages projects. Resource profiles are 10-100 times leaner, yet agents assume large pharma contexts.
 
-\subsection{Resource Constraints Current Agents Ignore}
+\subsubsection{Findings}
+
+All evaluated frameworks assume large-pharma resource levels: abundant proprietary data, cluster-scale compute, and specialized teams. No framework supports few-shot adaptation, active learning, or transfer learning for data-scarce settings. Interactive chat interfaces assume dedicated operator time, impractical for small teams managing multiple projects simultaneously.
+
+\subsubsection{Resource Assumptions vs Reality}
 
 \begin{figure}[htbp]
 \centering
@@ -26,7 +30,7 @@ Team structure is the third constraint. Large pharma has specialized roles (ML e
 
 This demands tools for generalists handling infrastructure complexity (dependencies, environments, memory, debugging). Practitioners specify what, not how. Current agents assume infrastructure exists; generated code assumes installed libraries, formatted data, available resources. For small biotechs, these assumptions fail.
 
-\subsection{Transfer Learning and Few-Shot Adaptation}
+\subsubsection{Transfer Learning and Few-Shot Adaptation}
 
 Transfer learning leverages public data for small proprietary tasks. Protein language models trained on UniProt's millions of sequences achieve performance with 50-200 examples that would require tens of thousands if trained from scratch.
 
@@ -36,7 +40,7 @@ Few-shot learning extends transfer to extreme scarcity. In our experience, proto
 
 Active learning selects which data to acquire next, prioritizing experiments reducing uncertainty. Acquisition functions (expected improvement, upper confidence bound) balance exploitation and exploration. Developing peptide bioactivity predictors, active learning reduced assays by one-third. Round one: 20 diverse peptides. Round two: 15 targeting high uncertainty. Round three: exploiting predicted best candidates. This iterative loop between models, acquisition functions, and feedback exceeds agent capabilities.
 
-\subsection{Batch-Mode Efficiency for Small Teams}
+\subsubsection{Batch-Mode Efficiency for Small Teams}
 
 Interactive chat assumes time for conversational interaction. This works for specific queries, not managing multiple projects simultaneously.
 
@@ -48,4 +52,6 @@ Parallelization is essential. Given 100 peptide docking jobs, agents should auto
 
 Current agents support minimal batch capabilities, designed for interactive queries not unsupervised analyses. They lack checkpointing, parallelization, and error handling, assuming interactive debugging impractical for overnight jobs.
 
-Small biotech is not large pharma with fewer resources. It is a different operating mode requiring data-efficient learning, transfer/few-shot adaptation, active learning, batch automation, and resource-aware optimization. Current agents are designed for large pharma contexts. The biotech sector, which accounts for a growing share of therapeutic innovation, remains underserved.
+\subsubsection{Derived Requirements}
+
+Small biotech is not large pharma with fewer resources. It is a different operating mode requiring few-shot learning modules for rapid adaptation to new assays, active learning loops with acquisition functions balancing exploration and exploitation, transfer learning pipelines composing public pre-training with private fine-tuning, and batch-mode orchestration enabling unsupervised overnight analyses. Resource-aware agents should propose strategies matched to available infrastructure rather than assuming cluster-scale compute. The biotech sector, which accounts for a growing share of therapeutic innovation, remains underserved by current agent architectures designed for large pharma contexts.

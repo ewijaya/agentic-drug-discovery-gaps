@@ -1,0 +1,69 @@
+\section{Evaluation Framework}
+\label{sec:methods}
+
+This section describes the systematic approach used to evaluate agentic AI frameworks against drug discovery task requirements.
+
+\subsection{Agent Framework Selection}
+
+We selected six agentic AI frameworks representing distinct design paradigms in drug discovery automation (Table~\ref{tab:frameworks}). Selection criteria required published or preprint documentation with sufficient architectural detail, demonstrated application to drug discovery tasks, and representation of distinct paradigms (single-agent, multi-agent, tool-augmented).
+
+\begin{table}[htbp]
+\centering
+\caption{Agentic AI Frameworks Evaluated}
+\label{tab:frameworks}
+\small
+\begin{tabular}{llll}
+\hline
+\textbf{Framework} & \textbf{Year} & \textbf{Organization} & \textbf{Primary Focus} \\
+\hline
+ChemCrow \citep{bran2024chemcrow} & 2023 & EPFL/Rochester & Chemistry tool orchestration \\
+Coscientist \citep{boiko2023coscientist} & 2023 & CMU & Autonomous synthesis \\
+PharmAgents \citep{gao2025pharmagents} & 2025 & Tsinghua & Target-compound interaction \\
+ChatInvent \citep{he2026chatinvent} & 2026 & AstraZeneca & Literature-driven hypothesis \\
+MADD \citep{madd2025} & 2025 & Multi-institutional & Multi-agent drug design \\
+DiscoVerse \citep{discoverse2025} & 2025 & Roche & Discovery workflow automation \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Task Class Definition}
+
+We defined 15 task classes derived from real-world drug discovery workflows spanning peptide therapeutics, in vivo pharmacology, and computational biology. These task classes represent the computational requirements encountered across 14 projects at a small biotech specializing in therapeutic peptides for regenerative medicine:
+
+\begin{enumerate}
+\item ML bioactivity prediction (multi-endpoint regression)
+\item Generative peptide design (PLM fine-tuning)
+\item Peptide-receptor binding site analysis and clustering
+\item In vivo recovery modeling (longitudinal clinical scores)
+\item Peptide-enzyme interaction modeling for stability optimization
+\item Protein language model-based receptor type prediction
+\item Monte Carlo optimization for peptide landscape exploration
+\item RNA sequencing and single-cell transcriptomics analysis
+\item Digital image processing for tissue quantification
+\item Immune response profiling (pathway analysis)
+\item Functional annotation and pathway enrichment
+\item Computer vision for behavioral phenotyping
+\item Predictive modeling bridging in vivo and in vitro endpoints
+\item Reinforcement learning for de novo peptide generation
+\item Safety and toxicology modeling (dose-response, multi-objective trade-offs)
+\end{enumerate}
+
+These task classes span the full discovery pipeline from target identification through preclinical validation, representing computational requirements that extend well beyond the small-molecule, target-based workflows that current frameworks primarily support.
+
+\subsection{Evaluation Dimensions}
+
+Each framework was evaluated across five dimensions capturing distinct aspects of drug discovery computational requirements:
+
+\begin{enumerate}
+\item \textbf{Molecular representation coverage:} Support for peptides, proteins, and biologics beyond SMILES strings and molecular fingerprints.
+\item \textbf{Computational paradigm support:} Capacity for ML training, reinforcement learning, simulation, and constrained optimization beyond LLM inference and API calls.
+\item \textbf{Data modality integration:} Handling of in vivo longitudinal data, imaging, transcriptomics, and behavioral data beyond text and tabular formats.
+\item \textbf{Resource assumptions:} Alignment with varying data volumes, compute budgets, and team sizes, particularly resource-constrained settings.
+\item \textbf{Optimization framework:} Support for multi-objective optimization, uncertainty quantification, and constraint satisfaction beyond single-metric objectives.
+\end{enumerate}
+
+\subsection{Analysis Approach}
+
+For each framework-task pair, we performed a binary capability assessment (supported or not supported) based on published documentation, source code availability, and demonstrated use cases. We computed a coverage score as the fraction of 15 task classes addressable per framework. Gaps were identified as task classes with zero or minimal framework coverage. Design requirements were derived from the capabilities needed to close identified gaps, grounded in practitioner experience with the corresponding task classes.
+
+This approach has limitations: binary assessment may oversimplify nuanced partial support, and the rapidly evolving nature of the field means new frameworks may address some identified gaps. We discuss these limitations further in \S\ref{sec:discussion}.

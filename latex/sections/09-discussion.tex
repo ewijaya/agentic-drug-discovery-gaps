@@ -1,0 +1,28 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Scope and Limitations}
+
+The 15 task classes evaluated in this analysis are derived from peptide therapeutics development at a small biotech. While we expect many findings to generalize to other biologics (antibodies, nucleic acid therapeutics) and resource-constrained settings, applicability to these modalities requires further evaluation. The specific challenges of antibody CDR optimization, mRNA design, or gene therapy vector engineering may surface additional gaps not captured here.
+
+Our binary capability assessment (supported or not supported) may oversimplify cases of nuanced partial support. Some frameworks provide limited functionality for certain task classes that falls short of full workflow integration but represents meaningful progress. Where we identified partial support, we noted this in the analysis, but a more granular scoring framework could reveal additional nuance.
+
+The field is rapidly evolving. Since beginning this analysis, systems like Agentomics \citep{agentomics2026} and ML-Agent \citep{mlagent2025} have demonstrated single-paradigm ML automation, and tools like PepTune \citep{peptune2024} and PepMLM \citep{pepmlm2025} have advanced peptide-specific generation. These developments address individual capabilities but do not yet close the integration gaps we identify.
+
+\subsection{Relation to Existing Work}
+
+This analysis complements two distinct contributions in the field. Seal et al. \citep{seal2025aiagents} provide a comprehensive architectural survey cataloging agent designs, tool integrations, and benchmarks. Their work maps what exists; ours evaluates what is missing when these systems confront diverse real-world requirements. The gaps we characterize are precisely the ones their survey catalogs but does not critique.
+
+He et al. \citep{he2026chatinvent} demonstrate a deep single-organization deployment at AstraZeneca, establishing that agentic systems can deliver value in practice. However, their evaluation reflects one organizational context with extensive resources. Our analysis extends this by assessing generalizability across resource levels, data modalities, and therapeutic modalities.
+
+Lakhan \citep{lakhan2025agentic} advocates for agentic AI adoption in biopharma. The adoption they advocate requires the engineering solutions we propose; without addressing the identified gaps, adoption will remain limited to settings that match current framework assumptions.
+
+\subsection{Future Directions}
+
+Three directions would advance the field. First, empirical benchmarks reflecting diverse drug discovery contexts beyond molecular generation. Current benchmarks (MoleculeNet, GuacaMol, Therapeutic Data Commons) focus on small-molecule property prediction and generation. Benchmarks incorporating peptide design, in vivo modeling, multi-modal integration, and resource-constrained settings would enable more representative framework evaluation.
+
+Second, open-source multi-paradigm orchestration frameworks. Workflow orchestration systems (Airflow, Kubeflow, Nextflow) provide task graphs, dependency resolution, and resource allocation. Integrating agent reasoning with these systems, enabling inspection, diagnosis, and iterative improvement, would close the gap between workflow automation and intelligent orchestration.
+
+Third, community-driven task class definitions spanning therapeutic modalities. Our 15 task classes reflect one practitioner's experience. Broader community input would extend coverage to antibodies, cell therapies, gene therapies, and other modalities, creating a shared evaluation framework for the field.
+
+These systems should augment practitioner judgment, not replace it. Drug discovery is too complex and context-dependent for full automation. Computational partners that handle preprocessing, training, tuning, and visualization while practitioners focus on hypotheses, mechanistic interpretation, and strategic trade-offs represent the appropriate design target. Partnership requires bidirectional communication: agents explain reasoning, expose assumptions, and quantify uncertainty; practitioners provide feedback and correct errors.
