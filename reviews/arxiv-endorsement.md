@@ -1,6 +1,6 @@
 # arXiv Endorsement Log
 
-## Status: Waiting for endorsement (cs.AI)
+## Status: ENDORSED (cs.AI) - Ready to submit
 
 **Endorsement code**: J4S4DF
 **Endorsement link**: https://arxiv.org/auth/endorse?x=J4S4DF
@@ -17,7 +17,7 @@
 | Who | Affiliation | Email | Paper we cite | Date sent | Status |
 |---|---|---|---|---|---|
 | Srijit Seal | University of Cambridge | srijit@understanding.bio | Seal et al. 2025 (AI Agents survey) | 2026-02-07 | Declined (not enough cs.AI papers to endorse) |
-| Bowen Gao | Tsinghua University (PhD) | billgao0111@gmail.com | PharmAgents (Gao et al. 2025) | 2026-02-07 | Waiting |
+| Bowen Gao | Tsinghua University (PhD) | billgao0111@gmail.com | PharmAgents (Gao et al. 2025) | 2026-02-07 | **ENDORSED** (2026-02-09) |
 | Botao Yu | Ohio State University (PhD) | btyu@foxmail.com | ChemToolAgent (Yu et al. 2024) | 2026-02-07 | Waiting |
 | Huan Sun | Ohio State University (Prof) | sun.397@osu.edu | ChemToolAgent (Yu et al. 2024) | 2026-02-07 | Waiting |
 | Yanyan Lan | Tsinghua University (Prof) | lanyanyan@air.tsinghua.edu.cn | PharmAgents (Gao et al. 2025) | 2026-02-07 | Waiting |
