@@ -77,6 +77,8 @@ def extract_response_text(response: Any) -> str:
 
 
 def is_retryable_error(exc: Exception) -> bool:
+    if isinstance(exc, ConnectionError):
+        return True
     status_code = getattr(exc, "status_code", None)
     if status_code in {429, 503}:
         return True
@@ -107,7 +109,21 @@ def call_model_with_retry(
                 },
             )
             latency_ms = int((time.perf_counter() - start) * 1000)
-            return extract_response_text(response), latency_ms, None
+            response_text = extract_response_text(response)
+            if response_text.strip():
+                return response_text, latency_ms, None
+
+            if attempt > MAX_RETRIES:
+                return None, latency_ms, "ValueError: Empty response content from model"
+
+            backoff = RETRY_BASE_SECONDS * (2 ** (attempt - 1))
+            print(
+                f"  retryable error on attempt {attempt}/{MAX_RETRIES} for {model_tag}: "
+                "empty response content; "
+                f"sleeping {backoff}s"
+            )
+            time.sleep(backoff)
+            continue
         except Exception as exc:  # noqa: BLE001
             latency_ms = int((time.perf_counter() - start) * 1000)
             if attempt > MAX_RETRIES or not is_retryable_error(exc):
