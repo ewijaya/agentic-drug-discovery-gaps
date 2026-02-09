@@ -1,29 +1,25 @@
 # Consolidated Action Plan: Manuscript Shape-Up for arXiv CS.AI
 
-**4 agents reviewed 16 .tex files. Findings: 29 tone issues, 53 prose cuts (~850 words), 11 methodology gaps, 10 confidentiality issues. Below is the deduplicated, prioritized plan.**
+**4 agents reviewed 16 .tex files. Findings: 29 tone issues, 53 prose cuts (~850 words), 11 methodology gaps, 9 confidentiality issues. Below is the deduplicated, prioritized plan.**
 
 ---
 
 ## P0: BLOCKING (Would cause arXiv rejection or confidentiality breach)
 
-### P0-1. CRITICAL: Company name leak in author block
-**`main.tex:7-9`** — `StemRIM, Inc.` and `wijaya@stemrim.com` appear in the author affiliation. This directly violates the confidentiality constraint.
-- **Fix**: Replace with anonymized affiliation or personal email. Your call on whether to use "Independent Computational Scientist" or a generic "Small Biopharma Company, Japan."
-
-### P0-2. Factual error: Gap 5 claims "zero coverage" but matrix shows partial
+### P0-1. Factual error: Gap 5 claims "zero coverage" but matrix shows partial
 **`07-gap-multi-objective.tex:6-7`** — "Task class 15...has zero coverage across all six frameworks." The capability matrix shows 5/6 frameworks have partial support.
 - **Fix**: "Task class 15 receives only partial coverage: five of six frameworks provide adjacent capabilities (toxicophore flagging, ADMET prediction) but none supports multi-objective trade-off reasoning, Pareto optimization, or dose-response modeling."
 
-### P0-3. Methods/matrix inconsistency: "binary" vs actual ternary scoring
+### P0-2. Methods/matrix inconsistency: "binary" vs actual ternary scoring
 **`02-methods.tex:67`** says "binary capability assessment" but the matrix uses three levels (full/partial/not supported). **`09-discussion.tex:8`** also says "binary."
 - **Fix**: Rewrite both to describe the actual three-level scheme. Add operationalized criteria for each level and a sensitivity note on the 0.5 weighting for partial support.
 
-### P0-4. Title and section title use position-paper framing
+### P0-3. Title and section title use position-paper framing
 - **`main.tex:5`**: "Mapping the Blind Spots in Agentic Drug Discovery" — "Blind Spots" editorializes.
 - **`01-introduction.tex:1`**: "The Promise and the Blind Spots" — perspective framing.
 - **Fix**: Title options: "A Systematic Capability Gap Analysis of Agentic AI Frameworks for Drug Discovery" or "Evaluating Agentic AI Frameworks Against Real-World Drug Discovery Requirements." Section title: just "Introduction."
 
-### P0-5. 16 prescriptive "must/should" directives (arXiv rejection risk)
+### P0-4. 16 prescriptive "must/should" directives (arXiv rejection risk)
 Section 8 alone has 7 instances of "Agents must..." which reads as a manifesto. Combined with "should" and "essential" across all gap sections, there are 29 advocacy-tone findings.
 
 **Pattern fix** — convert all from imperative to analytical:
@@ -44,7 +40,7 @@ Section 8 alone has 7 instances of "Agents must..." which reads as a manifesto. 
 - `07-gap-multi-objective.tex:45,57`
 - `09-discussion.tex:18,28`
 
-### P0-6. Ungrounded editorial claims
+### P0-5. Ungrounded editorial claims
 
 | File:Line | Text | Fix |
 |---|---|---|
@@ -90,7 +86,7 @@ Individually borderline, but collectively they form an identifying fingerprint: 
 
 ### P1-6. "Derived Requirements" subsections read as prescriptive proposals
 Each gap section (03-07) ends with aspirational "Derived Requirements" that lack measurability.
-- **Fix**: Rename to "Capability Requirements Implied by Gap." Add measurable success criteria (e.g., "A peptide-aware agent should accept a FASTA file of 200 labeled sequences and return a classifier with per-class AUC-ROC and calibration curves"). Apply the must-to-analytical rewrites from P0-5.
+- **Fix**: Rename to "Capability Requirements Implied by Gap." Add measurable success criteria (e.g., "A peptide-aware agent should accept a FASTA file of 200 labeled sequences and return a classifier with per-class AUC-ROC and calibration curves"). Apply the must-to-analytical rewrites from P0-4.
 
 ---
 
@@ -138,19 +134,18 @@ The abstract lists 5 gaps then 5 requirements that are nearly identical rephrasi
 
 | Tier | Count | Action |
 |------|-------|--------|
-| **P0** | 6 issues (~30 sub-items) | Must fix before submission. Focus on: author block, factual error, binary/ternary inconsistency, title, all must/should advocacy language, ungrounded claims |
+| **P0** | 5 issues (~28 sub-items) | Must fix before submission. Focus on: factual error, binary/ternary inconsistency, title, all must/should advocacy language, ungrounded claims |
 | **P1** | 6 issues | Strongly recommended. Focus on: methodology defense, identifying details, prescriptive framing |
 | **P2** | 11 issues (~850 words) | Polish. Cross-section dedup, verbose phrasing, minor tightening |
 
 ## Recommended Edit Order
 
-1. **P0-1** (author block) — 2 minutes, highest risk
-2. **P0-2** (factual error in Gap 5) — 1 minute
-3. **P0-3** (binary to ternary fix) — 10 minutes
-4. **P0-4** (title + section title) — 5 minutes
-5. **P0-5** (16 must/should rewrites) — 30 minutes
-6. **P0-6** (editorial claims) — 15 minutes
-7. **P1-1 through P1-4** (methodology strengthening) — 30 minutes
-8. **P1-5** (identifying details) — 15 minutes
-9. **P1-6** (Derived Requirements reframing) — 10 minutes
-10. **P2 items** (prose tightening) — 45 minutes
+1. **P0-1** (factual error in Gap 5) — 1 minute
+2. **P0-2** (binary to ternary fix) — 10 minutes
+3. **P0-3** (title + section title) — 5 minutes
+4. **P0-4** (16 must/should rewrites) — 30 minutes
+5. **P0-5** (editorial claims) — 15 minutes
+6. **P1-1 through P1-4** (methodology strengthening) — 30 minutes
+7. **P1-5** (identifying details) — 15 minutes
+8. **P1-6** (Derived Requirements reframing) — 10 minutes
+9. **P2 items** (prose tightening) — 45 minutes
