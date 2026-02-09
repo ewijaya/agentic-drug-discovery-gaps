@@ -52,6 +52,8 @@ In peptide pipelines, early rounds prioritized diversity, middle rounds balanced
 
 Sensitivity analysis is missing. How robust are rankings to model error? If bioactivity predictions have 20% error or toxicity is biased optimistic, which candidates remain Pareto-optimal? Sensitivity analysis quantifies robustness and guides resource allocation.
 
-\subsubsection{Derived Requirements}
+\subsubsection{Capability Requirements Implied by Gap}
+
+An agent meeting this requirement would, given multi-endpoint assay data, construct a Pareto frontier with confidence intervals, provide interactive filtering by feasibility constraints, and generate sensitivity analyses quantifying ranking robustness to model error.
 
 Closing this gap requires multi-objective Bayesian optimization with constraint handling, Pareto frontier visualization with interactive filtering, uncertainty quantification providing epistemic uncertainty in bioactivity prediction and dose-response confidence bands, and risk-aware candidate selection that adapts recommendations to development stage. The gap analysis identifies Pareto frontier representation, uncertainty quantification, risk-aware decision support, and structured decision spaces as design requirements, replacing the current pattern of outputting single optima.

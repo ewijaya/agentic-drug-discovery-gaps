@@ -36,7 +36,7 @@ Transfer learning leverages public data for small proprietary tasks. Protein lan
 
 Effective transfer learning requires selecting models (ESM-2, ProtBERT, ProGen), choosing fine-tuning layers (freezing early layers is data-efficient), setting learning rates (avoiding catastrophic forgetting or slow convergence), and implementing regularization. These are experimental decisions requiring domain knowledge.
 
-Few-shot learning extends transfer to extreme scarcity. In our experience, prototypical networks achieved 60-70\% accuracy on peptide-receptor binding classification with only 20 examples per type, sufficient for initial screening prioritization though dependent on the number of receptor classes and baseline rates. Agents provide no few-shot pathways, meta-learning support, or confidence interval quantification. A 70% prediction with ±5% confidence is actionable; ±30% is not. Uncertainty quantification is critical yet absent.
+Few-shot learning extends transfer to extreme scarcity. In our experience, prototypical networks achieved reasonable accuracy on peptide-receptor binding classification with tens of examples per type, sufficient for initial screening prioritization though dependent on the number of receptor classes and baseline rates. Agents provide no few-shot pathways, meta-learning support, or confidence interval quantification. A 70% prediction with ±5% confidence is actionable; ±30% is not. Uncertainty quantification is critical yet absent.
 
 Active learning selects which data to acquire next, prioritizing experiments reducing uncertainty. Acquisition functions (expected improvement, upper confidence bound) balance exploitation and exploration. Developing peptide bioactivity predictors, active learning reduced assays by one-third. Round one: 20 diverse peptides. Round two: 15 targeting high uncertainty. Round three: exploiting predicted best candidates. This iterative loop between models, acquisition functions, and feedback exceeds agent capabilities.
 
@@ -52,6 +52,8 @@ Parallelization is a standard requirement for computational drug discovery. Give
 
 Current agents support minimal batch capabilities, designed for interactive queries not unsupervised analyses. They lack checkpointing, parallelization, and error handling, assuming interactive debugging impractical for overnight jobs.
 
-\subsubsection{Derived Requirements}
+\subsubsection{Capability Requirements Implied by Gap}
+
+An agent meeting this requirement would, given 50--200 labeled sequences and a single GPU, recommend an appropriate modeling strategy, execute transfer learning with uncertainty quantification, and return predictions with calibrated confidence intervals within a 24-hour compute budget.
 
 Small biotech is not large pharma with fewer resources. It is a different operating mode requiring few-shot learning modules for rapid adaptation to new assays, active learning loops with acquisition functions balancing exploration and exploitation, transfer learning pipelines composing public pre-training with private fine-tuning, and batch-mode orchestration enabling unsupervised overnight analyses. Resource-aware frameworks would propose strategies matched to available infrastructure rather than assuming cluster-scale compute. The biotech sector, which accounts for a growing share of therapeutic innovation, remains underserved by current agent architectures designed for large pharma contexts.

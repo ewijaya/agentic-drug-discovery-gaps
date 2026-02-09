@@ -51,7 +51,9 @@ Agents cannot express these workflows. Orchestrators call models for inference b
 
 Recent systems have begun addressing single-paradigm ML automation. Agentomics \citep{agentomics2026} achieves autonomous ML experimentation, surpassing human-engineered state-of-the-art on 11 of 20 biomedical benchmark datasets across protein engineering, drug discovery, and regulatory genomics. ML-Agent \citep{mlagent2025} uses reinforcement learning to train LLM agents for autonomous ML engineering. These demonstrate that agents can automate individual ML workflows. However, neither orchestrates multi-paradigm pipelines: concurrent RL-based generation, supervised bioactivity prediction, Bayesian batch selection, and structural simulation in closed loops. The gap is cross-paradigm integration, not single-paradigm automation.
 
-\subsubsection{Derived Requirements}
+\subsubsection{Capability Requirements Implied by Gap}
+
+An agent meeting this requirement would accept a declarative workflow specification (e.g., ``train ensemble bioactivity predictors with 5-fold cross-validation'') and produce an executable workflow graph with resource estimates, provenance tracking, and human decision points.
 
 \begin{figure}[htbp]
 \centering

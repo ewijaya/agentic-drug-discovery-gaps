@@ -5,7 +5,7 @@ This section describes the systematic approach used to evaluate agentic AI frame
 
 \subsection{Agent Framework Selection}
 
-We selected six agentic AI frameworks representing distinct design paradigms in drug discovery automation (Table~\ref{tab:frameworks}). Selection criteria required published or preprint documentation with sufficient architectural detail, demonstrated application to drug discovery tasks, and representation of distinct paradigms (single-agent, multi-agent, tool-augmented).
+We identified candidate frameworks through systematic search of arXiv, PubMed, and Google Scholar (through January 2026) using terms including ``agentic AI drug discovery,'' ``LLM drug design,'' and ``autonomous chemistry agent.'' We selected six frameworks representing distinct design paradigms in drug discovery automation (Table~\ref{tab:frameworks}). Selection criteria required published or preprint documentation with sufficient architectural detail, demonstrated application to drug discovery tasks, and representation of distinct paradigms (single-agent, multi-agent, tool-augmented). We excluded systems that are foundation models rather than agent frameworks (TxGemma \citep{txgemma2025}), evaluation benchmarks rather than deployable systems (BioPlanner \citep{bioplanner2023}, ChemToolAgent \citep{chemtoolagent2024}), and single-paradigm ML automation tools (Agentomics \citep{agentomics2026}, ML-Agent \citep{mlagent2025}), which we discuss as complementary developments in \S\ref{sec:multiparadigm}.
 
 \begin{table}[htbp]
 \centering
@@ -28,7 +28,7 @@ DiscoVerse \citep{discoverse2025} & 2025 & Roche & Discovery workflow automation
 
 \subsection{Task Class Definition}
 
-We defined 15 task classes derived from real-world drug discovery workflows spanning peptide therapeutics, in vivo pharmacology, and computational biology. These task classes represent the computational requirements encountered across 14 projects at a small biotech specializing in therapeutic peptides for regenerative medicine:
+We defined 15 task classes derived from real-world drug discovery workflows spanning peptide therapeutics, in vivo pharmacology, and computational biology. These task classes represent the computational requirements encountered across 14 projects at a small biotech specializing in therapeutic peptides:
 
 \begin{enumerate}
 \item ML bioactivity prediction (multi-endpoint regression)
@@ -48,7 +48,7 @@ We defined 15 task classes derived from real-world drug discovery workflows span
 \item Safety and toxicology modeling (dose-response, multi-objective trade-offs)
 \end{enumerate}
 
-These task classes span the full discovery pipeline from target identification through preclinical validation, representing computational requirements that extend well beyond the small-molecule, target-based workflows that current frameworks primarily support.
+These task classes align with established drug discovery workflow taxonomies. Schneider et al.\ \citep{schneider2020generative} identify generative design, property prediction, and optimization as core computational tasks; Vamathevan et al.\ \citep{vamathevan2019applications} catalog ML applications spanning target identification, compound screening, and preclinical development. Our taxonomy extends these to include in vivo modeling, behavioral phenotyping, and multi-objective optimization, which are underrepresented in existing computational frameworks. Some task classes overlap intentionally: T10 (immune profiling) and T11 (functional annotation) share pathway analysis methods but differ in biological focus; T7 (Monte Carlo optimization) and T14 (RL generation) both explore sequence space but use distinct algorithmic approaches. We deliberately exclude task classes where agents already perform well, such as literature synthesis, retrosynthesis planning, and molecular property lookup, focusing instead on capabilities that remain unsupported.
 
 \subsection{Evaluation Dimensions}
 
@@ -62,8 +62,12 @@ Each framework was evaluated across five dimensions capturing distinct aspects o
 \item \textbf{Optimization framework:} Support for multi-objective optimization, uncertainty quantification, and constraint satisfaction beyond single-metric objectives.
 \end{enumerate}
 
+These five evaluation dimensions and the five gaps identified in \S\ref{sec:results} are not in one-to-one correspondence. Gaps emerge from clusters of low coverage across multiple dimensions: for example, Gap 1 (small-molecule bias) reflects limitations in both molecular representation (D1) and computational paradigm support (D2), while Gap 4 (small-biotech constraints) spans resource assumptions (D4), computational paradigm support (D2), and data modality integration (D3).
+
 \subsection{Analysis Approach}
 
 For each framework-task pair, we performed a three-level capability assessment: full support (the framework provides end-to-end workflow coverage for the task class), partial support (the framework provides adjacent or limited capabilities that address aspects of the task class without complete workflow coverage), and not supported (the framework provides no relevant capability). Partial support received a weight of 0.5 when computing coverage scores. We computed a coverage score as the weighted fraction of 15 task classes addressable per framework. Gaps were identified as task classes with zero or minimal framework coverage. Design requirements were derived from the capabilities needed to close identified gaps, grounded in practitioner experience with the corresponding task classes.
+
+Capability assessments were based on examination of published manuscripts, available source code repositories, official documentation, and publicly accessible demonstrations for each framework. All assessments were performed by a single rater (the author); we acknowledge this as a limitation in \S\ref{sec:discussion}. Evidence supporting individual assessments is documented in Appendix~\ref{sec:appendix-b}.
 
 This approach has limitations: the three-level assessment and the 0.5 weighting for partial support may not capture the full spectrum of capability nuance, and the rapidly evolving nature of the field means new frameworks may address some identified gaps. We discuss these limitations further in \S\ref{sec:discussion}.

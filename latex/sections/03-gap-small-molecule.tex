@@ -11,7 +11,7 @@ All six frameworks evaluated assume small-molecule representations (SMILES strin
 
 Therapeutic peptides (2 to 50 amino acids) bridge small molecules and biologics. Unlike rigid small molecules, peptides are conformationally flexible, sampling diverse structural states. They achieve high selectivity through induced-fit binding but face aggregation, protease degradation, and permeability barriers. These challenges extend beyond peptides to biologics broadly: antibodies require CDR loop modeling, nanobodies need single-domain folding, and fusion proteins demand multi-domain interaction prediction. The small-molecule bias is a biologics-wide limitation.
 
-Peptide discovery diverges from small-molecule workflows. Structure-activity relationships do not transfer; conservative substitutions can abolish activity while drastic changes improve potency. Stability dominates. Developing peptides for traumatic brain injury, efficacy-stability trade-offs exceeded potency concerns. A bioactive peptide with minute-scale serum half-life has no therapeutic value. Protease resistance requires modeling interactions across dozens of enzyme families. Immunogenicity demands epitope scanning and MHC binding prediction. Aggregation depends on charge distribution and hydrophobic patterning.
+Peptide discovery diverges from small-molecule workflows. Structure-activity relationships do not transfer; conservative substitutions can abolish activity while drastic changes improve potency. Stability dominates. In neurological injury indications, efficacy-stability trade-offs exceeded potency concerns. A bioactive peptide with minute-scale serum half-life has no therapeutic value. Protease resistance requires modeling interactions across dozens of enzyme families. Immunogenicity demands epitope scanning and MHC binding prediction. Aggregation depends on charge distribution and hydrophobic patterning.
 
 Current agents provide no pathway for these requirements. ChemCrow includes RDKit, which does not handle peptide conformational sampling. PharmAgents focuses on small-molecule structure-based design workflows not designed for flexible peptide interactions. ChatInvent mines small-molecule synthesis routes and molecular design, irrelevant to peptide synthesis.
 
@@ -37,7 +37,9 @@ Generative modeling extends this gap. ProtGPT2 \citep{ferruz2022protgpt2} fine-t
 
 The gap reflects a missing paradigm, not a missing tool. Protein language models are the foundation of peptide discovery, demanding first-class support for training and fine-tuning. Without this, agents cannot support the core workflows practitioners use to move from sequence space exploration to experimentally validated leads.
 
-\subsubsection{Derived Requirements}
+\subsubsection{Capability Requirements Implied by Gap}
+
+A peptide-aware agent meeting this requirement would accept a FASTA file of 200 labeled sequences and return a classifier with per-class AUC-ROC and calibration curves, or accept a generative model specification and return novel sequences with predicted property distributions and diversity metrics.
 
 Peptide-aware architectures require protein language models as core components, not external APIs. First, fine-tuning pipelines: dataset curation, train-validation-test splits, learning rate scheduling, early stopping, checkpointing. Effective frameworks would fine-tune ProtBERT on 200 sequences and return calibrated classifiers with uncertainty estimates.
 
