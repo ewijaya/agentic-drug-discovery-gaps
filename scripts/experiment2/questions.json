@@ -1,0 +1,1006 @@
+[
+  {
+    "id": "SAR-SM-01",
+    "category": "SAR Reasoning",
+    "domain": "small_molecule",
+    "pair_id": "SAR-01",
+    "question": "A ligand’s para-substituent on a phenyl ring points into a hydrophobic subpocket and sits ~3.2 Å from a protein backbone carbonyl oxygen (geometry compatible with a halogen bond). If the para-methyl analog has IC50 = 200 nM, what is the most likely potency change when replacing para-CH3 with para-Cl, and what is the mechanistic rationale?",
+    "reference_answer": "Replacing para-CH3 with para-Cl is most likely to improve potency (often ~2–10×) because Cl increases hydrophobic contact and can form a favorable halogen bond to the carbonyl oxygen at ~3.0–3.5 Å. The larger, more polarizable substituent can better occupy the hydrophobic volume while adding a directional electrostatic interaction. The net effect is typically a lower IC50 if steric fit remains favorable.",
+    "key_concepts": ["halogen bonding geometry", "hydrophobic subpocket occupancy", "substituent polarizability", "IC50 potency shift"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "SAR-PEP-01",
+    "category": "SAR Reasoning",
+    "domain": "peptide",
+    "pair_id": "SAR-01",
+    "question": "A peptide ligand has a Leu side chain that inserts into a hydrophobic subpocket adjacent to an aromatic residue that can support edge-to-face π interactions. If the Leu-containing peptide has Kd = 200 nM, what is the most likely binding change when substituting that Leu with Phe, and why?",
+    "reference_answer": "Substituting Leu with Phe is most likely to improve binding affinity (often ~2–10×) because the phenyl ring can increase hydrophobic surface area and enable favorable π interactions with nearby aromatic residues. If the pocket volume accommodates the larger side chain without steric clash, the added dispersion/π contacts stabilize the complex. The expected outcome is a lower Kd than 200 nM.",
+    "key_concepts": ["hydrophobic packing", "aromatic π interactions", "steric fit vs clash", "Kd affinity shift"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "SAR-SM-02",
+    "category": "SAR Reasoning",
+    "domain": "small_molecule",
+    "pair_id": "SAR-02",
+    "question": "A carboxylate on a small molecule forms a salt bridge to a Lys side chain (N–O distance ~2.8–3.0 Å) and is required for activity. What is the most likely effect on potency if you convert the carboxylic acid to a methyl ester, and why?",
+    "reference_answer": "Converting a carboxylic acid to a methyl ester typically causes a large loss of potency (commonly 10^2–10^4-fold) because the ester is neutral and cannot maintain the strong ionic interaction with Lys. The salt bridge contributes several kcal/mol of binding energy, and removing it markedly destabilizes the bound state. Unless the ester is hydrolyzed in situ, activity usually drops sharply.",
+    "key_concepts": ["salt bridge energetics", "ionization state change", "carboxylate-to-ester impact", "order-of-magnitude potency loss"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "SAR-PEP-02",
+    "category": "SAR Reasoning",
+    "domain": "peptide",
+    "pair_id": "SAR-02",
+    "question": "A peptide’s Asp side chain forms a salt bridge to a Lys on the target protein (distance ~2.8–3.0 Å) and is required for activity. What is the most likely effect on potency if Asp is substituted with Asn at that position, and why?",
+    "reference_answer": "Asp→Asn typically causes a large potency loss (often 10^2-fold or more) because Asn is neutral and cannot provide the same ionic interaction as a deprotonated Asp. While Asn can sometimes form hydrogen bonds, it rarely compensates fully for the missing salt bridge energy. The result is usually substantially weaker binding and reduced activity.",
+    "key_concepts": ["Asp vs Asn charge state", "salt bridge contribution", "hydrogen bond vs ionic bond strength", "large activity drop"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "SAR-SM-03",
+    "category": "SAR Reasoning",
+    "domain": "small_molecule",
+    "pair_id": "SAR-03",
+    "question": "A ligand has a flexible linker (6 rotatable bonds) between two pharmacophoric groups. A co-crystal shows the bound conformation is U-shaped, but in solution the ligand is highly flexible. What is the most likely effect of macrocyclizing the linker to bias the U-shape, and why?",
+    "reference_answer": "Macrocyclization is most likely to improve potency (often ~5–50×) if the ring preorganizes the ligand toward the bioactive U-shaped conformation, reducing the entropic penalty of binding. By lowering conformational freedom in solution, the ligand pays less entropy upon binding, improving ΔG. A common risk is reduced solubility from increased lipophilicity/rigidity, but affinity often improves when the bioactive geometry is captured.",
+    "key_concepts": ["conformational preorganization", "entropy of binding", "macrocycle SAR", "potency vs solubility trade-off"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "SAR-PEP-03",
+    "category": "SAR Reasoning",
+    "domain": "peptide",
+    "pair_id": "SAR-03",
+    "question": "A linear 10-mer peptide binds a target in a compact turn-like conformation. What is the most likely effect of head-to-tail cyclization on potency and why (assume cyclization does not directly block a key contact residue)?",
+    "reference_answer": "Head-to-tail cyclization often improves potency (commonly ~2–20×) by preorganizing the peptide toward the bound conformation and reducing the entropic cost of binding. Cyclization can also reduce conformational heterogeneity and protect termini from exopeptidases, indirectly improving functional activity. If the ring does not distort the bioactive geometry, affinity typically increases.",
+    "key_concepts": ["cyclization preorganization", "entropy–affinity relationship", "terminal protease protection", "bioactive conformation retention"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "SAR-SM-04",
+    "category": "SAR Reasoning",
+    "domain": "small_molecule",
+    "pair_id": "SAR-04",
+    "question": "A chiral secondary alcohol is positioned so that only the (S)-enantiomer can donate a hydrogen bond to an Asp residue; the (R)-enantiomer points the substituent into a tight hydrophobic cleft causing steric clash. Which enantiomer is expected to be more potent, and what magnitude of potency difference is commonly observed in such cases?",
+    "reference_answer": "The (S)-enantiomer is expected to be more potent because it can form the required hydrogen bond without steric clash. In stereochemically constrained binding sites, enantiomer potency differences of >10× and often >100× are common when only one enantiomer satisfies key geometric constraints. The (R)-enantiomer is likely much weaker or inactive.",
+    "key_concepts": ["stereochemical fit", "hydrogen bond geometry", "steric clash", "enantiomer potency separation"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "SAR-PEP-04",
+    "category": "SAR Reasoning",
+    "domain": "peptide",
+    "pair_id": "SAR-04",
+    "question": "A peptide binds its target as an α-helix, and residue i is buried in a helix-dependent interface. What is the most likely effect on activity of substituting that residue from an L-amino acid to the corresponding D-amino acid, and why?",
+    "reference_answer": "Substituting an L-residue to the corresponding D-residue at a helix-dependent interface usually causes a substantial loss of activity (often >10–100×) because D-residues disrupt local backbone dihedrals and destabilize α-helical structure. The side-chain orientation relative to the helix and interface is altered, breaking packing and hydrogen-bond networks. D-substitutions are better tolerated in non-structured or solvent-exposed positions.",
+    "key_concepts": ["L-to-D stereochemistry in helices", "backbone dihedral disruption", "interface packing", "large activity loss"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "SAR-SM-05",
+    "category": "SAR Reasoning",
+    "domain": "small_molecule",
+    "pair_id": "SAR-05",
+    "question": "A ligand’s secondary amide NH donates a hydrogen bond to the target (N–O distance ~2.9 Å) and is critical for potency. What is the expected potency effect of replacing that amide with an ester at the same position, and what other property often changes in parallel?",
+    "reference_answer": "Replacing an amide with an ester commonly causes a marked potency decrease (often ≥10×, sometimes much more) because the ester removes the NH hydrogen-bond donor and changes local geometry/electronics. In parallel, permeability often increases because esters are less polar and have fewer hydrogen-bond donors. The net outcome is typically weaker target binding but potentially better passive transport.",
+    "key_concepts": ["amide-to-ester HBD loss", "hydrogen bond contribution", "potency vs permeability trade-off", "electronic/geometry changes"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "SAR-PEP-05",
+    "category": "SAR Reasoning",
+    "domain": "peptide",
+    "pair_id": "SAR-05",
+    "question": "A peptide’s backbone NH at a specific position donates a critical hydrogen bond to the target (distance ~2.9 Å). What is the expected effect on activity of N-methylating that backbone amide at the same position, and what secondary benefit might occur?",
+    "reference_answer": "N-methylation at a position where the backbone NH is a required hydrogen-bond donor typically decreases potency (often ≥10×) because the donor is removed and local backbone conformation can shift. A secondary benefit is increased proteolytic stability because many proteases require access to backbone NH/planar amide geometry for recognition and catalysis. Thus, activity may drop even as serum stability improves.",
+    "key_concepts": ["N-methylation removes HBD", "backbone conformational effects", "binding-energy loss", "protease resistance gain"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "SAR-SM-06",
+    "category": "SAR Reasoning",
+    "domain": "small_molecule",
+    "pair_id": "SAR-06",
+    "question": "A kinase inhibitor relies on a heteroaromatic ring to form two hinge hydrogen bonds (one acceptor and one donor). What is the most likely potency effect of replacing that heteroaromatic ring with a phenyl ring at the same position, and why?",
+    "reference_answer": "Replacing a hinge-binding heteroaromatic with phenyl typically causes a large potency loss (often >100×) because phenyl cannot replicate the required hinge hydrogen-bond donor/acceptor pattern. Those two hinge interactions are frequently the dominant anchoring contacts for kinase inhibitors. Without them, binding affinity drops sharply and IC50 increases substantially.",
+    "key_concepts": ["hinge hydrogen bonds", "heteroaromatic donor/acceptor pattern", "anchor interactions", "large potency collapse"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "SAR-PEP-06",
+    "category": "SAR Reasoning",
+    "domain": "peptide",
+    "pair_id": "SAR-06",
+    "question": "A stapled α-helical peptide binds a protein–protein interaction target, and CD measurements show ~60% helicity in solution. What is the most likely activity effect of removing the staple (keeping the same sequence otherwise), and why?",
+    "reference_answer": "Removing the staple typically reduces helicity substantially (often to <20%) and leads to a large loss of potency (commonly >10–100×) because the peptide becomes more disordered in solution and pays a larger entropic penalty upon binding. Stapling also positions key side chains on the helical face; losing that preorganization weakens interface packing. Therefore, activity usually drops markedly.",
+    "key_concepts": ["staple stabilizes helicity", "entropy penalty on binding", "side-chain display geometry", "order-of-magnitude potency loss"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "SAR-SM-07",
+    "category": "SAR Reasoning",
+    "domain": "small_molecule",
+    "pair_id": "SAR-07",
+    "question": "A phenyl ring in a lead compound occupies a hydrophobic pocket in both the intended target and a close off-target homolog. Only the intended target has a nearby Ser OH positioned to hydrogen-bond to a ring heteroatom. What is the expected effect on target potency and selectivity of replacing phenyl with a 3-pyridyl ring (introducing one ring nitrogen), and why?",
+    "reference_answer": "Replacing phenyl with 3-pyridyl is expected to improve target selectivity and often improve target potency because the pyridine nitrogen can act as a hydrogen-bond acceptor for the target’s Ser OH while the off-target lacks that interaction. The hydrophobic packing can be largely preserved while adding a target-specific polar contact. A common parallel effect is a modest decrease in logP and improved aqueous solubility.",
+    "key_concepts": ["target-specific H-bond", "phenyl-to-pyridyl substitution", "selectivity via unique residue", "logP/solubility shift"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "SAR-PEP-07",
+    "category": "SAR Reasoning",
+    "domain": "peptide",
+    "pair_id": "SAR-07",
+    "question": "A peptide binds both a target protein and a close homolog. Only the target has a Tyr OH positioned to hydrogen-bond with a side-chain acceptor at the interface. What is the expected effect on potency and selectivity of substituting a Val at the interface to an Asn (introducing a side-chain carbonyl acceptor), and why?",
+    "reference_answer": "Val→Asn is expected to improve selectivity and can improve potency if the Asn side-chain carbonyl forms a stabilizing hydrogen bond with the target Tyr OH that is absent in the homolog. This adds a target-specific polar interaction while maintaining reasonable packing if sterics are compatible. The homolog, lacking the Tyr OH, gains less or no affinity increase, widening selectivity.",
+    "key_concepts": ["introducing a side-chain H-bond acceptor", "target-specific interaction", "packing compatibility", "selectivity amplification"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "SAR-SM-08",
+    "category": "SAR Reasoning",
+    "domain": "small_molecule",
+    "pair_id": "SAR-08",
+    "question": "A lead compound binds in a folded conformation. You add a gem-dimethyl group adjacent to the folding hinge (Thorpe–Ingold effect) to bias the folded conformation. If conformational preorganization improves binding free energy by ~1.0 kcal/mol, approximately what potency change (fold) would you expect at 298 K, and why?",
+    "reference_answer": "A ~1.0 kcal/mol improvement in binding free energy corresponds to roughly a ~5-fold potency improvement at 298 K because ΔG = RT ln(Kd) and RT ≈ 0.593 kcal/mol. The Thorpe–Ingold effect reduces conformational entropy loss by favoring the bioactive fold in solution. Thus, an IC50/Kd on the order of 5× lower is a reasonable expectation if other properties are unchanged.",
+    "key_concepts": ["Thorpe–Ingold (gem-dimethyl) effect", "ΔG to fold-change mapping", "RT ≈ 0.593 kcal/mol at 298 K", "conformational entropy"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "SAR-PEP-08",
+    "category": "SAR Reasoning",
+    "domain": "peptide",
+    "pair_id": "SAR-08",
+    "question": "A peptide binds as an α-helix but is mostly disordered in solution. Stapling increases preorganization and improves binding free energy by ~1.0 kcal/mol. Approximately what fold-improvement in affinity would you expect at 298 K, and what is the mechanism?",
+    "reference_answer": "A ~1.0 kcal/mol improvement corresponds to ~5-fold stronger binding at 298 K because RT ≈ 0.593 kcal/mol and fold-change ≈ exp(ΔΔG/RT). Stapling increases helical population in solution, reducing the entropic penalty required to adopt the bound conformation. The resulting affinity increase is therefore typically on the order of a few-fold per ~1 kcal/mol gained.",
+    "key_concepts": ["helix preorganization", "entropy penalty reduction", "ΔΔG-to-affinity fold-change", "RT scaling"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "SAR-SM-09",
+    "category": "SAR Reasoning",
+    "domain": "small_molecule",
+    "pair_id": "SAR-09",
+    "question": "A tertiary amine (pKa ~9) forms a salt bridge to an Asp in the binding site (N–O distance ~2.8 Å). You replace the tertiary amine with an amide at the same position. What is the most likely potency effect and why?",
+    "reference_answer": "Potency is expected to drop dramatically (often >100×) because the amide is largely neutral and cannot sustain the strong ionic interaction to Asp that a protonated amine provides. The replacement also alters geometry and removes a key electrostatic anchor. Even if the amide can accept hydrogen bonds, it rarely compensates for the lost salt bridge energy.",
+    "key_concepts": ["pKa and ionization", "salt bridge anchoring", "amine-to-amide neutralization", "large affinity loss"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "SAR-PEP-09",
+    "category": "SAR Reasoning",
+    "domain": "peptide",
+    "pair_id": "SAR-09",
+    "question": "A peptide’s Lys side chain forms a salt bridge to an Asp on the target protein (N–O distance ~2.8 Å). You mutate Lys to Gln at that position. What is the most likely effect on binding/activity and why?",
+    "reference_answer": "Lys→Gln typically causes a large loss of binding/activity (often >10–100×) because Gln is neutral and cannot replicate the strong ionic interaction of Lys with Asp. While Gln can form hydrogen bonds, these are generally weaker and less directional than the salt bridge contribution. The net result is substantially weaker complex stabilization.",
+    "key_concepts": ["ionic vs neutral side chains", "salt bridge energetics", "Lys hotspot role", "activity drop magnitude"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "SAR-SM-10",
+    "category": "SAR Reasoning",
+    "domain": "small_molecule",
+    "pair_id": "SAR-10",
+    "question": "A biaryl inhibitor rapidly interconverts between two atropisomers, but only one atropisomer fits the binding pocket. What design change is most likely to increase potency and selectivity, and why?",
+    "reference_answer": "Increasing the rotational barrier (e.g., adding ortho substituents to bias and lock the bioactive atropisomer) is most likely to increase potency and selectivity by enriching the population of the active conformer. If the atropisomers interconvert faster than binding, the effective affinity is diluted by the inactive fraction. Conformational locking can convert a mixture into predominantly the binding-competent geometry, often yielding multi-fold improvements.",
+    "key_concepts": ["atropisomerism and conformational populations", "rotational barrier tuning", "bioactive conformer enrichment", "selectivity via conformational fit"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "SAR-PEP-10",
+    "category": "SAR Reasoning",
+    "domain": "peptide",
+    "pair_id": "SAR-10",
+    "question": "A peptide bond adjacent to a Pro residue exists as a cis/trans mixture in solution, but only the trans conformer binds the target. What modification is most likely to increase apparent potency, and why?",
+    "reference_answer": "Biasing or locking the peptide into the trans conformer (e.g., using a Pro analog such as 4-substituted proline that favors trans, or cyclizing to restrict the bond geometry) is most likely to increase apparent potency by increasing the fraction of binding-competent conformers. If only trans binds, the effective affinity is reduced in proportion to the inactive cis population. Enriching trans increases functional binding without changing the binding interface per se.",
+    "key_concepts": ["cis/trans proline isomerization", "active conformer fraction", "conformational locking", "apparent potency dependence on population"],
+    "difficulty": "advanced"
+  },
+
+  {
+    "id": "ADMET-SM-01",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "small_molecule",
+    "pair_id": "ADMET-01",
+    "question": "State Lipinski’s Rule-of-Five thresholds (MW, cLogP, HBD, HBA) and give two mechanistic reasons why violating multiple thresholds tends to reduce oral exposure.",
+    "reference_answer": "Typical Rule-of-Five thresholds are MW ≤ 500, cLogP ≤ 5, HBD ≤ 5, and HBA ≤ 10. Violating them often reduces aqueous solubility (especially with high cLogP/MW) and reduces passive permeability (especially with many HBD/HBA and high polarity). It can also increase clearance via metabolism/efflux and increase nonspecific tissue binding.",
+    "key_concepts": ["Ro5 numeric thresholds", "solubility limitation", "permeability/polarity", "clearance and efflux effects"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "ADMET-PEP-01",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "peptide",
+    "pair_id": "ADMET-01",
+    "question": "What is the typical plasma half-life range for unmodified linear therapeutic peptides, and what are three primary strategies to extend it (include typical timescale changes)?",
+    "reference_answer": "Unmodified linear peptides commonly have plasma half-lives of ~2–30 minutes due to proteolysis and rapid renal clearance. Half-life can be extended to hours–days by PEGylation or Fc/albumin fusion, and to days–weeks by lipidation/albumin-binding strategies; cyclization and D-amino acid or N-methylation at cleavage sites often extend serum stability by reducing protease susceptibility. These approaches reduce clearance and/or protect from enzymatic degradation.",
+    "key_concepts": ["2–30 minute baseline half-life", "proteolysis vs renal clearance", "PEGylation/Fc fusion", "lipidation/albumin binding", "cyclization/D-amino acids"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "ADMET-SM-02",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "small_molecule",
+    "pair_id": "ADMET-02",
+    "question": "A benzylic CH2 is identified as the major CYP oxidation soft spot (rapid benzylic hydroxylation). Name one structural change that typically reduces this metabolism and explain the mechanism (include a typical magnitude of intrinsic clearance reduction).",
+    "reference_answer": "Installing a benzylic fluorine (CH2→CHF) or adding steric hindrance adjacent to the benzylic position often reduces oxidation by making C–H abstraction less favorable and/or blocking access to the reactive site. Such changes can reduce intrinsic clearance by several-fold (commonly ~2–10×) when that pathway dominates. Deuteration can also help, but kinetic isotope effects in vivo are often modest (~1.2–2×).",
+    "key_concepts": ["CYP soft spot", "benzylic oxidation mechanism", "fluorination/steric blocking", "typical fold-change in clearance"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "ADMET-PEP-02",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "peptide",
+    "pair_id": "ADMET-02",
+    "question": "A linear peptide is rapidly cleaved by trypsin-like proteases at a Lys site (cleavage after Lys). Name two peptide modifications that typically reduce this cleavage and explain why serum stability increases (include a typical qualitative timescale change).",
+    "reference_answer": "Replacing the scissile-site residue with a D-amino acid or a non-canonical analog can strongly reduce protease recognition and cleavage, often extending degradation half-life from minutes toward tens of minutes or hours if that site is dominant. N-methylation of the backbone near the cleavage site and cyclization can also reduce cleavage by disrupting enzyme–substrate binding geometry and limiting access to the peptide bond. These modifications decrease kcat/KM for the protease at the vulnerable bond.",
+    "key_concepts": ["trypsin-like specificity after Lys/Arg", "D-amino acid/non-natural substitution", "N-methylation/cyclization", "serum stability via reduced cleavage"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "ADMET-SM-03",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "small_molecule",
+    "pair_id": "ADMET-03",
+    "question": "What physicochemical profile is commonly associated with hERG liability, and what in vitro hERG IC50 threshold is often treated as a significant flag for follow-up?",
+    "reference_answer": "hERG risk is commonly associated with lipophilic, cationic, aromatic molecules (e.g., cLogP > ~3 and a basic pKa > ~8 leading to a positively charged species) that can bind the channel pore. A hERG IC50 < ~10 µM is frequently treated as a significant flag requiring optimization and safety margin analysis. A common goal is a substantial margin (often >30×) between free Cmax and hERG potency.",
+    "key_concepts": ["cationic amphiphilic profile", "cLogP and pKa risk factors", "hERG IC50 ~10 µM flag", "exposure safety margin concept"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "ADMET-PEP-03",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "peptide",
+    "pair_id": "ADMET-03",
+    "question": "Name three common drivers of peptide immunogenicity (anti-drug antibody risk) and two mitigation strategies used in therapeutic peptide design.",
+    "reference_answer": "Immunogenicity risk increases with strong T-cell epitope content, aggregation/particulates (which enhance immune activation), and non-human or highly unusual motifs/impurities from manufacturing. Mitigation strategies include deimmunization by altering predicted T-cell epitopes while preserving function, and formulation/sequence changes that reduce aggregation; PEGylation or fusion to human carriers can also reduce effective immunogenic presentation. Monitoring ADA titers in vivo is used to confirm impact.",
+    "key_concepts": ["T-cell epitopes", "aggregation/particulates", "sequence non-self features/impurities", "deimmunization", "aggregation reduction strategies"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "ADMET-SM-04",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "small_molecule",
+    "pair_id": "ADMET-04",
+    "question": "A small molecule has systemic clearance CL = 30 L/h and volume of distribution Vd = 300 L in humans. Estimate the terminal half-life and interpret what a Vd this large typically implies about tissue distribution.",
+    "reference_answer": "Half-life t1/2 ≈ 0.693 × Vd/CL ≈ 0.693 × 300/30 ≈ 6.9 hours. A very large Vd (hundreds of liters) typically implies extensive distribution into tissues, often driven by lipophilicity, tissue binding, or sequestration in membranes. This can prolong apparent half-life even when clearance is moderate.",
+    "key_concepts": ["t1/2 = 0.693 Vd/CL", "unit consistency", "large Vd interpretation", "tissue binding/distribution"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "ADMET-PEP-04",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "peptide",
+    "pair_id": "ADMET-04",
+    "question": "A therapeutic peptide has systemic clearance CL = 12 L/h and Vd = 4 L in humans. Estimate the terminal half-life and interpret what a Vd near 3–5 L typically implies about distribution.",
+    "reference_answer": "Half-life t1/2 ≈ 0.693 × 4/12 ≈ 0.23 hours ≈ 14 minutes. A Vd near plasma/extracellular fluid volume (roughly a few liters) typically implies the peptide is largely confined to the vascular/extracellular space with limited tissue penetration. Rapid half-life is consistent with proteolysis and/or renal filtration dominating clearance.",
+    "key_concepts": ["t1/2 calculation", "Vd near plasma volume", "limited tissue penetration", "renal/proteolytic clearance"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "ADMET-SM-05",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "small_molecule",
+    "pair_id": "ADMET-05",
+    "question": "A highly metabolized drug has high intrinsic clearance (CLint >> hepatic blood flow). Using the well-stirred model, how does decreasing the unbound fraction in plasma from fu = 0.01 to fu = 0.005 tend to change hepatic clearance, and why?",
+    "reference_answer": "When CLint >> Q, the well-stirred model approximates CLh ≈ Q × fu × CLint/(fu × CLint) ≈ Q for very high extraction, but for drugs that are not fully flow-limited, clearance scales approximately with fu. Decreasing fu from 0.01 to 0.005 tends to reduce hepatic clearance (often roughly proportional in the fu-limited regime) because only unbound drug is available for metabolism. This also changes the relationship between total and free concentrations, so interpretation must distinguish free vs total exposure.",
+    "key_concepts": ["well-stirred model", "unbound drug hypothesis", "fu impact on clearance", "free vs total exposure"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "ADMET-PEP-05",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "peptide",
+    "pair_id": "ADMET-05",
+    "question": "A peptide’s renal filtration is approximately proportional to its free (unbound) fraction. If lipidation increases albumin binding and reduces fu from 0.5 to 0.01 (50-fold), what qualitative change do you expect in renal clearance and half-life (assume Vd is roughly unchanged)?",
+    "reference_answer": "Renal filtration clearance would be expected to decrease strongly (often approaching the same order as the fu decrease) because only unbound peptide is filtered efficiently. If fu drops 50-fold and Vd is similar, half-life can increase by a comparable factor because t1/2 scales inversely with clearance (t1/2 ∝ 1/CL). In practice, other pathways may contribute, but albumin binding is a major lever for extending peptide half-life.",
+    "key_concepts": ["albumin binding reduces fu", "filtration proportional to unbound fraction", "t1/2 inverse with CL", "lipidation as half-life extension"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "ADMET-SM-06",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "small_molecule",
+    "pair_id": "ADMET-06",
+    "question": "A candidate has TPSA = 140 Å², HBD = 3, and is a P-gp substrate. Name two design strategies that can increase oral absorption and briefly explain the mechanism.",
+    "reference_answer": "Reducing exposed polarity (e.g., lowering TPSA by removing or masking polar groups, reducing HBD, or using an intramolecular hydrogen bond) can improve passive permeability. A prodrug strategy (e.g., esterifying a polar acid) can transiently reduce polarity and evade efflux, with enzymatic conversion back to active drug after absorption. Altering basicity and scaffold features can also reduce P-gp recognition and improve net absorption.",
+    "key_concepts": ["TPSA/HBD impact on permeability", "P-gp efflux reduction", "prodrug masking polarity", "intramolecular H-bonding strategy"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "ADMET-PEP-06",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "peptide",
+    "pair_id": "ADMET-06",
+    "question": "A 12-mer peptide has net charge +3 and many hydrogen-bond donors (backbone + side chains), giving poor cell permeability. Name two chemical strategies that can increase cell permeability while keeping the same amino-acid sequence identity largely intact, and explain why they work.",
+    "reference_answer": "Cyclization and/or stapling can increase permeability by reducing conformational flexibility and enabling shielding of polar groups, lowering the effective polar surface area. Backbone N-methylation reduces hydrogen-bond donors and can promote conformations with intramolecular hydrogen bonding, improving passive diffusion. Lipidation or CPP conjugation can also increase uptake by engaging membranes, though it may change distribution and toxicity.",
+    "key_concepts": ["effective polar surface area shielding", "cyclization/stapling", "N-methylation reduces HBD", "membrane interaction strategies"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "ADMET-SM-07",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "small_molecule",
+    "pair_id": "ADMET-07",
+    "question": "Assume hepatic blood flow Qh ≈ 90 L/h. A drug has hepatic clearance CLh = 60 L/h. Compute the extraction ratio E and state whether clearance is more likely flow-limited or capacity/fu-limited.",
+    "reference_answer": "Extraction ratio E = CLh/Qh ≈ 60/90 ≈ 0.67. An E of ~0.67 indicates relatively high extraction, so clearance is more likely to be partially flow-limited and less sensitive to changes in fu or CLint than low-extraction compounds. High-extraction drugs are strongly influenced by hepatic blood flow.",
+    "key_concepts": ["E = CL/Q", "high vs low extraction regimes", "flow limitation", "fu/CLint sensitivity"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "ADMET-PEP-07",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "peptide",
+    "pair_id": "ADMET-07",
+    "question": "Assume renal plasma flow Qr ≈ 45 L/h. A peptide has renal clearance CLr = 5 L/h. Compute extraction ratio E and state whether clearance is more likely flow-limited or capacity/fu-limited.",
+    "reference_answer": "Extraction ratio E = CLr/Qr ≈ 5/45 ≈ 0.11. An E of ~0.11 indicates low extraction, so clearance is more likely limited by intrinsic processes (filtration/secretion) and the unbound fraction rather than renal plasma flow. Therefore, increasing albumin binding (lowering fu) can meaningfully reduce clearance.",
+    "key_concepts": ["renal extraction ratio", "low-extraction interpretation", "fu dependence", "flow vs intrinsic limitation"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "ADMET-SM-08",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "small_molecule",
+    "pair_id": "ADMET-08",
+    "question": "A basic drug has pKa = 9.5 and cLogP = 3.5. At intestinal pH 6.5, approximately what fraction is un-ionized, and what does that imply for passive permeability?",
+    "reference_answer": "For a base, fraction un-ionized ≈ 1/(1 + 10^(pKa − pH)) ≈ 1/(1 + 10^3) ≈ 0.1%. With only ~0.1% neutral species at pH 6.5, passive permeability is often limited despite high cLogP because the charged form crosses membranes poorly. A typical strategy is to lower pKa, reduce HBD/HBA, or use a prodrug to increase the neutral fraction during absorption.",
+    "key_concepts": ["Henderson–Hasselbalch for bases", "fraction unionized estimate", "charge limits permeability", "pKa modulation/prodrug strategy"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "ADMET-PEP-08",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "peptide",
+    "pair_id": "ADMET-08",
+    "question": "Some cyclic peptides (~1000–1200 Da) can show measurable oral exposure despite violating Rule-of-Five guidelines. Name three molecular features that enable this and explain the mechanism in terms of effective polarity.",
+    "reference_answer": "Key enabling features include extensive backbone N-methylation (reducing H-bond donors), conformational ‘chameleonic’ behavior that shields polar groups via intramolecular hydrogen bonds, and sufficient lipophilicity to partition into membranes. These reduce the effective polar surface area presented during membrane transit even when the formal PSA is high. The result is improved permeability relative to similarly sized but more exposed, polar peptides.",
+    "key_concepts": ["N-methylation reduces HBD", "intramolecular H-bond shielding", "chameleonic conformations", "effective vs formal polarity"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "ADMET-SM-09",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "small_molecule",
+    "pair_id": "ADMET-09",
+    "question": "How do you experimentally distinguish reversible CYP inhibition from mechanism-based (time-dependent) inhibition in vitro, and why does time-dependent inhibition elevate clinical DDI risk?",
+    "reference_answer": "Time-dependent inhibition is tested by preincubating inhibitor with microsomes + NADPH (to allow metabolism) and then measuring an IC50 shift; a substantial IC50 decrease after preincubation indicates time-dependent inhibition/MBI. Reversible inhibitors show minimal shift with preincubation. MBI elevates DDI risk because enzyme activity can remain suppressed until new CYP is synthesized, prolonging the interaction beyond inhibitor plasma residence time.",
+    "key_concepts": ["IC50 shift assay with NADPH", "reversible vs time-dependent inhibition", "mechanism-based inactivation", "clinical DDI duration"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "ADMET-PEP-09",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "peptide",
+    "pair_id": "ADMET-09",
+    "question": "In an in vivo PK study, a peptide shows accelerating clearance over repeated weekly dosing despite similar initial exposure. What two mechanisms can cause this, and what measurements distinguish them?",
+    "reference_answer": "Two common mechanisms are anti-drug antibodies (ADA) causing immune-complex clearance and target-mediated drug disposition (TMDD) changes due to altered target levels/occupancy. ADA-mediated effects typically correlate with rising ADA titers and reduced free (unbound) drug, often worsening over time after immunization. TMDD is characterized by nonlinear PK at low doses with saturation behavior and can be assessed via target occupancy/biomarkers plus dose-dependence of clearance.",
+    "key_concepts": ["ADA-driven accelerated clearance", "TMDD nonlinearity/saturation", "ADA titers and free drug", "dose-dependence diagnostics"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "ADMET-SM-10",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "small_molecule",
+    "pair_id": "ADMET-10",
+    "question": "What approximate molecular-weight threshold is commonly associated with increased biliary excretion for small molecules, and what other physicochemical features favor biliary vs renal elimination?",
+    "reference_answer": "Biliary excretion becomes more common as MW rises above roughly ~500–600 Da, particularly for amphipathic molecules with high polarity that are substrates of hepatic transporters. Biliary elimination is favored by higher MW, higher PSA, and transporter-recognition motifs, whereas renal elimination is more common for smaller, polar, water-soluble compounds that are not extensively protein-bound and are poorly metabolized. Transporter involvement is often the deciding factor for highly polar high-MW drugs.",
+    "key_concepts": ["~500–600 Da biliary threshold", "hepatic transporter substrates", "amphipathic polarity", "renal vs biliary elimination logic"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "ADMET-PEP-10",
+    "category": "ADMET / Pharmacokinetic Properties",
+    "domain": "peptide",
+    "pair_id": "ADMET-10",
+    "question": "Why do small peptides (e.g., 1–5 kDa) often clear rapidly via the kidney, and how does increasing hydrodynamic size (e.g., PEGylation) reduce this clearance?",
+    "reference_answer": "Small peptides are efficiently filtered at the glomerulus because they are well below the size exclusion threshold and often have limited protein binding, leading to high renal clearance and short half-life. PEGylation increases hydrodynamic radius and can raise apparent size above the filtration-efficient range, decreasing glomerular filtration and slowing clearance. PEGylation can also reduce proteolysis by steric shielding, further extending half-life.",
+    "key_concepts": ["glomerular filtration of small peptides", "size exclusion and hydrodynamic radius", "PEGylation reduces filtration", "steric shielding vs proteolysis"],
+    "difficulty": "advanced"
+  },
+
+  {
+    "id": "GEN-SM-01",
+    "category": "Generative Design Strategies",
+    "domain": "small_molecule",
+    "pair_id": "GEN-01",
+    "question": "In SMILES-based molecular generation, name three necessary validity conditions a generated string must satisfy to correspond to a chemically valid molecule.",
+    "reference_answer": "A valid SMILES string must have syntactically correct branching (balanced parentheses), properly matched ring-closure labels (each ring digit appears exactly twice in a consistent context), and chemically valid valences/connectivity for all atoms. It must also respect aromaticity and charge notation rules so the implied bonding pattern is consistent. Violating any of these typically produces invalid molecules or impossible valence states.",
+    "key_concepts": ["SMILES grammar (parentheses)", "ring-closure matching", "valence constraints", "aromaticity/charge consistency"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "GEN-PEP-01",
+    "category": "Generative Design Strategies",
+    "domain": "peptide",
+    "pair_id": "GEN-01",
+    "question": "In sequence-based peptide generation, what makes a generated peptide sequence syntactically valid, and what additional constraint is often imposed for therapeutic developability?",
+    "reference_answer": "A peptide sequence is syntactically valid if it uses an allowed alphabet (e.g., the 20 canonical residues plus explicitly defined non-canonical tokens) and respects any specified length/format constraints (e.g., N- and C-termini definitions or cyclization linkage specification). For therapeutic developability, constraints often include limiting problematic motifs (e.g., extreme hydrophobicity or multiple reactive residues) and enforcing charge/length ranges. These filters reduce aggregation and manufacturing liabilities.",
+    "key_concepts": ["allowed residue alphabet", "length/format constraints", "developability filters", "aggregation/manufacturing risk"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "GEN-SM-02",
+    "category": "Generative Design Strategies",
+    "domain": "small_molecule",
+    "pair_id": "GEN-02",
+    "question": "Why do graph-based molecular generators often yield higher validity rates than naive character-level SMILES generators?",
+    "reference_answer": "Graph-based generators build molecules by adding atoms/bonds under explicit valence and connectivity rules, preventing many invalid structures during construction. In contrast, character-level SMILES models can easily violate ring matching or create impossible valences because validity is only implicitly learned. Enforcing chemical constraints during generation typically raises validity substantially compared to unconstrained string sampling.",
+    "key_concepts": ["explicit valence enforcement", "connectivity constraints", "implicit vs explicit validity", "string vs graph generation"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "GEN-PEP-02",
+    "category": "Generative Design Strategies",
+    "domain": "peptide",
+    "pair_id": "GEN-02",
+    "question": "Protein language models trained with a masked-token objective can be used for peptide ‘inpainting’. What does the masked-token objective learn, and why does it enable filling variable positions around a fixed motif?",
+    "reference_answer": "Masked-token training learns conditional distributions P(residue | context) by predicting masked residues from surrounding sequence context. This directly supports inpainting because fixed motif residues can be kept unmasked while variable positions are masked and sampled conditional on the motif. The model thus generates sequences compatible with the preserved motif and the learned sequence statistics.",
+    "key_concepts": ["masked language modeling objective", "conditional residue distribution", "motif conditioning", "sequence inpainting mechanics"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "GEN-SM-03",
+    "category": "Generative Design Strategies",
+    "domain": "small_molecule",
+    "pair_id": "GEN-03",
+    "question": "In fragment-based de novo design, why does starting from known fragments often improve hit rates, and what constraint is commonly applied to keep designs synthesizable?",
+    "reference_answer": "Known fragments provide validated binding interactions and efficient exploration of chemical space around proven anchoring motifs, improving hit probability relative to unconstrained de novo generation. To maintain synthesizability, designs are often restricted to reaction-based growth/linking rules or filtered by synthetic accessibility (e.g., SA score thresholds, avoiding unstable functional groups). This reduces proposals that are chemically implausible to make.",
+    "key_concepts": ["fragment anchoring", "hit rate rationale", "reaction-based growth constraints", "synthetic accessibility filtering"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "GEN-PEP-03",
+    "category": "Generative Design Strategies",
+    "domain": "peptide",
+    "pair_id": "GEN-03",
+    "question": "A peptide binder design strategy fixes a short epitope (e.g., 4 residues) and generates sequences by varying flanking positions. Why can this improve success rates, and what constraint is commonly applied to keep candidates developable?",
+    "reference_answer": "Fixing an epitope preserves the core binding determinant while exploring sequence space in surrounding positions to optimize affinity and stability, improving success relative to fully unconstrained generation. Developability constraints commonly include limiting extreme hydrophobicity and controlling net charge (e.g., avoiding very high positive charge that can increase toxicity). Length constraints are also used to keep synthesis and characterization tractable.",
+    "key_concepts": ["epitope preservation", "local sequence optimization", "net charge control", "hydrophobicity/developability constraints"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "GEN-SM-04",
+    "category": "Generative Design Strategies",
+    "domain": "small_molecule",
+    "pair_id": "GEN-04",
+    "question": "What is reaction-aware molecular generation, and why does it typically produce a higher fraction of synthesizable proposals than unconstrained SMILES generation?",
+    "reference_answer": "Reaction-aware generation constructs molecules through sequences of allowed chemical transformations (templates or retrosynthetic steps), ensuring each proposal has a plausible synthetic route. This avoids many structures that are valid on paper but impractical to synthesize. As a result, the synthesizable fraction is typically higher because feasibility is enforced during generation rather than filtered afterward.",
+    "key_concepts": ["reaction templates/retrosynthesis", "route feasibility", "constraint during generation", "synthesizable proposal rate"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "GEN-PEP-04",
+    "category": "Generative Design Strategies",
+    "domain": "peptide",
+    "pair_id": "GEN-04",
+    "question": "Phage display yields enrichment values across panning rounds. How can enrichment be used as a training signal for peptide sequence generation, and what experimental bias must be considered?",
+    "reference_answer": "Enrichment (often log-enrichment between rounds) can be used as a supervised label or as a reward signal to bias generation toward sequences that bind and survive selection. A critical bias is amplification or growth bias in the phage system, where some clones expand faster independent of binding. Correcting or controlling for this bias is necessary to avoid training the generator on non-binding artifacts.",
+    "key_concepts": ["log-enrichment as label/reward", "selection signal", "amplification bias", "artifact control"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "GEN-SM-05",
+    "category": "Generative Design Strategies",
+    "domain": "small_molecule",
+    "pair_id": "GEN-05",
+    "question": "You condition a generator to maximize a QSAR-predicted property (e.g., potency) using classifier guidance. What is a common failure mode of this approach, and what is one practical way to detect it?",
+    "reference_answer": "A common failure mode is ‘model exploitation’: the generator produces molecules that score highly under the predictor but are unrealistic or outside the predictor’s applicability domain. This can be detected by evaluating candidates with independent models/calculators, applicability-domain checks, and distributional sanity checks (e.g., comparing descriptor distributions to training data). Large predictor–reality gaps often indicate adversarial optimization rather than true improvement.",
+    "key_concepts": ["predictor exploitation", "applicability domain", "independent validation models", "distribution shift detection"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "GEN-PEP-05",
+    "category": "Generative Design Strategies",
+    "domain": "peptide",
+    "pair_id": "GEN-05",
+    "question": "You condition a peptide generator to maximize predicted activity from an in silico model. What is a common failure mode, and what validation step reduces the risk of selecting ‘adversarial’ sequences?",
+    "reference_answer": "A common failure mode is that the generator finds sequence patterns that exploit weaknesses in the activity predictor, yielding high predicted scores without true activity. Risk is reduced by validating candidates with orthogonal predictors (e.g., independent embeddings/models), enforcing applicability-domain checks (similarity to training support), and experimentally testing a diverse subset rather than only top-scoring sequences. Consistency across models is a practical red flag filter.",
+    "key_concepts": ["adversarial sequence patterns", "predictor robustness", "orthogonal model validation", "diverse experimental sampling"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "GEN-SM-06",
+    "category": "Generative Design Strategies",
+    "domain": "small_molecule",
+    "pair_id": "GEN-06",
+    "question": "Name two generation-time techniques that increase diversity of generated small molecules and one quantitative metric commonly used to measure diversity in molecular sets.",
+    "reference_answer": "Increasing sampling temperature or using nucleus/top-p sampling can increase diversity by flattening the token probability distribution. Penalizing similarity to previously generated molecules (e.g., via a similarity penalty) also increases diversity. A common diversity metric is average pairwise Tanimoto similarity computed on ECFP fingerprints (lower average similarity indicates higher diversity).",
+    "key_concepts": ["temperature/top-p sampling", "similarity penalty", "ECFP Tanimoto similarity", "diversity quantification"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "GEN-PEP-06",
+    "category": "Generative Design Strategies",
+    "domain": "peptide",
+    "pair_id": "GEN-06",
+    "question": "Name two generation-time techniques that increase diversity of generated peptide sequences and one quantitative diversity metric commonly used for sequences.",
+    "reference_answer": "Using higher sampling temperature or nucleus/top-p sampling increases diversity by allowing less-probable residues to appear. Penalizing high sequence identity to previously generated candidates (e.g., diversity-aware decoding) further increases coverage of sequence space. A common diversity metric is average pairwise sequence identity (or equivalently average Levenshtein distance) across the generated set.",
+    "key_concepts": ["temperature/top-p sampling", "identity penalty", "pairwise sequence identity", "sequence-space coverage"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "GEN-SM-07",
+    "category": "Generative Design Strategies",
+    "domain": "small_molecule",
+    "pair_id": "GEN-07",
+    "question": "Give three commonly used synthesizability/developability filters applied to generated small molecules and provide a typical numeric threshold for at least one of them.",
+    "reference_answer": "Common filters include a synthetic accessibility (SA) score cutoff (e.g., SA < ~6 as a rough screen), removal of reactive/toxicophores (e.g., alkylating Michael acceptors when undesired), and limiting excessive ring strain or unstable functional groups. Additional filters include capping cLogP or TPSA to stay within oral-like ranges. These constraints reduce designs that are valid but impractical or unsafe.",
+    "key_concepts": ["SA score threshold (e.g., <6)", "toxicophore/reactive group filtering", "ring strain/stability constraints", "physchem caps"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "GEN-PEP-07",
+    "category": "Generative Design Strategies",
+    "domain": "peptide",
+    "pair_id": "GEN-07",
+    "question": "Give three developability/manufacturability filters applied to generated peptide sequences and provide a typical numeric threshold for at least one (e.g., charge or length).",
+    "reference_answer": "Common filters include restricting length to a manageable range (e.g., ~8–30 residues for many therapeutic peptides), controlling net charge (e.g., avoiding very high |charge| that can drive toxicity or poor PK), and limiting extreme hydrophobic content to reduce aggregation. Filters may also limit the number/placement of cysteines (to control disulfide complexity) and avoid known chemical liabilities (e.g., oxidation-prone motifs in sensitive contexts). These screens reduce synthesis and formulation failures.",
+    "key_concepts": ["length constraint (e.g., 8–30 aa)", "net charge control", "hydrophobicity/aggregation risk", "cysteine/disulfide complexity"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "GEN-SM-08",
+    "category": "Generative Design Strategies",
+    "domain": "small_molecule",
+    "pair_id": "GEN-08",
+    "question": "You have a 3D pharmacophore with two H-bond acceptors ~7 Å apart and one hydrophobic feature. How can a generative model be conditioned to satisfy this, and what quantitative post-generation check verifies success?",
+    "reference_answer": "Conditioning can be implemented by adding a constraint loss that penalizes deviation from required feature distances/angles in generated 3D conformers or by providing the pharmacophore as an explicit conditioning input during generation. Verification is done by generating conformers and measuring whether the acceptor–acceptor distance is within a tolerance (e.g., ±0.5 Å) and whether hydrophobic features overlap the target region. Reporting the percentage of molecules meeting all geometric constraints is a standard quantitative check.",
+    "key_concepts": ["3D conditioning/constraint loss", "feature distance tolerances (e.g., ±0.5 Å)", "conformer generation for checking", "constraint satisfaction rate"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "GEN-PEP-08",
+    "category": "Generative Design Strategies",
+    "domain": "peptide",
+    "pair_id": "GEN-08",
+    "question": "In structure-conditioned peptide design for a binding groove, what is typically held fixed vs optimized (backbone vs side chains), and what quantitative structural metric can verify that the designed peptide matches the intended fold?",
+    "reference_answer": "A common approach fixes a backbone scaffold (or a constrained backbone family) and optimizes side-chain identities/rotamers to improve interface complementarity and stability. Verification can use RMSD of the peptide backbone to the intended scaffold (e.g., backbone RMSD < ~2 Å) or a predicted confidence score from structure prediction. Interface-focused scores (e.g., predicted ΔΔG or contact recovery) are then used to assess binding plausibility.",
+    "key_concepts": ["fixed backbone scaffold", "side-chain optimization/rotamers", "backbone RMSD threshold (e.g., <2 Å)", "interface scoring"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "GEN-SM-09",
+    "category": "Generative Design Strategies",
+    "domain": "small_molecule",
+    "pair_id": "GEN-09",
+    "question": "List four quantitative metrics commonly used to evaluate small-molecule generative models and briefly state what each measures.",
+    "reference_answer": "Validity measures the fraction of generated outputs that are chemically valid; uniqueness measures how many are non-duplicates; novelty measures how many are not present in the training set. Distributional similarity metrics such as Fréchet ChemNet Distance (or KL divergence on descriptors) measure how closely generated molecules match reference chemical space while remaining diverse. These metrics collectively capture correctness, redundancy, and realism.",
+    "key_concepts": ["validity", "uniqueness", "novelty", "distributional similarity (e.g., FCD/KL)"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "GEN-PEP-09",
+    "category": "Generative Design Strategies",
+    "domain": "peptide",
+    "pair_id": "GEN-09",
+    "question": "List four quantitative metrics commonly used to evaluate peptide sequence generative models and briefly state what each measures.",
+    "reference_answer": "Validity checks that sequences contain only allowed residue tokens and satisfy length/cyclization formatting rules; uniqueness measures duplicate rate; novelty measures whether sequences are absent from the training corpus. Distributional similarity can be assessed via KL divergence of amino-acid frequencies (or embedding distributions) relative to a reference set. Additional checks often include predicted property distributions (e.g., charge/hydrophobicity) to ensure realism.",
+    "key_concepts": ["sequence validity", "uniqueness", "novelty", "distributional similarity (KL on residues/embeddings)"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "GEN-SM-10",
+    "category": "Generative Design Strategies",
+    "domain": "small_molecule",
+    "pair_id": "GEN-10",
+    "question": "You expand a molecular generator to include non-standard charged fragments (new tokens not seen in the original training set). What two components must be updated to keep generation chemically consistent and valid?",
+    "reference_answer": "The vocabulary/tokenization must be extended to represent the new fragments unambiguously, and the chemical validity checker must be updated to enforce correct valence/charge rules for the added fragment types. If reaction-aware generation is used, reaction templates/rules also must include how those fragments can be formed. Without updating these components, the model can generate syntactically plausible but chemically impossible structures.",
+    "key_concepts": ["vocabulary/tokenizer extension", "valence/charge rule updates", "reaction/template updates (if applicable)", "validity enforcement"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "GEN-PEP-10",
+    "category": "Generative Design Strategies",
+    "domain": "peptide",
+    "pair_id": "GEN-10",
+    "question": "You expand a peptide generator to include several non-natural amino acids. What must be updated in the model representation and in downstream scoring to keep generation physically and chemically coherent?",
+    "reference_answer": "The model must add explicit tokens (or structured embeddings) for each non-natural amino acid so generation can represent them consistently, and downstream scoring must include physicochemical/structural parameters for those residues (e.g., sterics, charge, torsion preferences). Structure prediction or docking pipelines must also recognize the new residues, typically via parameterization or mapping to chemical templates. Otherwise, generated sequences cannot be reliably evaluated for folding and binding.",
+    "key_concepts": ["non-natural residue tokenization", "residue parameterization", "structure/scoring pipeline compatibility", "coherent evaluation of novel residues"],
+    "difficulty": "advanced"
+  },
+
+  {
+    "id": "OPT-SM-01",
+    "category": "Optimization Approaches",
+    "domain": "small_molecule",
+    "pair_id": "OPT-01",
+    "question": "What is matched molecular pair (MMP) analysis, and how is it used to prioritize substitutions during lead optimization?",
+    "reference_answer": "MMP analysis compares pairs of molecules that differ by a single, well-defined structural transformation (e.g., H→F, Me→Cl) and measures the associated change in a property (potency, logP, clearance). By aggregating many such pairs, it estimates typical property shifts for specific transforms. This helps prioritize substitutions with predictable improvements and lower risk.",
+    "key_concepts": ["single-transform pairs", "property delta attribution", "transform statistics", "lead optimization prioritization"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "OPT-PEP-01",
+    "category": "Optimization Approaches",
+    "domain": "peptide",
+    "pair_id": "OPT-01",
+    "question": "What is an alanine scan in peptide optimization, and what does a large activity loss upon Ala substitution at a position imply about that residue’s role?",
+    "reference_answer": "An alanine scan replaces residues one-by-one with Ala and measures the effect on activity/binding. A large loss (often >10×) implies that the original side chain makes a major contribution to binding or function (a ‘hotspot’ residue), via packing, hydrogen bonds, or electrostatics. Positions with little change are typically non-critical or redundant.",
+    "key_concepts": ["alanine scanning concept", "hotspot residue inference", "fold-change interpretation", "binding contribution mechanisms"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "OPT-SM-02",
+    "category": "Optimization Approaches",
+    "domain": "small_molecule",
+    "pair_id": "OPT-02",
+    "question": "In multi-parameter optimization (MPO) for small molecules, how does a weighted desirability function combine objectives, and what is the limitation when objectives conflict?",
+    "reference_answer": "Each property (e.g., potency, solubility, clearance) is mapped to a desirability score (0–1), and a weighted combination (often a weighted product or sum) yields an overall MPO score to rank compounds. The limitation is that conflicting objectives create trade-offs where no single compound is best on all metrics; different weight choices can change rankings. This is why Pareto analysis is often used alongside MPO.",
+    "key_concepts": ["desirability mapping 0–1", "weighted aggregation", "trade-offs under conflict", "Pareto vs single-score ranking"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "OPT-PEP-02",
+    "category": "Optimization Approaches",
+    "domain": "peptide",
+    "pair_id": "OPT-02",
+    "question": "Define a Pareto-optimal set for peptides optimized simultaneously for higher potency, higher serum stability, and lower hemolysis. What does it mean for one peptide to dominate another?",
+    "reference_answer": "A peptide is Pareto-optimal if no other peptide is at least as good on all objectives (higher potency and stability, lower hemolysis) and strictly better on at least one. One peptide dominates another if it improves or matches every objective while improving at least one. Dominated peptides can be discarded without sacrificing any objective trade-off frontier.",
+    "key_concepts": ["Pareto optimality definition", "dominance criterion", "multi-objective optimization", "frontier interpretation"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "OPT-SM-03",
+    "category": "Optimization Approaches",
+    "domain": "small_molecule",
+    "pair_id": "OPT-03",
+    "question": "In a QSAR-guided lead-optimization loop, what minimum experimental data characteristics are needed to retrain reliably and reduce overfitting risk?",
+    "reference_answer": "You need a chemically diverse training set that includes measured activity values across a meaningful dynamic range, including inactive/weak negatives, not only top hits. Replicates or uncertainty estimates improve robustness, and proper split strategies (scaffold-based splits) reduce leakage. Without diversity and negatives, the model can overfit and fail to generalize to new analogs.",
+    "key_concepts": ["diverse training coverage", "include negatives", "dynamic range", "scaffold split to prevent leakage"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "OPT-PEP-03",
+    "category": "Optimization Approaches",
+    "domain": "peptide",
+    "pair_id": "OPT-03",
+    "question": "In phage display affinity maturation, name two experimental knobs that increase selection stringency across rounds and explain the expected effect on the enriched pool.",
+    "reference_answer": "Lowering target concentration and increasing wash stringency (or selecting for slower off-rate via longer dissociation steps) increase stringency by favoring higher-affinity and slower-dissociating binders. Adding competitor ligand or serum components can further penalize nonspecific binders. The enriched pool shifts toward sequences with improved affinity/specificity but may lose diversity if stringency is too high too early.",
+    "key_concepts": ["target concentration reduction", "wash/off-rate stringency", "competitor selection", "diversity vs stringency balance"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "OPT-SM-04",
+    "category": "Optimization Approaches",
+    "domain": "small_molecule",
+    "pair_id": "OPT-04",
+    "question": "In Bayesian optimization for molecules, what does Expected Improvement (EI) favor, and why is predictive uncertainty required for principled exploration?",
+    "reference_answer": "EI favors candidates that either have high predicted performance or have substantial uncertainty that could plausibly yield improvement over the current best, balancing exploitation and exploration. Predictive uncertainty is essential because it quantifies where the model is unsure, guiding experiments to informative regions of chemical space. Without uncertainty, optimization collapses to greedy exploitation and can get stuck in local optima.",
+    "key_concepts": ["Expected Improvement acquisition", "exploration–exploitation trade-off", "uncertainty-guided selection", "local optimum avoidance"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "OPT-PEP-04",
+    "category": "Optimization Approaches",
+    "domain": "peptide",
+    "pair_id": "OPT-04",
+    "question": "How can Bayesian optimization be applied to peptide sequences using embeddings, and what does EI do in that setting?",
+    "reference_answer": "Peptide sequences can be embedded into a continuous vector space (e.g., from a protein language model), and a Gaussian process can be fit to predict activity with uncertainty over that space. EI then selects sequences expected to improve over the best observed while accounting for uncertainty, enabling exploration of under-sampled regions. This supports sample-efficient optimization of sequence–activity landscapes.",
+    "key_concepts": ["sequence embeddings", "Gaussian process surrogate", "uncertainty estimation", "EI-driven candidate selection"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "OPT-SM-05",
+    "category": "Optimization Approaches",
+    "domain": "small_molecule",
+    "pair_id": "OPT-05",
+    "question": "A lead compound is cleared rapidly due to oxidative N-dealkylation of a tertiary amine. Propose two structural changes that often reduce this clearance while preserving a basic center, and explain why they work.",
+    "reference_answer": "Adding steric hindrance adjacent to the N (e.g., introducing an α-methyl or converting to a more hindered cyclic amine) can reduce N-dealkylation by making the oxidizable site less accessible and slowing formation of the required iminium intermediate. Lowering basicity slightly (e.g., by adding electron-withdrawing substituents while keeping the amine protonatable) can also reduce CYP-mediated oxidation by reducing binding/activation. These changes often reduce intrinsic clearance several-fold when N-dealkylation dominates.",
+    "key_concepts": ["N-dealkylation mechanism", "steric hindrance strategy", "basicity tuning", "intrinsic clearance reduction"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "OPT-PEP-05",
+    "category": "Optimization Approaches",
+    "domain": "peptide",
+    "pair_id": "OPT-05",
+    "question": "A peptide lead clears rapidly primarily via renal filtration and proteolysis. Name two half-life extension strategies and explain which clearance component each mainly addresses.",
+    "reference_answer": "PEGylation or Fc/albumin fusion mainly reduces renal filtration by increasing hydrodynamic size and often increases protease resistance by steric shielding. Cyclization and/or site-specific D-amino acid/N-methylation mainly reduce proteolysis by preventing protease recognition and access to scissile bonds. Combining a size-increasing strategy with protease-hardening can shift half-life from minutes toward hours or longer.",
+    "key_concepts": ["renal filtration reduction", "PEGylation/Fc fusion", "protease resistance via cyclization/D/N-methyl", "minutes-to-hours half-life shift"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "OPT-SM-06",
+    "category": "Optimization Approaches",
+    "domain": "small_molecule",
+    "pair_id": "OPT-06",
+    "question": "A small molecule inhibits both the intended kinase and a close off-target kinase. Structural data indicate the intended target has a larger lipophilic pocket extension that the off-target lacks. What modification strategy is most likely to improve selectivity, and why?",
+    "reference_answer": "Adding a substituent that extends into the target’s larger pocket (increasing shape complementarity) is most likely to improve selectivity because it can be accommodated by the target but causes steric clash or poor fit in the off-target. This leverages differential pocket volume rather than relying only on subtle electronics. Such ‘selectivity handles’ often produce large selectivity gains if the structural difference is real.",
+    "key_concepts": ["selectivity via pocket volume difference", "steric clash in off-target", "shape complementarity", "structure-guided substitution"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "OPT-PEP-06",
+    "category": "Optimization Approaches",
+    "domain": "peptide",
+    "pair_id": "OPT-06",
+    "question": "A peptide binds both a target receptor and a homolog. Only the target has a unique Asp near the interface; the homolog has Asn at that position. What sequence modification strategy is most likely to improve selectivity, and why?",
+    "reference_answer": "Introducing a basic residue (e.g., adding Lys/Arg at a position that can contact the target Asp) is most likely to improve selectivity by creating a salt bridge to Asp that cannot form with Asn in the homolog. This adds a target-specific electrostatic interaction while keeping the rest of the binding interface similar. Selectivity can increase substantially when a unique charged contact is exploited.",
+    "key_concepts": ["exploiting unique charged residue", "salt bridge engineering", "target vs homolog difference", "selectivity gain mechanism"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "OPT-SM-07",
+    "category": "Optimization Approaches",
+    "domain": "small_molecule",
+    "pair_id": "OPT-07",
+    "question": "Adding a fluorine to block a metabolic soft spot increases cLogP from 2.5 to 3.5. What developability risk commonly increases as cLogP rises by ~1 unit, and name one mitigation approach that does not remove the fluorine.",
+    "reference_answer": "Raising cLogP by ~1 unit commonly reduces aqueous solubility and can increase nonspecific binding, which can reduce free exposure and complicate formulation. A mitigation approach is to introduce a polar substituent elsewhere (or adjust ionization via pKa tuning) to recover solubility while keeping the metabolically stabilizing fluorine. Salt formation or prodrug strategies can also be used when compatible with the mechanism of action.",
+    "key_concepts": ["cLogP vs solubility relationship", "nonspecific binding", "mitigation via polar add/pKa tuning", "retain metabolic-blocking substitution"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "OPT-PEP-07",
+    "category": "Optimization Approaches",
+    "domain": "peptide",
+    "pair_id": "OPT-07",
+    "question": "Cyclization improves a peptide’s protease stability but reduces affinity because the ring distorts the bioactive geometry. What optimization lever can restore affinity while keeping most of the stability gain, and why?",
+    "reference_answer": "Tuning the ring topology (e.g., changing ring size, linker length, or cyclization position) can restore affinity by allowing the cyclic scaffold to better match the bioactive conformation while preserving restricted flexibility and protease resistance. Moving the cyclization away from key contact residues often reduces distortion of the binding epitope. This approach navigates the stability–activity trade-off by re-optimizing conformational constraints rather than removing them.",
+    "key_concepts": ["ring size/topology tuning", "bioactive conformation matching", "cyclization site selection", "stability–activity trade-off navigation"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "OPT-SM-08",
+    "category": "Optimization Approaches",
+    "domain": "small_molecule",
+    "pair_id": "OPT-08",
+    "question": "In batch Bayesian optimization where you choose 20 compounds per cycle, why is within-batch diversity important, and name one method to enforce it during selection?",
+    "reference_answer": "Within-batch diversity prevents wasting experiments on highly similar compounds that provide redundant information, improving model learning and increasing the chance of finding multiple promising regions. Diversity can be enforced by penalizing fingerprint similarity to already selected batch members or using a determinantal point process (DPP) objective to favor diverse sets. This improves exploration efficiency under a limited experimental budget.",
+    "key_concepts": ["batch redundancy problem", "information gain", "similarity penalties", "DPP/diversity enforcement"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "OPT-PEP-08",
+    "category": "Optimization Approaches",
+    "domain": "peptide",
+    "pair_id": "OPT-08",
+    "question": "In designing an affinity-maturation library for a peptide, why do you typically limit the number of mutated positions per variant, and how does this relate to epistasis and library size?",
+    "reference_answer": "Limiting mutated positions controls combinatorial explosion: even 10 options at 5 positions is 10^5 variants, which can exceed practical screening depth. It also reduces epistasis complexity; with too many simultaneous mutations, non-additive interactions make optimization noisy and harder to learn. Constraining mutations improves coverage of the relevant landscape and increases the probability of sampling beneficial combinations.",
+    "key_concepts": ["combinatorial explosion", "screening depth constraints", "epistasis/non-additivity", "library coverage strategy"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "OPT-SM-09",
+    "category": "Optimization Approaches",
+    "domain": "small_molecule",
+    "pair_id": "OPT-09",
+    "question": "A baseline inhibitor has IC50 = 1.0 µM. Substitution A gives IC50 = 0.30 µM, substitution B gives IC50 = 0.20 µM, and the double substitution AB gives IC50 = 0.020 µM. Under a multiplicative (log-additive) model, what IC50 would you predict for AB, and does the observation indicate positive epistasis (synergy)?",
+    "reference_answer": "Under multiplicative improvement, predicted AB IC50 ≈ 1.0 µM ÷ (1/0.30 × 1/0.20) = 1.0 ÷ (3.33 × 5) ≈ 0.060 µM. The observed 0.020 µM is ~3× better than predicted, indicating positive epistasis (synergy) beyond simple additivity on the log scale. This implies the substitutions interact to stabilize the bound state more than expected independently.",
+    "key_concepts": ["multiplicative/log-additive model", "predicted IC50 computation", "positive epistasis definition", "non-additive SAR"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "OPT-PEP-09",
+    "category": "Optimization Approaches",
+    "domain": "peptide",
+    "pair_id": "OPT-09",
+    "question": "A baseline peptide has Kd = 1.0 µM. Mutation A gives Kd = 0.30 µM, mutation B gives Kd = 0.20 µM, and double mutant AB gives Kd = 0.020 µM. Under a multiplicative (log-additive) model, what Kd would you predict for AB, and does the result indicate synergy?",
+    "reference_answer": "Under multiplicative improvement, predicted AB Kd ≈ 1.0 µM ÷ (3.33 × 5) ≈ 0.060 µM. The observed 0.020 µM is ~3× stronger than predicted, consistent with synergy (positive epistasis). This suggests the mutations jointly create a better interface than the sum of their independent effects.",
+    "key_concepts": ["multiplicative affinity model", "predicted Kd calculation", "synergy/epistasis", "sequence–activity non-additivity"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "OPT-SM-10",
+    "category": "Optimization Approaches",
+    "domain": "small_molecule",
+    "pair_id": "OPT-10",
+    "question": "You have four compounds with (IC50 nM, solubility µM, clearance mL/min/kg): A(10, 5, 40), B(30, 50, 20), C(15, 10, 10), D(50, 200, 60). Objectives: minimize IC50 and clearance, maximize solubility. Which compounds are Pareto-optimal?",
+    "reference_answer": "A is not Pareto-optimal because C has lower IC50 (15 vs 10 is worse for C) actually C is higher IC50 than A, but C has much lower clearance (10 vs 40) and higher solubility (10 vs 5), so neither dominates the other; A remains Pareto-optimal. B is Pareto-optimal because it has much higher solubility (50) with moderate IC50 and clearance and is not dominated by any single compound. C is Pareto-optimal due to the lowest clearance (10) with strong potency and reasonable solubility. D is dominated by B (B has lower IC50, lower clearance, and lower solubility? actually B has solubility 50 vs 200, so D has higher solubility; thus B does not dominate D), but D is dominated by none on all three objectives because it has the highest solubility; therefore A, B, C, and D are all Pareto-optimal in this set.",
+    "key_concepts": ["Pareto dominance with mixed objectives", "trade-offs across three metrics", "non-dominance reasoning", "multi-objective selection"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "OPT-PEP-10",
+    "category": "Optimization Approaches",
+    "domain": "peptide",
+    "pair_id": "OPT-10",
+    "question": "You have four peptides with (EC50 nM, serum half-life h, hemolysis HC50 µg/mL): A(10, 0.2, 50), B(30, 8, 40), C(15, 2, 200), D(50, 20, 20). Objectives: minimize EC50, maximize half-life, maximize HC50. Which peptides are Pareto-optimal?",
+    "reference_answer": "A is Pareto-optimal because it has the best potency (lowest EC50) and no other peptide matches it while improving both half-life and HC50 without worsening potency. B is Pareto-optimal because it offers strong half-life (8 h) with acceptable potency and is not dominated (C has better HC50 but worse half-life; D has better half-life but worse potency and HC50). C is Pareto-optimal due to the best safety window (HC50 = 200) with good potency and moderate half-life. D is Pareto-optimal because it has the longest half-life (20 h), and no other peptide achieves ≥20 h with better potency and safety simultaneously.",
+    "key_concepts": ["Pareto optimality", "dominance across potency/PK/safety", "trade-off frontier", "multi-endpoint peptide selection"],
+    "difficulty": "advanced"
+  },
+
+  {
+    "id": "ASSAY-SM-01",
+    "category": "Assay Interpretation",
+    "domain": "small_molecule",
+    "pair_id": "ASSAY-01",
+    "question": "Define IC50 in a biochemical inhibition assay and state one key assay-condition factor that can shift the measured IC50 without changing true binding affinity.",
+    "reference_answer": "IC50 is the inhibitor concentration that reduces assay signal (e.g., enzyme activity) by 50% under the specific assay conditions. For competitive inhibitors, IC50 depends on substrate concentration relative to Km, so changing [S] can shift IC50 even if Ki (true affinity) is unchanged. Enzyme concentration, binding kinetics, and assay time can also affect apparent IC50.",
+    "key_concepts": ["IC50 definition", "competitive inhibition dependence on [S]/Km", "Ki vs IC50 distinction", "assay-condition sensitivity"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "ASSAY-PEP-01",
+    "category": "Assay Interpretation",
+    "domain": "peptide",
+    "pair_id": "ASSAY-01",
+    "question": "Define MIC for an antimicrobial peptide and describe the typical dilution scheme used to measure it (include the standard concentration step size).",
+    "reference_answer": "MIC is the minimum inhibitory concentration that prevents visible microbial growth after a defined incubation period (commonly ~16–20 hours) under standardized conditions. It is typically measured in a two-fold serial dilution series (each step is a 2× change in concentration). Because MIC is discrete and condition-dependent, repeated measurements often vary by ±1 dilution.",
+    "key_concepts": ["MIC definition", "16–20 h endpoint", "two-fold serial dilution", "measurement discreteness/variability"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "ASSAY-SM-02",
+    "category": "Assay Interpretation",
+    "domain": "small_molecule",
+    "pair_id": "ASSAY-02",
+    "question": "A dose–response curve fit yields a Hill slope of 0.5 (much shallower than 1). Give two mechanistic interpretations relevant to small-molecule assays.",
+    "reference_answer": "A Hill slope < 1 can reflect heterogeneous target engagement (e.g., multiple binding states or mixed compound populations) or assay artifacts such as solubility limits/aggregation causing non-ideal concentration–response behavior. It can also indicate multiple mechanisms contributing to the readout or partial accessibility of target. Follow-up often includes checking solubility/aggregation and testing orthogonal assay formats.",
+    "key_concepts": ["Hill slope interpretation", "heterogeneity/multiple states", "aggregation/solubility artifacts", "orthogonal assay validation"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "ASSAY-PEP-02",
+    "category": "Assay Interpretation",
+    "domain": "peptide",
+    "pair_id": "ASSAY-02",
+    "question": "A hemolysis assay for an antimicrobial peptide yields a steep dose–response with Hill slope ~3. Give a mechanistic interpretation consistent with peptide membrane-disruption behavior.",
+    "reference_answer": "A steep Hill slope in hemolysis is consistent with a threshold/cooperative membrane disruption process, where a critical surface concentration must be reached before rapid lysis occurs. Once that threshold is crossed, small increases in peptide concentration produce large increases in hemolysis. This behavior is typical for membrane-active peptides that form pores or cause collective bilayer destabilization.",
+    "key_concepts": ["cooperative threshold behavior", "membrane disruption mechanism", "steep Hill slope meaning", "surface concentration threshold"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "ASSAY-SM-03",
+    "category": "Assay Interpretation",
+    "domain": "small_molecule",
+    "pair_id": "ASSAY-03",
+    "question": "A compound has IC50 = 50 nM on the intended target and IC50 = 5 µM on an off-target. Compute the selectivity ratio and interpret whether this is generally considered strong selectivity.",
+    "reference_answer": "Selectivity ratio = 5 µM / 50 nM = 5000 nM / 50 nM = 100×. A 100× biochemical selectivity margin is generally considered strong, though required selectivity depends on exposure and safety margins. Cellular selectivity and off-target panel breadth still need confirmation.",
+    "key_concepts": ["selectivity ratio calculation", "unit conversion nM vs µM", "interpretation of ~100× margin", "biochemical vs cellular selectivity"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "ASSAY-PEP-03",
+    "category": "Assay Interpretation",
+    "domain": "peptide",
+    "pair_id": "ASSAY-03",
+    "question": "An antimicrobial peptide has MIC = 2 µg/mL against a bacterium and hemolysis HC50 = 200 µg/mL. Compute the therapeutic index (HC50/MIC) and interpret it.",
+    "reference_answer": "Therapeutic index = HC50/MIC = 200/2 = 100. A TI of ~100 suggests a relatively wide safety window in this simplified comparison, though it is not sufficient alone: serum binding, in vivo exposure, and cytokine/toxicity endpoints can narrow the practical therapeutic window. Still, 100 is typically a favorable starting point for further optimization.",
+    "key_concepts": ["TI computation", "HC50 vs MIC meaning", "interpretation of TI ~100", "additional safety endpoints"],
+    "difficulty": "basic"
+  },
+  {
+    "id": "ASSAY-SM-04",
+    "category": "Assay Interpretation",
+    "domain": "small_molecule",
+    "pair_id": "ASSAY-04",
+    "question": "A competitive inhibitor has IC50 = 100 nM in an assay run at substrate concentration [S] = 50 µM. The enzyme’s Km for substrate is 10 µM. Using Cheng–Prusoff, estimate Ki.",
+    "reference_answer": "For competitive inhibition, Ki ≈ IC50 / (1 + [S]/Km) = 100 nM / (1 + 50/10) = 100 nM / 6 ≈ 16.7 nM. This converts condition-dependent IC50 into an affinity-like parameter. The calculation assumes rapid equilibrium and purely competitive behavior.",
+    "key_concepts": ["Cheng–Prusoff equation", "competitive inhibition", "Ki vs IC50", "substrate dependence"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "ASSAY-PEP-04",
+    "category": "Assay Interpretation",
+    "domain": "peptide",
+    "pair_id": "ASSAY-04",
+    "question": "A peptide is degraded by a protease with apparent first-order rate constant k = 0.023 min^-1 (measured under pseudo-first-order conditions). Compute the degradation half-life and interpret what this means for a 2-hour incubation assay.",
+    "reference_answer": "Half-life t1/2 = 0.693/k = 0.693/0.023 ≈ 30 minutes. Over a 2-hour incubation (~4 half-lives), the intact peptide fraction would drop to roughly (1/2)^4 ≈ 6%. This implies assay readouts after 2 hours may reflect degradation products rather than parent peptide unless stabilized.",
+    "key_concepts": ["first-order kinetics", "t1/2 = 0.693/k", "multi-half-life decay", "assay-time interpretation"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "ASSAY-SM-05",
+    "category": "Assay Interpretation",
+    "domain": "small_molecule",
+    "pair_id": "ASSAY-05",
+    "question": "A compound’s apparent IC50 shifts from 1.0 µM with 5-minute preincubation to 50 nM with 60-minute preincubation. What mechanism does this suggest, and what follow-up assay distinguishes covalent from slow-tight binding?",
+    "reference_answer": "A large time-dependent potency increase suggests slow-binding inhibition or covalent/irreversible inhibition. A dilution (jump-dilution) recovery experiment can distinguish them: covalent inhibitors show little recovery of activity after dilution, whereas reversible slow-tight binders recover over time. Measuring k_inact/KI (for covalent) or on/off rates (for slow binding) provides mechanistic quantification.",
+    "key_concepts": ["time-dependent IC50 shift", "slow-binding vs covalent inhibition", "jump-dilution test", "kinetic parameterization"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "ASSAY-PEP-05",
+    "category": "Assay Interpretation",
+    "domain": "peptide",
+    "pair_id": "ASSAY-05",
+    "question": "In a mouse efficacy study of a therapeutic peptide dosed weekly, efficacy improves on days 1–3 but wanes by week 3 despite unchanged dosing. Give two plausible assay-linked explanations and name one measurement that distinguishes them.",
+    "reference_answer": "Two plausible explanations are anti-drug antibodies increasing clearance over time (immunogenicity-driven loss of exposure) and pharmacodynamic tolerance/target adaptation reducing response at the same exposure. Measuring peptide plasma concentrations over time alongside ADA titers distinguishes these: rising ADA with falling exposure supports immunogenic clearance, whereas stable exposure with declining effect suggests PD adaptation. Target occupancy/biomarkers can further separate PD mechanisms.",
+    "key_concepts": ["waning efficacy causes", "ADA vs PD tolerance", "exposure–response separation", "ADA titers and PK measurement"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "ASSAY-SM-06",
+    "category": "Assay Interpretation",
+    "domain": "small_molecule",
+    "pair_id": "ASSAY-06",
+    "question": "A compound has target IC50 = 200 nM and cellular CC50 (viability) = 20 µM. Compute the in vitro safety window (CC50/IC50) and state one follow-up assay you would run to contextualize the cytotoxicity.",
+    "reference_answer": "Safety window = 20 µM / 0.2 µM = 100×. A 100× window is often encouraging but not definitive; a follow-up could be testing cytotoxicity across multiple cell lines and measuring apoptosis/necrosis markers to distinguish general toxicity from assay-specific artifacts. Confirming on-target cellular potency versus nonspecific effects is also important.",
+    "key_concepts": ["window calculation", "unit conversion", "interpretation of ~100×", "follow-up toxicity deconvolution"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "ASSAY-PEP-06",
+    "category": "Assay Interpretation",
+    "domain": "peptide",
+    "pair_id": "ASSAY-06",
+    "question": "An antimicrobial peptide has MIC = 5 µg/mL and hemolysis HC50 = 25 µg/mL. Compute TI (HC50/MIC) and state why this is a concern and one design direction to reduce hemolysis.",
+    "reference_answer": "TI = 25/5 = 5. A TI of ~5 is concerning because the therapeutic window against bacteria is narrow relative to red blood cell toxicity, increasing the risk of hemolytic side effects. Reducing hydrophobic moment or overall hydrophobicity, or tuning charge distribution to decrease nonspecific membrane disruption, is a common direction to reduce hemolysis while maintaining antimicrobial activity.",
+    "key_concepts": ["TI calculation", "narrow safety window", "membrane toxicity mechanism", "design levers to reduce hemolysis"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "ASSAY-SM-07",
+    "category": "Assay Interpretation",
+    "domain": "small_molecule",
+    "pair_id": "ASSAY-07",
+    "question": "Three analogs have (IC50 nM, kinetic solubility µM): A(30, 2), B(80, 50), C(20, 0.5). If you require IC50 ≤ 50 nM and solubility ≥ 5 µM for the next round, which analog best meets criteria and what is the most logical next experimental step?",
+    "reference_answer": "None meets both criteria: A meets potency but fails solubility (2 µM), B meets solubility but fails potency (80 nM), and C is potent but has very poor solubility (0.5 µM). The logical next step is to design around A (closest to meeting both) with a solubilizing modification that minimally perturbs the potency-driving motif, and to confirm solubility-limited assay artifacts are not inflating potency estimates for C. This triage uses explicit go/no-go thresholds rather than subjective ranking.",
+    "key_concepts": ["threshold-based triage", "potency–solubility trade-off", "closest-to-spec selection", "artifact checking for low solubility"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "ASSAY-PEP-07",
+    "category": "Assay Interpretation",
+    "domain": "peptide",
+    "pair_id": "ASSAY-07",
+    "question": "Three peptide variants have (EC50 nM, serum stability t1/2 min): A(30, 15), B(80, 240), C(20, 5). If you require EC50 ≤ 50 nM and serum t1/2 ≥ 60 min for the next round, which variant best meets criteria and what is the most logical next step?",
+    "reference_answer": "None meets both criteria: A meets potency but fails stability (15 min), B meets stability but fails potency (80 nM), and C is potent but extremely unstable (5 min). The logical next step is to optimize around A by introducing stability-enhancing modifications (e.g., cyclization or targeted D/N-methyl substitutions at cleavage sites) while monitoring potency preservation. This is a threshold-driven decision rather than selecting the single best on one axis.",
+    "key_concepts": ["explicit advancement criteria", "potency–stability trade-off", "stability engineering strategies", "triage logic"],
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "ASSAY-SM-08",
+    "category": "Assay Interpretation",
+    "domain": "small_molecule",
+    "pair_id": "ASSAY-08",
+    "question": "A compound tested as a receptor agonist reaches only 60% of the maximal response produced by a known full agonist, even at saturating concentrations. What does this imply about the compound’s pharmacology, and how should EC50 be interpreted?",
+    "reference_answer": "This implies the compound is a partial agonist with Emax ~60% relative to the full agonist under these assay conditions. EC50 should be interpreted as the concentration producing 50% of its own maximal effect (i.e., 30% of the full-agonist maximum in this comparison), not 50% of the full agonist’s Emax. Partial agonists can also behave functionally as antagonists in the presence of a full agonist.",
+    "key_concepts": ["partial agonism", "Emax interpretation", "EC50 relative to own Emax", "agonist–antagonist context dependence"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "ASSAY-PEP-08",
+    "category": "Assay Interpretation",
+    "domain": "peptide",
+    "pair_id": "ASSAY-08",
+    "question": "In an in vivo antibacterial study, increasing peptide dose increases plasma exposure linearly but bacterial load reduction plateaus at ~60% and does not improve further. What does this suggest mechanistically, and what is one follow-up measurement to confirm?",
+    "reference_answer": "A plateau in effect with increasing exposure suggests a pharmacodynamic ceiling such as target/pathway saturation, limited tissue penetration to the infection site, or a subpopulation of bacteria not susceptible under the mechanism. Measuring tissue concentrations at the infection site (or target occupancy/biomarkers in the tissue) can confirm whether the limitation is distribution/penetration rather than systemic exposure. If tissue levels plateau or remain low, distribution is implicated.",
+    "key_concepts": ["PD ceiling/saturation", "exposure–effect decoupling", "tissue penetration limitation", "confirmatory tissue PK/biomarkers"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "ASSAY-SM-09",
+    "category": "Assay Interpretation",
+    "domain": "small_molecule",
+    "pair_id": "ASSAY-09",
+    "question": "A PK/PD plot of effect vs plasma concentration shows counterclockwise hysteresis (effect lags concentration early and increases later at the same concentration). What does this imply about system dynamics, and what sampling strategy improves model identifiability?",
+    "reference_answer": "Counterclockwise hysteresis implies a delay between plasma concentration and effect, commonly due to distributional delay to the effect site, slow receptor binding, or indirect response mechanisms. Improving identifiability requires denser early timepoint sampling and measurements near the onset of effect to characterize the delay, plus extended sampling to capture equilibration. An effect-compartment or indirect-response model is typically appropriate.",
+    "key_concepts": ["counterclockwise hysteresis meaning", "distribution/effect-site delay", "sampling design for delays", "effect-compartment/indirect models"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "ASSAY-PEP-09",
+    "category": "Assay Interpretation",
+    "domain": "peptide",
+    "pair_id": "ASSAY-09",
+    "question": "Protease degradation of a peptide shows biphasic kinetics: 60% loss in the first 10 minutes, then slow decay over the next 2 hours. Give one kinetic explanation and one experiment that tests it.",
+    "reference_answer": "One explanation is sequential processing where an initial fast cleavage produces a more stable fragment that then degrades slowly, yielding biphasic apparent kinetics. LC–MS time-course fragment mapping tests this by identifying intermediate fragments and their formation/decay rates. Varying enzyme concentration can also distinguish true sequential cleavage from enzyme depletion or adsorption artifacts.",
+    "key_concepts": ["biphasic degradation mechanisms", "sequential cleavage/fragments", "LC–MS fragment mapping", "enzyme-concentration dependence"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "ASSAY-SM-10",
+    "category": "Assay Interpretation",
+    "domain": "small_molecule",
+    "pair_id": "ASSAY-10",
+    "question": "An HTS assay has positive-control mean signal μp = 10 with SD σp = 2, and negative-control mean μn = 100 with SD σn = 5. Compute Z' factor and interpret assay quality.",
+    "reference_answer": "Z' = 1 − 3(σp + σn)/|μp − μn| = 1 − 3(2 + 5)/|10 − 100| = 1 − 21/90 ≈ 0.77. A Z' > 0.5 is generally considered excellent for HTS, indicating good separation and low variability. Therefore, this assay is high quality for screening.",
+    "key_concepts": ["Z' formula", "control means and SDs", "numeric computation (~0.77)", "HTS quality threshold (>0.5)"],
+    "difficulty": "advanced"
+  },
+  {
+    "id": "ASSAY-PEP-10",
+    "category": "Assay Interpretation",
+    "domain": "peptide",
+    "pair_id": "ASSAY-10",
+    "question": "A peptide screening assay has positive-control mean μp = 20 with SD σp = 3, and negative-control mean μn = 100 with SD σn = 6. Compute Z' factor and interpret assay quality.",
+    "reference_answer": "Z' = 1 − 3(σp + σn)/|μp − μn| = 1 − 3(3 + 6)/|20 − 100| = 1 − 27/80 ≈ 0.66. A Z' around 0.66 indicates an excellent assay for screening because the signal window is large relative to variability. This supports reliable discrimination between actives and inactives.",
+    "key_concepts": ["Z' computation", "control separation", "numeric result (~0.66)", "screening suitability threshold"],
+    "difficulty": "advanced"
+  }
+]
