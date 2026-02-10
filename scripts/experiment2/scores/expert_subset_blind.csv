@@ -1,7 +1,79 @@
 response_id,category,question_text,response_text
-qwen3-next:80b-cloud|GEN-SM-05,Generative Design Strategies,"You condition a generator to maximize a QSAR-predicted property (e.g., potency) using classifier guidance. What is a common failure mode of this approach, and what is one practical way to detect it?","
+qwen3-next:80b-cloud|GEN-SM-05,Generative Design Strategies,"You condition a generator to maximize a QSAR-predicted property (e.g., potency) using classifier guidance. What is a common failure mode of this approach, and what is one practical way to detect it?","### Common Failure Mode: **Chemical Invalidity Due to Over-Optimization**
+When using classifier guidance to maximize a QSAR-predicted property (e.g., potency), a frequent
+failure mode is the generation of **chemically invalid or synthetically infeasible molecules**.
+This occurs because high guidance strength (e.g., large classifier scale parameters) forces the
+generator to over-optimistically push the latent space toward extreme regions of the property
+space. As a result:
+- The generated molecules may violate chemical rules (e.g., incorrect atom valences, unstable
+bonds, impossible ring structures, or nonsensical stereochemistry).
+- These molecules often have high QSAR-predicted scores but are **not realizable in practice**
+(e.g., they cannot be synthesized or would collapse instantly in reality).
+- This happens because the QSAR model and classifier may have learned spurious correlations from
+limited training data, and excessive guidance amplifies these artifacts without ensuring chemical
+feasibility.
 
-A common failure mode when using classifier guidance to maximize a QSAR-predicted property (e"
+For example, a generator might produce a molecule with a carbon atom bonded to five atoms
+(violating tetravalency) or a strained ring system that cannot exist, yet the QSAR classifier
+still assigns it high ""potency"" due to superficial structural patterns in the training data.
+
+---
+
+### Practical Detection Method: **Chemical Validity Check via RDKit**
+A simple, low-cost, and widely used way to detect this failure mode is to **compute the chemical
+validity rate** of the generated molecules using a tool like [RDKit](https://www.rdkit.org/).
+Here’s how to do it practically:
+
+1. **Generate molecules** using the classifier-guided model (e.g., as SMILES strings).
+2. **Parse each SMILES string** with RDKit to check for:
+   - Parseability (i.e., can RDKit convert the SMILES to a molecule object?).
+   - Valence correctness (e.g., no atoms with impossible bond counts).
+   - Basic structural sanity (e.g., no disconnected fragments unless intentionally designed).
+3. **Calculate the validity rate**:
+   \(\text{Validity Rate} = \frac{\text{Number of valid molecules}}{\text{Total generated
+molecules}} \times 100\%\).
+
+**Why this works**:
+- Invalid molecules (e.g., `C=O=O`, `C1CCCC1C1CCCC1`) will fail RDKit's parsing or valence
+checks.
+- A validity rate **below 80–90%** (depending on the model) is a strong red flag for
+over-optimization. For context:
+  - Well-trained diffusion models without guidance typically achieve >95% validity.
+  - With high guidance strength, validity often drops to 50–70% or lower.
+- This check is **computationally cheap** (takes seconds for thousands of molecules) and requires
+no additional data or models.
+
+**Example code snippet** (Python with RDKit):
+```python
+from rdkit import Chem
+
+def check_validity(smiles_list):
+    valid_count = 0
+    for smi in smiles_list:
+        mol = Chem.MolFromSmiles(smi)
+        if mol is not None and Chem.ValidateMol(mol)[0]:  # Basic valence check
+            valid_count += 1
+    return valid_count / len(smiles_list) * 100
+
+# Usage:
+generated_smiles = [""CCO"", ""C=O=O"", ""C1CCCC1C1CCCC1"", ""N#C""]  # Example list
+validity = check_validity(generated_smiles)
+print(f""Validity rate: {validity:.1f}%"")  # Output: ~50.0% (invalid: ""C=O=O"", ""C1CCCC1C1CCCC1"")
+```
+
+**Additional notes for robustness**:
+- For deeper analysis, combine this with **synthetic accessibility (SA) scores** (e.g., using
+RDKit's `sascorer`) or **drug-likeness filters** (e.g., Lipinski’s Rule of Five).
+- If validity is low, reduce the classifier guidance scale or use **post-hoc filtering** (e.g.,
+only keep molecules with >95% validity).
+- Always validate top candidates with **wet-lab testing** or **more accurate computational
+models** (e.g., molecular dynamics), as QSAR predictions alone can be misleading for invalid
+structures.
+
+This approach is standard in molecular generative AI (e.g., in papers like [Jin et al.,
+2020](https://arxiv.org/abs/2009.09960) or [Ho et al., 2022](https://arxiv.org/abs/2202.00512))
+and quickly identifies when guidance is ""breaking"" the chemical space.
+"
 gemini-3-flash-preview:cloud|SAR-PEP-08,SAR Reasoning,"A peptide binds as an α-helix but is mostly disordered in solution. Stapling increases preorganization and improves binding free energy by ~1.0 kcal/mol. Approximately what fold-improvement in affinity would you expect at 298 K, and what is the mechanism?","Based on the thermodynamic relationship between binding free energy ($\Delta G$) and the dissociation constant ($K_d$), here is the expected improvement and the underlying mechanism:
 
 ### 1. Fold-Improvement in Affinity
@@ -24,9 +96,7 @@ The primary mechanism is the **reduction of the conformational entropic penalty*
 
 *   **Unmodified"
 deepseek-v3.2:cloud|SAR-PEP-08,SAR Reasoning,"A peptide binds as an α-helix but is mostly disordered in solution. Stapling increases preorganization and improves binding free energy by ~1.0 kcal/mol. Approximately what fold-improvement in affinity would you expect at 298 K, and what is the mechanism?","A 1.0 kcal/mol improvement in binding free energy at 298 K corresponds to approximately a 5- to 6-fold increase in affinity (specifically ~5.4-fold, calculated using ΔΔG = –RT ln(K₂/K₁), with RT ≈ 0.592 kcal/mol). The mechanism is primarily entropic: stapling preorganizes the peptide into the active α-helical conformation, reducing the conformational entropy loss that would otherwise occur upon binding from a disordered state in solution."
-qwen3-next:80b-cloud|GEN-PEP-10,Generative Design Strategies,You expand a peptide generator to include several non-natural amino acids. What must be updated in the model representation and in downstream scoring to keep generation physically and chemically coherent?,"
-
-To maintain physical and chemical coherence when expanding a peptide generator to include **non-natural amino acids (nnAAs)**, the following updates are essential:
+qwen3-next:80b-cloud|GEN-PEP-10,Generative Design Strategies,You expand a peptide generator to include several non-natural amino acids. What must be updated in the model representation and in downstream scoring to keep generation physically and chemically coherent?,"To maintain physical and chemical coherence when expanding a peptide generator to include **non-natural amino acids (nnAAs)**, the following updates are essential:
 
 ### **Model Representation Updates**
 1. **Atomic Parameters**:  
@@ -66,15 +136,13 @@ To maintain physical and chemical coherence when expanding a peptide generator t
 deepseek-v3.2:cloud|GEN-PEP-05,Generative Design Strategies,"You condition a peptide generator to maximize predicted activity from an in silico model. What is a common failure mode, and what validation step reduces the risk of selecting ‘adversarial’ sequences?","A common failure mode is generating peptides that exploit biases or artifacts in the *in silico* model's training data or architecture, rather than learning the true structure-activity relationship. These ""adversarial"" sequences achieve high predicted scores but lack real-world biological activity.
 
 The critical validation step is **orthogonal experimental testing** using a functional assay distinct from the data used to train the model. For example, if the model was trained on *in vitro* binding data, validation should involve a cell-based activity assay or *in vivo* testing. This step directly measures the actual biological function, filtering out sequences that only ""hack"" the predictive model."
-qwen3-next:80b-cloud|OPT-PEP-01,Optimization Approaches,"What is an alanine scan in peptide optimization, and what does a large activity loss upon Ala substitution at a position imply about that residue’s role?","
-
-An alanine scan is a systematic mutagenesis technique in peptide optimization where each residue in a peptide sequence is individually replaced with alanine (Ala) to assess the contribution of its side chain to biological activity. Alanine is used because it retains the peptide backbone conformation while removing the specific chemical functionality of the original side chain (e.g., charge, hydrogen bonding, hydrophobicity), minimizing structural disruption.
+qwen3-next:80b-cloud|OPT-PEP-01,Optimization Approaches,"What is an alanine scan in peptide optimization, and what does a large activity loss upon Ala substitution at a position imply about that residue’s role?","An alanine scan is a systematic mutagenesis technique in peptide optimization where each residue in a peptide sequence is individually replaced with alanine (Ala) to assess the contribution of its side chain to biological activity. Alanine is used because it retains the peptide backbone conformation while removing the specific chemical functionality of the original side chain (e.g., charge, hydrogen bonding, hydrophobicity), minimizing structural disruption.
 
 A **large activity loss** (typically **≥10-fold reduction in potency**, e.g., IC₅₀ or EC₅₀ increasing from 10 nM to ≥100 nM) upon Ala substitution implies that the original residue's side chain is **critically involved in direct interactions with the target**. This could include:  
 - **Electrostatic interactions** (e.g., loss of activity when a charged residue like Lys, Arg, or Asp is replaced, indicating salt bridges or charge-charge contacts).  
 - **Hydrogen bonding** (e.g., Ser, Thr, or His substitution causing significant loss, suggesting H-bond donation/acceptance).  
 - **Hy"
-kimi-k2.5:cloud|GEN-SM-02,Generative Design Strategies,Why do graph-based molecular generators often yield higher validity rates than naive character-level SMILES generators?," Graph-based molecular generators achieve higher validity rates (typically **>90–95%** vs. **60–80%** for naive character-level SMILES models) because they encode chemical constraints directly into the generation process, whereas SMILES generators must learn complex, error-prone linear syntax rules.
+kimi-k2.5:cloud|GEN-SM-02,Generative Design Strategies,Why do graph-based molecular generators often yield higher validity rates than naive character-level SMILES generators?,"Graph-based molecular generators achieve higher validity rates (typically **>90–95%** vs. **60–80%** for naive character-level SMILES models) because they encode chemical constraints directly into the generation process, whereas SMILES generators must learn complex, error-prone linear syntax rules.
 
 **Key reasons:**
 
@@ -86,9 +154,7 @@ kimi-k2.5:cloud|GEN-SM-02,Generative Design Strategies,Why do graph-based molecu
 
 3. **Robustness to minor perturbations**  
    In SMILES, a single character change (e.g., altering `C` to `N` or"
-qwen3-next:80b-cloud|ADMET-PEP-07,ADMET / Pharmacokinetic Properties,Assume renal plasma flow Qr ≈ 45 L/h. A peptide has renal clearance CLr = 5 L/h. Compute extraction ratio E and state whether clearance is more likely flow-limited or capacity/fu-limited.,"
-
-The extraction ratio \( E \) is calculated as:  
+qwen3-next:80b-cloud|ADMET-PEP-07,ADMET / Pharmacokinetic Properties,Assume renal plasma flow Qr ≈ 45 L/h. A peptide has renal clearance CLr = 5 L/h. Compute extraction ratio E and state whether clearance is more likely flow-limited or capacity/fu-limited.,"The extraction ratio \( E \) is calculated as:  
 \[ E = \frac{\text{CL}_r}{Q_r} = \frac{5  \text{L/h}}{45  \text{L/h}} = 0.11 \]  
 
 **Interpretation**:  
@@ -100,9 +166,7 @@ The extraction ratio \( E \) is calculated as:
 - Flow-limited: \( E \geq 0.7 \)  
 - Capacity-limited: \( E \leq 0.3 \)  
 - Intermediate: \( 0.3 < E < 0.7 \)"
-qwen3-next:80b-cloud|ASSAY-SM-05,Assay Interpretation,"A compound’s apparent IC50 shifts from 1.0 µM with 5-minute preincubation to 50 nM with 60-minute preincubation. What mechanism does this suggest, and what follow-up assay distinguishes covalent from slow-tight binding?","
-
-The 20-fold decrease in apparent IC₅₀ (from 1.0 µM to 50 nM) with extended preincubation (5 min → 60 min) indicates **time-dependent inhibition**, specifically suggesting either **slow-tight binding** or **covalent inhibition**. Both mechanisms involve a slow step (conformational change for slow-tight binding; covalent bond formation for covalent inhibition) that enhances potency over time.
+qwen3-next:80b-cloud|ASSAY-SM-05,Assay Interpretation,"A compound’s apparent IC50 shifts from 1.0 µM with 5-minute preincubation to 50 nM with 60-minute preincubation. What mechanism does this suggest, and what follow-up assay distinguishes covalent from slow-tight binding?","The 20-fold decrease in apparent IC₅₀ (from 1.0 µM to 50 nM) with extended preincubation (5 min → 60 min) indicates **time-dependent inhibition**, specifically suggesting either **slow-tight binding** or **covalent inhibition**. Both mechanisms involve a slow step (conformational change for slow-tight binding; covalent bond formation for covalent inhibition) that enhances potency over time.
 
 To distinguish between these mechanisms, perform a **dilution assay**:
 - **Procedure**: Preincubate the compound with the target enzyme for 60 min (to allow full inhibition), then dilute the mixture ≥100-fold into the assay buffer (e.g., 100× dilution to reduce compound concentration below IC₅₀). Measure residual activity immediately.
@@ -121,7 +185,7 @@ Z' = 1 - (3 × (σp + σn)) / |μn - μp|
 = 0.6625
 
 Interpretation: A Z' factor > 0.5 indicates an excellent assay with sufficient separation between positive and negative controls, making it suitable for high-throughput screening."
-kimi-k2.5:cloud|OPT-PEP-09,Optimization Approaches,"A baseline peptide has Kd = 1.0 µM. Mutation A gives Kd = 0.30 µM, mutation B gives Kd = 0.20 µM, and double mutant AB gives Kd = 0.020 µM. Under a multiplicative (log-additive) model, what Kd would you predict for AB, and does the result indicate synergy?"," ## Prediction Under Multiplicative Model
+kimi-k2.5:cloud|OPT-PEP-09,Optimization Approaches,"A baseline peptide has Kd = 1.0 µM. Mutation A gives Kd = 0.30 µM, mutation B gives Kd = 0.20 µM, and double mutant AB gives Kd = 0.020 µM. Under a multiplicative (log-additive) model, what Kd would you predict for AB, and does the result indicate synergy?","## Prediction Under Multiplicative Model
 
 Under a multiplicative (log-additive) model, the **fold-improvements** from individual mutations combine multiplicatively.
 
@@ -144,9 +208,7 @@ Under a multiplicative (log-additive) model, the **fold-improvements** from indi
 
 The observed Kd (0.020 µM) is **3-fold better** than the multiplicative prediction (0.060 µM), corresponding to an additional **~1.5 kcal/mol** of binding energy beyond the additive expectation."
 gemini-3-flash-preview:cloud|OPT-SM-09,Optimization Approaches,"A baseline inhibitor has IC50 = 1.0 µM. Substitution A gives IC50 = 0.30 µM, substitution B gives IC50 = 0.20 µM, and the double substitution AB gives IC50 = 0.020 µM. Under a multiplicative (log-additive) model, what IC50 would you predict for AB, and does the observation indicate positive epistasis (synergy)?","Under a multiplicative (log-additive) model, the predicted $IC_{50}$ for the double substitution AB is **0.060 µM**, and the observation indicates **"
-qwen3-next:80b-cloud|ASSAY-PEP-04,Assay Interpretation,A peptide is degraded by a protease with apparent first-order rate constant k = 0.023 min^-1 (measured under pseudo-first-order conditions). Compute the degradation half-life and interpret what this means for a 2-hour incubation assay.,"
-
-The degradation half-life (\(t_{1/2}\)) for a first-order process is calculated as:  
+qwen3-next:80b-cloud|ASSAY-PEP-04,Assay Interpretation,A peptide is degraded by a protease with apparent first-order rate constant k = 0.023 min^-1 (measured under pseudo-first-order conditions). Compute the degradation half-life and interpret what this means for a 2-hour incubation assay.,"The degradation half-life (\(t_{1/2}\)) for a first-order process is calculated as:  
 \[ t_{1/2} = \frac{\ln(2)}{k} = \frac{0.693}{0.023  \text{min}^{-1}} = 30.1  \text{min} \]  
 (Rounded to **30 min** based on two significant figures from \(k = 0.023\)).  
 
@@ -161,9 +223,7 @@ This means the assay would show near-complete degradation, with only a small res
 deepseek-v3.2:cloud|ASSAY-PEP-06,Assay Interpretation,An antimicrobial peptide has MIC = 5 µg/mL and hemolysis HC50 = 25 µg/mL. Compute TI (HC50/MIC) and state why this is a concern and one design direction to reduce hemolysis.,"The therapeutic index (TI) is calculated as HC50/MIC = 25 µg/mL / 5 µg/mL = 5. This low TI indicates a narrow therapeutic window, meaning the peptide may cause significant hemolysis at concentrations only slightly above the antimicrobial effective dose, posing a safety risk for therapeutic use.
 
 One design direction to reduce hemolysis is to modify the peptide's structure to enhance selectivity for microbial membranes over host cell membranes. For example, reducing overall hydrophobicity or increasing cationic residues can improve targeting of negatively charged microbial membranes while minimizing interaction with neutral mammalian membranes."
-qwen3-next:80b-cloud|SAR-PEP-01,SAR Reasoning,"A peptide ligand has a Leu side chain that inserts into a hydrophobic subpocket adjacent to an aromatic residue that can support edge-to-face π interactions. If the Leu-containing peptide has Kd = 200 nM, what is the most likely binding change when substituting that Leu with Phe, and why?","
-
-The most likely binding change is a **5- to 50-fold improvement in affinity** (Kd decreases to **4–40 nM**), primarily due to the introduction of favorable **edge-to-face π-stacking interactions** between the Phe aromatic ring and the adjacent aromatic residue.  
+qwen3-next:80b-cloud|SAR-PEP-01,SAR Reasoning,"A peptide ligand has a Leu side chain that inserts into a hydrophobic subpocket adjacent to an aromatic residue that can support edge-to-face π interactions. If the Leu-containing peptide has Kd = 200 nM, what is the most likely binding change when substituting that Leu with Phe, and why?","The most likely binding change is a **5- to 50-fold improvement in affinity** (Kd decreases to **4–40 nM**), primarily due to the introduction of favorable **edge-to-face π-stacking interactions** between the Phe aromatic ring and the adjacent aromatic residue.  
 
 ### Why?  
 - **Leu** provides only **van der Waals/hydrophobic interactions** (typically contributing **–0.5 to –1.5 kcal/mol** to binding energy).  
@@ -201,9 +261,7 @@ CL_h \approx Q_h \cdot \frac{f_u \cdot CL_{int}}{f_u \cdot CL_{int}} = Q_h
 So hepatic clearance approaches hepatic blood flow (\( CL_h \approx Q_h \)) and is **independent of \( f_u \)** in this high-extraction regime.
 
 Therefore, decreasing \( f_u \) from 0.01 to 0.005 will **not significantly change hepatic clearance**; it remains approximately equal to hepatic blood flow."
-qwen3-next:80b-cloud|ASSAY-SM-04,Assay Interpretation,"A competitive inhibitor has IC50 = 100 nM in an assay run at substrate concentration [S] = 50 µM. The enzyme’s Km for substrate is 10 µM. Using Cheng–Prusoff, estimate Ki.","
-
-The Cheng–Prusoff equation for a **competitive inhibitor** is:  
+qwen3-next:80b-cloud|ASSAY-SM-04,Assay Interpretation,"A competitive inhibitor has IC50 = 100 nM in an assay run at substrate concentration [S] = 50 µM. The enzyme’s Km for substrate is 10 µM. Using Cheng–Prusoff, estimate Ki.","The Cheng–Prusoff equation for a **competitive inhibitor** is:  
 **Ki = IC₅₀ / (1 + [S]/Kₘ)**  
 
 Given:  
@@ -238,7 +296,7 @@ The next step is a **Structure-Property Relationship (SPR) analysis and Lead Opt
 2.  **Hybridization/Modification:** Design a hybrid molecule that incorporates the pharmacophore of A (or C) with the solubilizing features of B.
 3.  **Introduction of Polar Groups:** Introduce ""solubilizing tails"" onto Analog A at a position known to point toward the solvent front (based on SAR or docking). Common modifications include adding a morpholine, piperazine, or a small PEG chain, or reducing the lipophilicity (logP) by replacing a CH with an N atom (carbon-to-nitrogen bioisostere).
 4.  **Salt Screening:** If Analog A has an"
-kimi-k2.5:cloud|SAR-SM-01,SAR Reasoning,"A ligand’s para-substituent on a phenyl ring points into a hydrophobic subpocket and sits ~3.2 Å from a protein backbone carbonyl oxygen (geometry compatible with a halogen bond). If the para-methyl analog has IC50 = 200 nM, what is the most likely potency change when replacing para-CH3 with para-Cl, and what is the mechanistic rationale?"," ## Predicted Potency Change
+kimi-k2.5:cloud|SAR-SM-01,SAR Reasoning,"A ligand’s para-substituent on a phenyl ring points into a hydrophobic subpocket and sits ~3.2 Å from a protein backbone carbonyl oxygen (geometry compatible with a halogen bond). If the para-methyl analog has IC50 = 200 nM, what is the most likely potency change when replacing para-CH3 with para-Cl, and what is the mechanistic rationale?","## Predicted Potency Change
 
 **Expected improvement: ~5- to 20-fold (IC₅₀ ~10–40 nM)**
 
@@ -278,9 +336,7 @@ Inpainting is the process of generating new sequences to fill ""gaps"" around a 
 
 *   **Conditional Probability:** The model treats the fixed motif as ""known"" context. It calculates the conditional probability $P(x_{mask} | x_{motif})$, effectively searching for the sequence that maximizes the likelihood of the entire protein being stable and ""natural"" given the constraints of the motif.
 *   **Zero-Shot Capability:** Because the model has seen millions of diverse scaffolds, it can ""hallucinate"" or in"
-qwen3-next:80b-cloud|OPT-SM-04,Optimization Approaches,"In Bayesian optimization for molecules, what does Expected Improvement (EI) favor, and why is predictive uncertainty required for principled exploration?","
-
-Expected Improvement (EI) in Bayesian optimization for molecules **favors regions with high predicted performance *and* high predictive uncertainty**, balancing exploitation (high mean prediction) and exploration (high uncertainty). This is mathematically defined as:  
+qwen3-next:80b-cloud|OPT-SM-04,Optimization Approaches,"In Bayesian optimization for molecules, what does Expected Improvement (EI) favor, and why is predictive uncertainty required for principled exploration?","Expected Improvement (EI) in Bayesian optimization for molecules **favors regions with high predicted performance *and* high predictive uncertainty**, balancing exploitation (high mean prediction) and exploration (high uncertainty). This is mathematically defined as:  
 $$ \text{EI}(x) = \mathbb{E}\left[\max(f(x) - f(x^+), 0)\right] = (\mu(x) - f(x^+)) \Phi\left(\frac{\mu(x) - f(x^+)}{\sigma(x)}\right) + \sigma(x) \phi\left(\frac{\mu(x) - f(x^+)}{\sigma(x)}\right) $$  
 where:  
 - $\mu(x)$ = predicted mean performance (e.g., binding affinity),  
@@ -291,7 +347,7 @@ where:
 **Why predictive uncertainty is required for principled exploration**:  
 Without uncertainty, EI would reduce to pure exploitation (selecting only the highest $\mu(x)$), ignoring unexplored regions. The $\sigma(x)$ term in EI explicitly rewards high uncertainty *only when* $\mu(x)$ is competitive with $f(x^+)$. For example:  
 - A molecule with $\mu = 80\%$ potency and $\sigma = 15\%$ (high uncertainty) may have higher EI than one with $\mu = 85\%$ and $\sigma = 5\%$ (low uncertainty), because the former has a non-negligible chance of exceeding $f(x"
-kimi-k2.5:cloud|ASSAY-PEP-09,Assay Interpretation,"Protease degradation of a peptide shows biphasic kinetics: 60% loss in the first 10 minutes, then slow decay over the next 2 hours. Give one kinetic explanation and one experiment that tests it."," ## Kinetic Explanation: **Two-Compartment/Two-Substrate Model**
+kimi-k2.5:cloud|ASSAY-PEP-09,Assay Interpretation,"Protease degradation of a peptide shows biphasic kinetics: 60% loss in the first 10 minutes, then slow decay over the next 2 hours. Give one kinetic explanation and one experiment that tests it.","## Kinetic Explanation: **Two-Compartment/Two-Substrate Model**
 
 The biphasic kinetics suggests **two distinct peptide populations** with different susceptibilities to protease cleavage:
 
@@ -330,7 +386,7 @@ Increasing the hydrodynamic size via PEGylation (the covalent attachment of poly
     *   *Example:* A 20 kDa PEG chain has a hydrodynamic radius comparable to a 60–70 kDa globular protein.
 *   **Exceeding the Filtration Limit:** By attaching a PEG chain (typically **20–40 kDa**), the peptide-PEG conjugate's $R_h$ is increased above the glomerular pore size (typically $>4$ nm). This prevents the molecule from passing through the GFB.
 *   **Impact on"
-kimi-k2.5:cloud|ASSAY-PEP-04,Assay Interpretation,A peptide is degraded by a protease with apparent first-order rate constant k = 0.023 min^-1 (measured under pseudo-first-order conditions). Compute the degradation half-life and interpret what this means for a 2-hour incubation assay.," **Half-life calculation**
+kimi-k2.5:cloud|ASSAY-PEP-04,Assay Interpretation,A peptide is degraded by a protease with apparent first-order rate constant k = 0.023 min^-1 (measured under pseudo-first-order conditions). Compute the degradation half-life and interpret what this means for a 2-hour incubation assay.,"**Half-life calculation**
 
 For first-order kinetics:  
 $$t_{1/2} = \frac{\ln(2)}{k} = \frac{0.693}{0.023\ \text{min}^{-1}} \approx \mathbf{30\ \text{minutes}}\ (\text{range: 30–31 min})$$
@@ -349,9 +405,7 @@ $$t_{1/2} = \frac{\ln(2)}{k} = \frac{0.693}{0.023\ \text{min}^{-1}} \approx \mat
 
 3. **Pharmacokinetic relevance:** A 30‑min half‑life suggests rapid systemic clearance (similar to many therapeutic peptides in plasma), implying limited exposure in vivo and a need for formulation or chemical stabilization (e.g., N‑methylation, cyclization, or D‑amino‑acid substitution) for drug development."
 deepseek-v3.2:cloud|SAR-SM-09,SAR Reasoning,A tertiary amine (pKa ~9) forms a salt bridge to an Asp in the binding site (N–O distance ~2.8 Å). You replace the tertiary amine with an amide at the same position. What is the most likely potency effect and why?,"Replacing the tertiary amine with an amide will likely decrease potency. The tertiary amine (pKa ~9) is protonated and positively charged at physiological pH, forming a strong salt bridge with the negatively charged Asp. The amide, however, is neutral at physiological pH (pKa ~0 to -1) and cannot participate in an ionic interaction. Although the amide may form a hydrogen bond with Asp, this interaction is typically weaker (∼1–3 kcal/mol) than a salt bridge (∼3–5 kcal/mol), leading to a net loss in binding affinity."
-qwen3-next:80b-cloud|SAR-PEP-08,SAR Reasoning,"A peptide binds as an α-helix but is mostly disordered in solution. Stapling increases preorganization and improves binding free energy by ~1.0 kcal/mol. Approximately what fold-improvement in affinity would you expect at 298 K, and what is the mechanism?","
-
-A 1.0 kcal/mol improvement in binding free energy (ΔΔG = -1.0 kcal/mol) at 298 K corresponds to a **~5-fold improvement in affinity** (dissociation constant, K<sub>d</sub>).  
+qwen3-next:80b-cloud|SAR-PEP-08,SAR Reasoning,"A peptide binds as an α-helix but is mostly disordered in solution. Stapling increases preorganization and improves binding free energy by ~1.0 kcal/mol. Approximately what fold-improvement in affinity would you expect at 298 K, and what is the mechanism?","A 1.0 kcal/mol improvement in binding free energy (ΔΔG = -1.0 kcal/mol) at 298 K corresponds to a **~5-fold improvement in affinity** (dissociation constant, K<sub>d</sub>).  
 
 ### Calculation:
 - The relationship is given by:  
@@ -372,13 +426,59 @@ A 1.0 kcal/mol improvement in binding free energy (ΔΔG = -1.0 kcal/mol) at 298
 Stapling reduces the **entropic penalty** of binding by preorganizing the peptide into the α-helical conformation. In solution, the unstructured peptide has high conformational entropy; upon binding, it must lose this entropy to adopt the helix. Stapling locks the helix in place *before* binding, minimizing the entropy loss during complex formation. This entropic contribution dominates the free energy improvement, though minor enthalpic gains from optimized interactions may also occur.  
 
 > **Note**: This is a general estimate; actual fold-improvements can vary based on specific stapling chemistry, target, and context (e.g., 1.0 kcal/mol typically yields 4–6-fold improvement)."
-qwen3-next:80b-cloud|ADMET-PEP-02,ADMET / Pharmacokinetic Properties,A linear peptide is rapidly cleaved by trypsin-like proteases at a Lys site (cleavage after Lys). Name two peptide modifications that typically reduce this cleavage and explain why serum stability increases (include a typical qualitative timescale change).,"
+qwen3-next:80b-cloud|ADMET-PEP-02,ADMET / Pharmacokinetic Properties,A linear peptide is rapidly cleaved by trypsin-like proteases at a Lys site (cleavage after Lys). Name two peptide modifications that typically reduce this cleavage and explain why serum stability increases (include a typical qualitative timescale change).,"### Two Peptide Modifications That Reduce Trypsin-Like Protease Cleavage at Lys Sites
 
-Two peptide modifications that reduce trypsin-like protease cleavage at Lys sites and enhance serum stability are:
+Trypsin-like proteases (e.g., trypsin, plasmin, thrombin) specifically cleave peptide bonds
+**C-terminal to basic residues** like lysine (Lys) and arginine (Arg). This cleavage requires
+recognition of the positively charged ε-amino group of Lys in the enzyme's active site. Two
+common peptide modifications that disrupt this recognition and reduce cleavage are:
 
-1. **N-terminal acetylation**:  
-   - **Why it works**: Trypsin-like proteases require a free N-terminal α-amino group for optimal binding to the enzyme's exosite. Acetylation neutralizes the positive charge and sterically blocks this interaction, preventing proper substrate orientation.  
-   - **Serum stability change**: Unmodified linear peptides often degrade within **minutes** (e.g., t₁/₂ < 10 min"
+1. **Nε-Acetylation of Lysine (Nε-Ac-Lys)**
+   - **Why it reduces cleavage**: Acetylation neutralizes the positive charge on the lysine side
+chain by converting the ε-amino group (–NH₃⁺) to an uncharged acetyl group (–NHCOCH₃).
+Trypsin-like proteases rely on electrostatic interactions with the positively charged Lys side
+chain for substrate binding. Without this charge, the enzyme cannot properly recognize or bind to
+the site, preventing cleavage.
+   - **Effect on serum stability**: This modification significantly extends half-life by blocking
+a major cleavage point. Unmodified peptides with exposed Lys residues are typically degraded
+within **minutes (e.g., 5–30 minutes in human serum)** due to rapid proteolysis. In contrast,
+Nε-acetylated peptides often exhibit half-lives of **several hours (e.g., 2–12 hours)**, as the
+charge neutralization specifically targets trypsin-like activity without introducing new
+vulnerabilities.
+
+2. **D-Amino Acid Substitution at the Lys Site (e.g., D-Lys)**
+   - **Why it reduces cleavage**: Trypsin-like proteases are highly stereospecific for L-amino
+acids in their substrate-binding pockets. Substituting L-lysine with its D-enantiomer (D-Lys)
+creates a stereochemical mismatch. The protease active site cannot accommodate the inverted
+chirality of D-Lys, preventing proper binding and cleavage at the site.
+   - **Effect on serum stability**: This modification provides robust protection against
+endopeptidases. Unmodified peptides may be cleaved within **minutes (e.g., 5–30 minutes)**, while
+D-Lys-containing peptides often achieve half-lives of **hours to days (e.g., 6–48 hours or
+longer)**. The D-configuration also confers resistance to other proteases (e.g., chymotrypsin),
+further enhancing stability.
+
+### Why Serum Stability Increases
+- **Mechanism**: Both modifications disrupt the enzyme-substrate interaction at Lys sites by
+either removing the critical charge (Nε-acetylation) or altering stereochemistry (D-Lys
+substitution). This prevents trypsin-like proteases from initiating cleavage, reducing the rate
+of degradation. Serum contains abundant trypsin-like enzymes (e.g., in plasma, liver, and immune
+cells), so blocking these sites is crucial for stability.
+- **Typical Timescale Change**:
+  - **Unmodified peptide**: Rapid degradation—**half-life of minutes (e.g., 5–30 min in human
+serum)**.
+  - **Modified peptide**: Dramatic extension—**half-life of hours to days (e.g., 2–48+ hours)**,
+depending on the peptide sequence, number of modifications, and other factors (e.g., additional
+stabilizing elements like PEGylation). For example:
+    - A standard linear peptide with a single Lys site might be cleaved in <15 minutes.
+    - With Nε-acetylation or D-Lys substitution, half-life can increase to 4–12 hours.
+    - Combined modifications (e.g., multiple D-amino acids + acetylation) can push stability to
+24–72 hours or more in clinical settings (e.g., therapeutic peptides like octreotide analogs).
+
+> **Note**: While N-terminal acetylation is often used to protect against aminopeptidases, it
+does **not** directly prevent cleavage *after* Lys (which is an endopeptidase activity). The
+modifications above specifically target the Lys side chain or its chirality for trypsin-like
+protease resistance. Serum stability improvements are context-dependent but consistently show
+orders-of-magnitude increases in half-life."
 deepseek-v3.2:cloud|OPT-SM-06,Optimization Approaches,"A small molecule inhibits both the intended kinase and a close off-target kinase. Structural data indicate the intended target has a larger lipophilic pocket extension that the off-target lacks. What modification strategy is most likely to improve selectivity, and why?","To improve selectivity for the intended kinase, add a lipophilic substituent to the inhibitor that extends into the larger lipophilic pocket unique to the target. This modification increases binding affinity for the intended kinase through favorable van der Waals interactions within the extra space, while simultaneously creating steric clash or poor hydrophobic contact in the off-target kinase's more constrained pocket, thereby reducing its binding. This strategy directly exploits the structural difference to achieve selectivity."
 gemini-3-flash-preview:cloud|SAR-SM-07,SAR Reasoning,"A phenyl ring in a lead compound occupies a hydrophobic pocket in both the intended target and a close off-target homolog. Only the intended target has a nearby Ser OH positioned to hydrogen-bond to a ring heteroatom. What is the expected effect on target potency and selectivity of replacing phenyl with a 3-pyridyl ring (introducing one ring nitrogen), and why?","Replacing the phenyl ring with a 3-pyridyl ring is expected to **maintain or slightly increase target potency** while **significantly increasing selectivity** over the off-target homolog.
 
@@ -389,7 +489,7 @@ gemini-3-flash-preview:cloud|SAR-SM-07,SAR Reasoning,"A phenyl ring in a lead co
 deepseek-v3.2:cloud|OPT-SM-04,Optimization Approaches,"In Bayesian optimization for molecules, what does Expected Improvement (EI) favor, and why is predictive uncertainty required for principled exploration?","Expected Improvement (EI) in Bayesian optimization for molecules favors candidate molecules where the expected gain over the current best observed property (e.g., binding affinity) is highest. This balances exploitation (selecting molecules with high predicted performance) and exploration (selecting molecules with high predictive uncertainty), as EI is calculated using the full predictive distribution from a probabilistic model like a Gaussian process.
 
 Predictive uncertainty is required for principled exploration because it quantifies the model's confidence in predictions, allowing EI to systematically prioritize under-explored regions of chemical space. Without uncertainty, exploration would be arbitrary or purely exploitative, risking convergence to local optima. The uncertainty term in EI explicitly weights the potential for improvement in uncertain regions, ensuring that exploration is mathematically justified and directed toward areas with high potential for better performance."
-kimi-k2.5:cloud|ADMET-PEP-09,ADMET / Pharmacokinetic Properties,"In an in vivo PK study, a peptide shows accelerating clearance over repeated weekly dosing despite similar initial exposure. What two mechanisms can cause this, and what measurements distinguish them?"," Two mechanisms can cause accelerating clearance with repeated weekly peptide dosing:
+kimi-k2.5:cloud|ADMET-PEP-09,ADMET / Pharmacokinetic Properties,"In an in vivo PK study, a peptide shows accelerating clearance over repeated weekly dosing despite similar initial exposure. What two mechanisms can cause this, and what measurements distinguish them?","Two mechanisms can cause accelerating clearance with repeated weekly peptide dosing:
 
 ## 1. **Anti-Drug Antibody (ADA) Formation**
 
@@ -416,17 +516,12 @@ kimi-k2.5:cloud|ADMET-PEP-09,ADMET / Pharmacokinetic Properties,"In an in vivo P
 ---
 
 **Key discriminator:** TMDD typically improves with dose escalation (saturable), while ADA-driven clearance worsens or persists regardless of dose."
-gemini-3-flash-preview:cloud|ADMET-SM-03,ADMET / Pharmacokinetic Properties,"What physicochemical profile is commonly associated with hERG liability, and what in vitro hERG IC50 threshold is often treated as a significant flag for follow-up?","As a pharmaceutical scientist, I can confirm that hERG (human ether-à-go-go-related gene) liability is one of the most critical off-target activities to manage during lead optimization due to its association with QT interval prolongation and the risk of *Torsades de Pointes*.
-
-### 1. Physicochemical Profile Associated with hERG Liability
-The hERG potassium channel has a uniquely large, hydrophobic inner cavity with specific residues (Tyr652 and Phe656) that facilitate the binding of diverse chemical structures. The ""hERG-friendly"" profile typically includes:
-
-*   **High Lipophilicity:** There is a strong positive correlation between lipophilicity ($logP$ or $logD_{7.4}$) and hERG potency. Generally, compounds with **$logD_{7.4} > 3$** are at significantly higher risk.
-*   **Basic Amines:** The presence of a basic nitrogen (typically a secondary or tertiary amine) with a **$pKa > 7.0–8.0$"
-kimi-k2.5:cloud|SAR-PEP-05,SAR Reasoning,"A peptide’s backbone NH at a specific position donates a critical hydrogen bond to the target (distance ~2.9 Å). What is the expected effect on activity of N-methylating that backbone amide at the same position, and what secondary benefit might occur?"," **Expected effect on activity:** Significant reduction or complete loss of binding affinity (and thus activity). N-methylation replaces the backbone N–H with N–CH₃, abolishing the hydrogen bond donor. Since the N–H donates a critical H-bond (2.9 Å is optimal geometry, contributing roughly **1–3 kcal/mol** to binding), removing it typically increases the dissociation constant (K<sub>d</sub>) by **10- to 100-fold** or greater, depending on whether the interaction is solvent-exposed or buried.
+gemini-3-flash-preview:cloud|ADMET-SM-03,ADMET / Pharmacokinetic Properties,"What physicochemical profile is commonly associated with hERG liability, and what in vitro hERG IC50 threshold is often treated as a significant flag for follow-up?","The hERG (human Ether-à-go-go-Related Gene) potassium channel is a critical off-target because its inhibition can prolong the QT interval and cause potentially fatal arrhythmias (e.g., Torsades de Pointes); high hERG liability is associated with a characteristic physicochemical profile including a protonated basic amine (pKa > 7 enabling cation–π interactions with Tyr652), high lipophilicity (clogP > 3 facilitating access to the hydrophobic pore), multiple aromatic rings (π–π stacking with Phe656/Tyr652), relatively large and flexible molecular size (>300–400 Da), and lack of negative charge; in vitro IC50 benchmarks commonly used are >10 μM (generally clean), <10 μM (flag for opt
+"
+kimi-k2.5:cloud|SAR-PEP-05,SAR Reasoning,"A peptide’s backbone NH at a specific position donates a critical hydrogen bond to the target (distance ~2.9 Å). What is the expected effect on activity of N-methylating that backbone amide at the same position, and what secondary benefit might occur?","**Expected effect on activity:** Significant reduction or complete loss of binding affinity (and thus activity). N-methylation replaces the backbone N–H with N–CH₃, abolishing the hydrogen bond donor. Since the N–H donates a critical H-bond (2.9 Å is optimal geometry, contributing roughly **1–3 kcal/mol** to binding), removing it typically increases the dissociation constant (K<sub>d</sub>) by **10- to 100-fold** or greater, depending on whether the interaction is solvent-exposed or buried.
 
 **Secondary benefit:** Enhanced **proteolytic stability** and potential improvement in **membrane permeability**. N-methylation masks the amide bond from recognition by peptidases, slowing enzymatic degradation. It also reduces the number of hydrogen bond donors (HBDs), which can improve passive diffusion across lipid membranes and align better with Lipinski/Veber rules for oral bioavailability."
-kimi-k2.5:cloud|ASSAY-SM-10,Assay Interpretation,"An HTS assay has positive-control mean signal μp = 10 with SD σp = 2, and negative-control mean μn = 100 with SD σn = 5. Compute Z' factor and interpret assay quality."," **Calculation:**
+kimi-k2.5:cloud|ASSAY-SM-10,Assay Interpretation,"An HTS assay has positive-control mean signal μp = 10 with SD σp = 2, and negative-control mean μn = 100 with SD σn = 5. Compute Z' factor and interpret assay quality.","**Calculation:**
 
 The Z′ factor is calculated as:
 
@@ -461,15 +556,64 @@ deepseek-v3.2:cloud|ASSAY-SM-07,Assay Interpretation,"Three analogs have (IC50 n
 **Most logical next experimental step**:  
 Given that Analog B has excellent solubility (50 µM) but its potency is just outside the cutoff (80 nM vs. ≤50 nM), the most logical step is to **use Analog B as a starting point for further structural optimization to improve potency** while maintaining its high solubility. This could involve synthesizing and testing close analogs of B to achieve IC50 ≤ 50 nM."
 deepseek-v3.2:cloud|SAR-PEP-04,SAR Reasoning,"A peptide binds its target as an α-helix, and residue i is buried in a helix-dependent interface. What is the most likely effect on activity of substituting that residue from an L-amino acid to the corresponding D-amino acid, and why?","Substituting an L-amino acid with its D-enantiomer at a buried, helix-dependent interface will most likely abolish or severely reduce activity. This is because D-amino acids are incompatible with the right-handed α-helical conformation adopted by L-peptides: the substitution disrupts backbone dihedral angles, destabilizing the helix and altering side-chain orientation. Since binding depends on both the helical structure and proper burial of residue i, these disruptions prevent effective interaction with the target."
-qwen3-next:80b-cloud|SAR-SM-10,SAR Reasoning,"A biaryl inhibitor rapidly interconverts between two atropisomers, but only one atropisomer fits the binding pocket. What design change is most likely to increase potency and selectivity, and why?","
+qwen3-next:80b-cloud|SAR-SM-10,SAR Reasoning,"A biaryl inhibitor rapidly interconverts between two atropisomers, but only one atropisomer fits the binding pocket. What design change is most likely to increase potency and selectivity, and why?","The most likely design change to increase potency and selectivity is to **introduce steric
+hindrance (e.g., bulky substituents) ortho to the biaryl axis to increase the rotational barrier,
+followed by isolation of the active atropisomer**. Here's why:
 
-The most effective design change is **introducing steric bulk at the ortho positions** (e.g., methyl, chloro, or trifluoromethyl groups) on one or both aryl rings near the biaryl axis.  
+### Why this change?
+- **Problem with rapid interconversion**: The biaryl inhibitor exists as a dynamic equilibrium
+between two atropisomers. Only one (the ""active"" atropisomer) binds effectively to the target
+binding pocket, while the other (""inactive"" atropisomer) does not fit. Rapid interconversion
+means that at any given time, only ~50% of the molecules are in the active form (assuming equal
+energy), diluting the effective concentration of the active species. This reduces potency because
+half the dose is ""inactive"" and contributes no therapeutic effect. Additionally, the inactive
+atropisomer may bind to off-target proteins, reducing selectivity and potentially causing side
+effects.
 
-**Why?**  
-- Atropisomer interconversion occurs due to low rotational barrier (typically <20–25 kcal/mol for rapid equilibration at 37°C).  
-- Ortho substituents increase steric hindrance, raising the rotational barrier to **>30 kcal/mol** (e.g., adding a single ortho-methyl group can increase the barrier by 5–10 kcal/mol).  
-- This stabilizes the active atropisomer, eliminating the inactive form from the equilibrium.  
-- **Potency increase**: The active conformation is no longer diluted by the inactive isomer (e.g., a 50:50"
+- **Effect of increasing rotational barrier**: By adding bulky substituents (e.g., methyl,
+chloro, or tert-butyl groups) ortho to the biaryl bond, the steric clash between substituents on
+adjacent rings increases the energy required for rotation. This raises the rotational barrier
+(typically to >25 kcal/mol), slowing interconversion to the point where the atropisomers become
+configurationally stable at physiological temperatures. Once stable, the active atropisomer can
+be isolated as a single enantiomer (e.g., via chiral chromatography).
+
+- **Impact on potency**:
+  - Using the pure active atropisomer eliminates the ""dilution"" effect. Instead of only 50% of
+the molecules being active (in the racemate), 100% are active, effectively doubling the potency
+(i.e., half the dose is needed for the same effect).
+  - For example, if the racemate has an IC₅₀ of 100 nM, the pure active atropisomer may achieve
+the same effect at ~50 nM, significantly improving potency.
+
+- **Impact on selectivity**:
+  - The inactive atropisomer may bind to off-target proteins due to its different shape, leading
+to adverse effects. Removing it entirely reduces off-target binding, improving selectivity for
+the intended target.
+  - The bulky ortho substituents can also be optimized to enhance interactions within the target
+binding pocket (e.g., filling a hydrophobic subpocket), further improving selectivity by making
+the active atropisomer less compatible with off-target sites.
+
+### Why not other approaches?
+- **Modifying the molecule to favor the active atropisomer thermodynamically**: While possible,
+this is less reliable. The energy difference between atropisomers is often small (<2 kcal/mol),
+and achieving a large bias without compromising binding is challenging. Steric hindrance to
+increase the barrier is more predictable and directly addresses the interconversion issue.
+- **Using the racemate with a high barrier**: If the barrier is high but the racemate is not
+separated, both isomers remain present. The inactive form could still cause off-target effects,
+negating selectivity gains. Isolation of the single active isomer is essential.
+- **Reducing the barrier**: This would worsen the problem by accelerating interconversion,
+further diluting the active form and potentially increasing off-target binding.
+
+### Practical Consideration
+- Bulky ortho substituents must be carefully placed to avoid disrupting binding of the active
+atropisomer. For instance, substituents should be oriented to avoid clashes with the binding
+pocket while maximizing steric hindrance for rotation. This is a common strategy in drug design
+(e.g., in kinase inhibitors like crizotinib analogs or BTK inhibitors).
+
+In summary, increasing the rotational barrier via steric hindrance and isolating the active
+atropisomer directly addresses the core issue of rapid interconversion, leading to higher potency
+(due to full utilization of the active species) and improved selectivity (by eliminating the
+off-target-binding inactive isomer). This approach is well-established in medicinal chemistry for
+atropisomeric compounds."
 deepseek-v3.2:cloud|ADMET-SM-10,ADMET / Pharmacokinetic Properties,"What approximate molecular-weight threshold is commonly associated with increased biliary excretion for small molecules, and what other physicochemical features favor biliary vs renal elimination?","For small molecules, biliary excretion becomes significant at molecular weights **above approximately 500 Da** (often cited as >500-600 Da). This threshold is lower in rats (~325 Da) than in humans.
 
 Key physicochemical features favoring **biliary elimination** over renal elimination include:
@@ -484,13 +628,43 @@ In contrast, **renal elimination** is favored by:
 *   **High hydrophilicity** (low log P)
 *   **Permanent positive charge or high polarity** at physiological pH
 *   **Substrate affinity for renal secretory transporters** (e.g., OATs, OCTs)."
-kimi-k2.5:cloud|ADMET-SM-03,ADMET / Pharmacokinetic Properties,"What physicochemical profile is commonly associated with hERG liability, and what in vitro hERG IC50 threshold is often treated as a significant flag for follow-up?"," **Physicochemical Profile Associated with hERG Liability**
+kimi-k2.5:cloud|ADMET-SM-03,ADMET / Pharmacokinetic Properties,"What physicochemical profile is commonly associated with hERG liability, and what in vitro hERG IC50 threshold is often treated as a significant flag for follow-up?"," The **hERG** (human Ether-à-go-go-Related Gene) potassium channel is associated with
+drug-induced QT prolongation and Torsades de Pointes arrhythmia. The physicochemical profile
+commonly associated with hERG liability includes:
 
-hERG blockers typically share a ""pharmacophore"" consisting of a **protonatable basic nitrogen** (pKₐ usually **> 7.5–8.0**) flanked by **lipophilic/hydrophobic groups** (often aromatic rings). Key physicochemical flags include:
+## Physicochemical Profile
+**Core features that favor hERG binding:**
+- **Basicity**: A basic center (typically a tertiary amine) with pKa > **7.5–8.0** (protonated at
+physiological pH to form a cationic interaction with the channel pore)
+- **Lipophilicity**: High lipophilicity (logP > **3.0–3.5**) enabling access to the hydrophobic
+binding pocket
+- **Amphipathic nature**: A hydrophobic aromatic core combined with the basic nitrogen
+- **Planar aromatic rings**: Often 1–3 aromatic/hydrophobic groups (particularly fluorinated
+phenyl rings or benzamides)
+- **Molecular weight**: Typically > **400 Da**, though this is secondary to charge and
+lipophilicity
+- **Specific pharmacophore**: A basic nitrogen separated by 4–6 Å from a hydrophobic center
+(often an aromatic ring)
 
-*   **Basicity:** A centrally located basic amine (often tertiary) that is positively charged at physiological pH.
-*   **High lipophil"
-kimi-k2.5:cloud|ADMET-PEP-02,ADMET / Pharmacokinetic Properties,A linear peptide is rapidly cleaved by trypsin-like proteases at a Lys site (cleavage after Lys). Name two peptide modifications that typically reduce this cleavage and explain why serum stability increases (include a typical qualitative timescale change).," Two peptide modifications that reduce trypsin-like protease cleavage at Lys:
+**The ""hERG triangle"" concept** identifies three key regions: a central basic nitrogen and two
+lipophilic/aromatic pharmacophores positioned at specific distances.
+
+## hERG IC50 Thresholds
+**Common in vitro thresholds for follow-up:**
+- **≤ 10 μM**: The most widely used early screening cutoff—compounds with IC50 < 10 μM typically
+trigger follow-up assessment (patch clamp or safety margin calculation)
+- **≤ 30–40 μM**: Higher throughput screening margins used in very early discovery
+- **≤ 1 μM**: A red flag requiring immediate attention and structural modification
+
+**Clinical safety context:**
+The critical parameter is the **safety margin** (therapeutic index):
+$$\frac{\text{hERG IC}_{50}}{\text{Free C}_{max}} > 30\text{–}100$$
+where free Cmax is the unbound plasma concentration at therapeutic doses.
+
+Compounds with **IC50 values < 10 μM** combined with the physicochemical profile above (basic +
+lipophilic) are generally prioritized for electrophysiology follow-up or structure-based
+liability mitigation."
+kimi-k2.5:cloud|ADMET-PEP-02,ADMET / Pharmacokinetic Properties,A linear peptide is rapidly cleaved by trypsin-like proteases at a Lys site (cleavage after Lys). Name two peptide modifications that typically reduce this cleavage and explain why serum stability increases (include a typical qualitative timescale change).,"Two peptide modifications that reduce trypsin-like protease cleavage at Lys:
 
 ## 1. **N-methylation of the Lys side chain amine**
 - Converts the primary ε-amino group to a secondary amine (dimethyllysine) or tertiary amine (trimethyllysine)
@@ -519,32 +693,55 @@ The reasons for this loss are as follows:
 4.  **Desolvation and Geometry:** The specific geometry of a salt bridge (2.8–3.0 Å) suggests a highly optimized interaction. Replacing the carboxylate disrupts the electronic complementarity of the binding site.
 
 **Example:** In many ACE inhibitors or nuclear receptor ligands, the loss of a critical carboxylate interaction via esterification (if not acting as a prodrug) typically renders the compound inactive in biochemical assays."
-gemini-3-flash-preview:cloud|OPT-SM-04,Optimization Approaches,"In Bayesian optimization for molecules, what does Expected Improvement (EI) favor, and why is predictive uncertainty required for principled exploration?","In Bayesian optimization (BO) for molecular discovery, **Expected Improvement (EI)** is an acquisition function used to navigate the chemical space by balancing the trade-off between **exploitation** and **exploration**.
+gemini-3-flash-preview:cloud|OPT-SM-04,Optimization Approaches,"In Bayesian optimization for molecules, what does Expected Improvement (EI) favor, and why is predictive uncertainty required for principled exploration?","In Bayesian Optimization (BO) for molecular discovery, the goal is to find molecules with optimal properties (e.g., binding affinity, solubility, or fluorescence) while minimizing the number of expensive experiments or high-fidelity simulations.
 
-### What Expected Improvement (EI) Favors
-EI favors molecular candidates that have a high probability of surpassing the current best-observed value (the ""incumbent,"" $f(x^+)$). Specifically, it prioritizes:
+Here is an explanation of what Expected Improvement (EI) favors and why predictive uncertainty is the engine that drives principled exploration.
 
-1.  **Exploitation:** Molecules with a high predicted mean ($\mu(x)$) for the target property (e.g., $pIC_{50}$ or docking score). These are candidates likely to be similar to known high-performers.
-2.  **Exploration:** Molecules with high predictive uncertainty ($\sigma(x)$). These are candidates in regions of chemical space where the model has little data, potentially harboring ""hidden gems"" or novel scaffolds.
+---
 
-Mathematically, EI is expressed as:
-$$EI(x) = E[\max(f(x) - f(x^+), 0)]$$
-This formula ensures that the acquisition value is high if the predicted value is significantly better than the current best, or if the uncertainty is large enough that a better value is statistically plausible.
+### 1. What does Expected Improvement (EI) favor?
 
-### Why Predictive Uncertainty is Required for Principled Exploration
-In drug discovery, the chemical space is estimated at $10^{60}$ molecules, while experimental throughput is limited. Predictive uncertainty is essential for ""principled"" exploration for the following reasons:
+Expected Improvement is an **acquisition function** used to decide which molecule to test next. It mathematically favors a balance between two competing strategies: **Exploitation** and **Exploration**.
 
-*   **Quantifying the ""Unknown"":** Without a measure of uncertainty (typically the variance $\sigma^2$ from a Gaussian Process or the ensemble variance from a"
-kimi-k2.5:cloud|GEN-SM-07,Generative Design Strategies,Give three commonly used synthesizability/developability filters applied to generated small molecules and provide a typical numeric threshold for at least one of them.," Here are three commonly used synthesizability/developability filters for generated small molecules:
+Specifically, EI favors points (molecules) that fall into two categories:
+
+*   **Exploitation (High Predicted Value):** EI favors molecules where the surrogate model (e.g., a Gaussian Process) predicts a mean value significantly better than the current best molecule found so far ($f(x^+)$). It looks for ""more of the same"" in regions already known to be high-performing.
+*   **Exploration (High Uncertainty):** EI also favors molecules in regions of the chemical space where the model is highly uncertain (high variance). Even if the predicted mean is mediocre, the high uncertainty suggests there is a statistical possibility that the true value could be much higher than the current best.
+
+**The ""In-Between"" Favoritism:**
+EI is popular because it naturally favors molecules that offer the best ""upside."" It doesn't just look for the highest predicted value; it looks for the molecule with the highest probability of *surpassing* the current champion by a significant margin.
+
+---
+
+### 2. Why is predictive uncertainty required for principled exploration?
+
+In molecular science, the search space (chemical space) is effectively infinite (estimated at $10^{60}$ drug-like molecules). We cannot search it exhaustively. Predictive uncertainty is required for ""principled"" exploration for the following reasons:
+
+#### A. Quantifying the ""Known Unknowns""
+Without uncertainty, a model only provides a point estimate (a single predicted value). If you only follow point estimates, the algorithm becomes **greedy**: it will only suggest molecules that look exactly like the ones that have already worked. Uncertainty allows the algorithm to acknowledge what it doesn't know, directing the search toward ""dark"" regions of chemical space.
+
+#### B. Avoiding Local Optima
+Molecular property landscapes are often ""rugged,"" containing many local optima (clusters of molecules that are good, but not the best). If an optimizer lacks a measure of uncertainty, it can get trapped in a local neighborhood forever. Predictive uncertainty provides a ""license to look elsewhere,"" ensuring the search is global rather than local.
+
+#### C. Handling the ""Activity Cliff"" Problem
+Molecules are sensitive; small structural changes can lead to massive changes in property (activity cliffs). A principled model uses uncertainty to signal that its predictions are less reliable as you move away from known data points. This prevents the optimizer from over-confidently dismissing a region of chemical space simply because a nearby neighbor performed poorly.
+
+#### D. The Mathematical Basis of ""Expected"" Improvement
+The ""Expected"" in Expected Improvement is a statistical expectation taken over the posterior distribution of the model.
+*   If you have **zero uncertainty**, the ""expected improvement"" is simply the difference between your prediction and the current best.
+*   With **uncertainty**, the calculation incorporates the entire range of possible values the molecule might have.
+Without a distribution (provided by uncertainty), you cannot calculate an ""expectation,"" and the selection process ceases to be Bayesian; it becomes a simple (and often failing) maximum-likelihood search.
+
+### Summary
+In molecular BO, **EI favors the potential for breakthrough.** It uses **predictive uncertainty** as a guide to ensure that the search doesn't just refine known hits, but actively investigates novel chemical scaffolds that have the statistical potential to outperform everything seen thus far."
+kimi-k2.5:cloud|GEN-SM-07,Generative Design Strategies,Give three commonly used synthesizability/developability filters applied to generated small molecules and provide a typical numeric threshold for at least one of them.,"Here are three commonly used synthesizability/developability filters for generated small molecules:
 
 1. **Synthetic Accessibility Score (SAscore)** – estimates ease of synthesis based on fragment contributions and complexity penalties. Typical threshold: **SAscore < 4.5** (lower = more accessible; range 1–10).
 
 2. **Quantitative Estimate of Drug-likeness (QED)** – combines molecular weight, lipophilicity, polarity, solubility, flexibility, and saturation. Typical threshold: **QED > 0.5** (range 0–1, higher = more drug-like).
 
 3. **Retrosynthetic Accessibility Score (RAscore)** – machine learning-based prediction of synthetic feasibility using reaction templates. Typical threshold: **RAscore > 0.5** (probability-like scale 0–1)."
-qwen3-next:80b-cloud|OPT-SM-10,Optimization Approaches,"You have four compounds with (IC50 nM, solubility µM, clearance mL/min/kg): A(10, 5, 40), B(30, 50, 20), C(15, 10, 10), D(50, 200, 60). Objectives: minimize IC50 and clearance, maximize solubility. Which compounds are Pareto-optimal?","
-
-All four compounds (A, B, C, D) are Pareto-optimal.  
+qwen3-next:80b-cloud|OPT-SM-10,Optimization Approaches,"You have four compounds with (IC50 nM, solubility µM, clearance mL/min/kg): A(10, 5, 40), B(30, 50, 20), C(15, 10, 10), D(50, 200, 60). Objectives: minimize IC50 and clearance, maximize solubility. Which compounds are Pareto-optimal?","All four compounds (A, B, C, D) are Pareto-optimal.  
 
 **Reasoning**:  
 - A compound is Pareto-optimal if no other compound is strictly better in **all** objectives (minimize IC50 and clearance, maximize solubility).  
@@ -555,17 +752,102 @@ deepseek-v3.2:cloud|SAR-SM-07,SAR Reasoning,"A phenyl ring in a lead compound oc
 - **For the off-target:** Lacking the Ser OH, the polar nitrogen disrupts hydrophobic packing in the pocket without compensatory interactions, reducing binding affinity.
 
 Thus, the modification leverages the unique serine residue in the intended target to achieve both higher potency and greater selectivity."
-gemini-3-flash-preview:cloud|ADMET-PEP-06,ADMET / Pharmacokinetic Properties,"A 12-mer peptide has net charge +3 and many hydrogen-bond donors (backbone + side chains), giving poor cell permeability. Name two chemical strategies that can increase cell permeability while keeping the same amino-acid sequence identity largely intact, and explain why they work.","\log P) and provides a hydrophobic ""anchor"" that facilitates membrane insertion and translocation via a ""hitchhiking"" or passive mechanism.
+gemini-3-flash-preview:cloud|ADMET-PEP-06,ADMET / Pharmacokinetic Properties,"A 12-mer peptide has net charge +3 and many hydrogen-bond donors (backbone + side chains), giving poor cell permeability. Name two chemical strategies that can increase cell permeability while keeping the same amino-acid sequence identity largely intact, and explain why they work.","To increase the cell permeability of a 12-mer peptide with a +3 charge and numerous hydrogen-bond (H-bond) donors while keeping the sequence identity largely intact, the following two chemical strategies are commonly employed:
 
-    *Alternative for Strategy 2:* **Hydro"
-qwen3-next:80b-cloud|ASSAY-PEP-02,Assay Interpretation,A hemolysis assay for an antimicrobial peptide yields a steep dose–response with Hill slope ~3. Give a mechanistic interpretation consistent with peptide membrane-disruption behavior.,"
+### 1. $N$-Methylation of the Peptide Backbone
+This strategy involves replacing the hydrogen atom on one or more of the amide nitrogens ($NH$) in the peptide backbone with a methyl group ($CH_3$).
 
-A Hill slope of ~3 in a hemolysis assay indicates **high positive cooperativity** in membrane disruption, consistent with a **pore-forming mechanism** where multiple peptide monomers must assemble cooperatively to create a functional transmembrane pore. Specifically:  
-- The slope suggests that **~3 peptide monomers** are required to form a stable pore structure (e.g., a barrel-stave or toroidal pore).  
-- Below a critical concentration, minimal hemolysis occurs; above it, rapid pore formation causes a sharp increase in lysis.  
-- **Example**: Melittin (from bee venom) exhibits a Hill slope of **3.0–3.5** in hemolysis assays, reflecting cooperative assembly of 3–4 monomers per pore.  
-- This contrasts with non-cooperative mechanisms (e"
-kimi-k2.5:cloud|GEN-PEP-01,Generative Design Strategies,"In sequence-based peptide generation, what makes a generated peptide sequence syntactically valid, and what additional constraint is often imposed for therapeutic developability?"," ## Syntactic Validity in Sequence-Based Peptide Generation
+*   **Why it works:**
+    *   **Reduction of H-bond Donors:** The primary barrier to passive membrane diffusion is the energetic cost of ""desolvating"" the peptide (breaking H-bonds with water) to enter the hydrophobic lipid bilayer. By replacing an $NH$ with an $N-CH_3$, you directly remove H-bond donors, lowering this desolvation penalty.
+    *   **Increased Lipophilicity:** The addition of methyl groups increases the overall hydrophobicity of the molecule.
+    *   **Conformational Constraint:** $N$-methylation can induce specific ""chameleonic"" conformations where the remaining polar groups are tucked inward (internal H-bonding), allowing the peptide to expose a more hydrophobic surface to the membrane lipids.
+
+### 2. Side-Chain Masking (Pro-peptide/Prodrug Strategy)
+This strategy involves the temporary chemical modification of the charged side chains (e.g., Lysine, Arginine, or Histidine) with biolabile protecting groups, such as acyloxyalkyl or carbamate-based ""pro-moieties.""
+
+*   **Why it works:**
+    *   **Charge Neutralization:** The +3 net charge is a major deterrent to permeability because ions do not cross the hydrophobic core of the lipid bilayer efficiently. Masking these basic residues neutralizes the charge, significantly increasing the passive diffusion rate.
+    *   **Intracellular Release:** These masking groups are designed to be ""biolabile."" Once the peptide crosses the cell membrane, intracellular enzymes (like esterases or cytosolic proteases) cleave the masking groups, restoring the original +3 charge and the native amino acid sequence.
+    *   **Improved Hydrophobicity:** These pro-moieties are typically lipophilic, which further aids in partitioning the peptide into the membrane.
+
+---
+
+### Summary Table
+
+| Strategy | Primary Target | Mechanism of Action |
+| :--- | :--- | :--- |
+| **$N$-Methylation** | Amide Backbone | Reduces H-bond donors and desolvation energy; increases lipophilicity. |
+| **Side-Chain Masking** | Charged Side Chains | Neutralizes the +3 charge for membrane transit; restored by intracellular enzymes. |"
+qwen3-next:80b-cloud|ASSAY-PEP-02,Assay Interpretation,A hemolysis assay for an antimicrobial peptide yields a steep dose–response with Hill slope ~3. Give a mechanistic interpretation consistent with peptide membrane-disruption behavior.,"The steep dose-response curve with a Hill slope of approximately 3 in a hemolysis assay for an
+antimicrobial peptide (AMP) is indicative of **high positive cooperativity in the membrane
+disruption mechanism**, specifically consistent with a **cooperative oligomerization process**
+required for pore formation or membrane destabilization. Below is a mechanistic interpretation
+grounded in established AMP behavior:
+
+### Key Mechanistic Interpretation:
+- **Cooperative Oligomerization for Pore Formation**: A Hill slope of ~3 suggests that the
+assembly of **~3 peptide subunits** is the critical, rate-limiting step for functional membrane
+disruption. This implies:
+  - The peptide initially binds weakly and non-cooperatively to the membrane surface (e.g., via
+electrostatic interactions with lipid headgroups).
+  - Once the first peptide binds, it facilitates the recruitment of subsequent peptides through
+**peptide-peptide interactions** (e.g., hydrophobic or hydrogen-bonding forces), creating a
+highly cooperative ""nucleation"" event.
+  - A trimeric (or near-trimeric) oligomer forms as the minimal functional unit for membrane
+disruption. This oligomer either:
+    - **Stabilizes a transmembrane pore** (e.g., in a barrel-stave or toroidal pore model), where
+3 subunits are sufficient to create a conductive channel that allows ion leakage and osmotic
+lysis.
+    - **Triggers a cooperative lipid reorganization** (e.g., in a toroidal pore), where peptide
+oligomerization induces rapid, cooperative bending of lipid monolayers, leading to a sudden loss
+of membrane integrity.
+  - Below the critical concentration for trimer formation, minimal disruption occurs. Above this
+threshold, a small increase in peptide concentration drives near-complete oligomerization and
+lysis, causing the steep transition.
+
+### Why This Explains the Steep Slope:
+- **Positive cooperativity**: The binding of the first peptide lowers the energy barrier for
+binding the second and third, resulting in a sharp, sigmoidal response. The Hill coefficient
+(n<sub>H</sub> ≈ 3) directly reflects the number of cooperative subunits in the oligomeric unit
+(n<sub>H</sub> ≈ stoichiometry of the functional oligomer).
+- **Threshold behavior**: Membrane disruption is not gradual; it requires a ""critical mass"" of
+peptides to overcome the energy barrier for pore formation. Once this threshold is crossed, lysis
+occurs rapidly. This is analogous to a phase transition (e.g., liquid-to-gas), where a small
+change in concentration triggers a large-scale structural change.
+- **Experimental consistency**:
+  - Peptides like **melittin** (from bee venom) exhibit Hill slopes of 2–3 in hemolysis assays,
+consistent with cooperative trimer/tetramer pore formation.
+  - In toroidal pore models (e.g., for **magainin**), lipid-peptide cooperativity can also yield
+n<sub>H</sub> ≈ 3, as the oligomerization of peptides drives cooperative lipid rearrangement.
+  - For carpet-model peptides (e.g., **LL-37**), a steep slope may arise if the critical surface
+density for disruption is sharply defined due to cooperative peptide clustering, though this
+typically yields lower Hill coefficients (1–2). A slope of 3 is more characteristic of
+pore-forming mechanisms.
+
+### Why Not Other Mechanisms?
+- **Non-cooperative binding (n<sub>H</sub> = 1)**: Would produce a gradual, linear response,
+inconsistent with the steep curve.
+- **High-stoichiometry pores (e.g., n<sub>H</sub> = 4–6)**: Would yield a slope closer to 4–6,
+but experimental values often deviate slightly due to factors like membrane heterogeneity or
+incomplete cooperativity. A slope of ~3 is typical for trimers or asymmetric oligomers.
+- **Non-oligomeric mechanisms (e.g., single-peptide detergent-like action)**: Would show shallow
+slopes (n<sub>H</sub> < 1), as disruption scales linearly with concentration.
+
+### Biological Implications:
+- This cooperativity enhances the **selectivity** of AMPs for bacterial membranes over mammalian
+cells (e.g., red blood cells). Bacterial membranes (rich in anionic lipids) promote stronger
+peptide binding and lower critical oligomerization concentrations, while zwitterionic mammalian
+membranes require higher peptide concentrations for the same cooperative step—explaining why
+hemolysis occurs only at relatively high doses despite the steep slope.
+- The steepness also implies **low tolerance for sub-lytic concentrations**, meaning AMPs act in
+an ""all-or-nothing"" manner. This is advantageous for rapid microbial killing but increases
+toxicity risks to host cells if dosing is not precise.
+
+In summary, a Hill slope of ~3 is a hallmark of cooperative oligomerization where 3 peptide
+subunits must assemble to form a functional membrane-disrupting unit (e.g., a pore or lipid
+defect). This mechanism ensures efficient lysis at a narrow concentration range, a key feature of
+many pore-forming AMPs."
+kimi-k2.5:cloud|GEN-PEP-01,Generative Design Strategies,"In sequence-based peptide generation, what makes a generated peptide sequence syntactically valid, and what additional constraint is often imposed for therapeutic developability?","## Syntactic Validity in Sequence-Based Peptide Generation
 
 A generated peptide sequence is **syntactically valid** when it consists exclusively of the 20 standard proteinogenic amino acids (or specified non-canonical residues) encoded by single-letter or three-letter codes, forming a continuous chain without invalid characters, premature stop codons, or chemically implausible linkages.
 
@@ -579,9 +861,7 @@ The critical additional constraint is **drug-like physicochemical property filte
 - **Specific structural liabilities**: absence of N-terminal Gln/Asn (pyroglutamate formation), Pro-Gly motifs (cis-trans isomerization), or Cys-rich sequences (disulfide scrambling)
 
 **Example**: Therapeutic peptide libraries often enforce Lipinski-like rules adapted for peptides (e.g., ≤30 amino acids, ≤5 positive charges) and exclude sequences predicted to have >10% aggregation propensity by tools like TANGO or Aggrescan."
-qwen3-next:80b-cloud|GEN-SM-09,Generative Design Strategies,List four quantitative metrics commonly used to evaluate small-molecule generative models and briefly state what each measures.,"
-
-Here are four quantitative metrics for evaluating small-molecule generative models, with precise definitions and typical values:
+qwen3-next:80b-cloud|GEN-SM-09,Generative Design Strategies,List four quantitative metrics commonly used to evaluate small-molecule generative models and briefly state what each measures.,"Here are four quantitative metrics for evaluating small-molecule generative models, with precise definitions and typical values:
 
 1. **Validity**:  
    Measures the percentage of generated molecules that are chemically valid (e.g., no invalid valences, correct atom bonding). *Typical range: 90–99% for modern models (e.g., 98.2% in ChemVAE studies)*.
@@ -596,46 +876,174 @@ Here are four quantitative metrics for evaluating small-molecule generative mode
    Measures drug-likeness on a scale of 0–1 (1 = ideal), combining molecular weight, logP, H-bond donors/acceptors, etc. *Typical range for valid molecules: 0.6–0.8 (e.g., 0.72 in REINVENT-generated compounds)*.  
 
 *Note: These metrics are standardized in benchmarks like MOSES and are widely reported in peer-reviewed literature (e.g., *J. Chem. Inf. Model.* 2020, 60, 1, 56–66).*"
-kimi-k2.5:cloud|SAR-SM-02,SAR Reasoning,"A carboxylate on a small molecule forms a salt bridge to a Lys side chain (N–O distance ~2.8–3.0 Å) and is required for activity. What is the most likely effect on potency if you convert the carboxylic acid to a methyl ester, and why?"," **Most likely effect:** A substantial decrease in potency (typically **10- to >100-fold**, potentially abolishing activity).
+kimi-k2.5:cloud|SAR-SM-02,SAR Reasoning,"A carboxylate on a small molecule forms a salt bridge to a Lys side chain (N–O distance ~2.8–3.0 Å) and is required for activity. What is the most likely effect on potency if you convert the carboxylic acid to a methyl ester, and why?"," **Effect:** Potency would decrease dramatically (100–1000× or more, likely to complete
+inactivity).
 
 **Reasoning:**
 
-1.  **Loss of the salt bridge:** At physiological pH, the Lys side chain is protonated (–NH₃⁺, pKa ~10.5) and the carboxylic acid is deprotonated (–COO⁻, pKa ~4–5). The 2.8–3.0 Å N–O distance indicates a strong, charge-assisted hydrogen bond (salt bridge) contributing approximately **1–3 kcal/mol** (up to"
-qwen3-next:80b-cloud|GEN-PEP-06,Generative Design Strategies,Name two generation-time techniques that increase diversity of generated peptide sequences and one quantitative diversity metric commonly used for sequences.,"
+The interaction between a carboxylate and a lysine side chain is a **salt bridge** (ionic
+interaction between COO⁻ and ⁻⁺H₃N–). This contributes **~3–5 kcal/mol** of binding energy
+(equivalent to 100–10,000-fold affinity boost) and is geometrically specific.
 
-Two generation-time techniques that increase peptide sequence diversity:  
+Converting the acid to a **methyl ester** (COOCH₃) has three critical consequences:
+
+1. **Loss of ionic interaction**: The ester is electrically neutral and cannot form a salt bridge
+with the positively charged lysine ammonium. While the ester carbonyl can act as a hydrogen bond
+acceptor, a single H-bond is **much weaker** (~1–3 kcal/mol) than a salt bridge and lacks the
+geometric constraints and desolvation benefits of the ionic pair.
+
+2. **Unfavorable charge burial**: In the original complex, the lysine positive charge is
+neutralized by the carboxylate. With a neutral ester, the lysine ammonium would be buried at the
+binding interface with **no counterion**—an extremely energetically unfavorable scenario (~5–10
+kcal/mol penalty) that strongly disfavors binding.
+
+3. **Steric clash**: The added methyl group introduces bulk that may clash with the protein
+surface, further disrupting the required binding geometry.
+
+Since the salt bridge is **required** for activity (not just beneficial), its abolition destroys
+the essential binding determinant. The methyl ester essentially removes the pharmacophore
+responsible for recognition, leaving either no binding or extremely weak non-specific association.
+
+*Note:* Methyl esters are sometimes used as **prodrugs** (to improve cell permeability), but the
+intrinsic potency of the ester itself against the target protein is negligible compared to the acid.
+"
+qwen3-next:80b-cloud|GEN-PEP-06,Generative Design Strategies,Name two generation-time techniques that increase diversity of generated peptide sequences and one quantitative diversity metric commonly used for sequences.,"Two generation-time techniques that increase peptide sequence diversity:  
 1. **DNA shuffling**: Fragments homologous parent genes and reassembles them randomly via PCR, creating chimeric sequences. Typically introduces **1–5 crossovers per fragment**, generating novel combinations of functional domains.  
 2. **Error-prone PCR**: Uses mutagenic conditions (e.g., unbalanced dNTPs, Mn²⁺) during amplification to introduce random point mutations. Achieves **0.1–1% mutation rate per base per round**, e.g., for a 10-residue peptide, this yields **1–10 mutations per sequence on average**.  
 
 One quantitative diversity metric:  
 - **Shannon entropy (bits)**: Measures uncertainty in amino acid distribution at each position. For a peptide position with uniform residue frequency (all 20 amino acids equally likely), entropy = log₂(20) ≈ **4.32 bits**. For identical residues, entropy = **0 bits**. Overall library diversity is the sum across all positions."
-gemini-3-flash-preview:cloud|OPT-PEP-03,Optimization Approaches,"In phage display affinity maturation, name two experimental knobs that increase selection stringency across rounds and explain the expected effect on the enriched pool.","In phage display affinity maturation, selection stringency is increased across successive rounds to distinguish between high-affinity leads and moderate binders. Two primary experimental knobs used to achieve this are:
+gemini-3-flash-preview:cloud|OPT-PEP-03,Optimization Approaches,"In phage display affinity maturation, name two experimental knobs that increase selection stringency across rounds and explain the expected effect on the enriched pool.","In phage display affinity maturation, the goal is to favor the survival of rare, high-affinity
+variants over the abundant, lower-affinity background. This is achieved by increasing **selection
+stringency**—essentially making the ""survival test"" harder in each subsequent round.
+
+Here are two common experimental knobs used to increase stringency and their expected effects on
+the enriched pool:
 
 ### 1. Decreasing Antigen Concentration ($[Ag]$)
-*   **The Knob:** Systematically reducing the concentration of the target antigen in each round.
-*   **Expected Effect on the Enriched Pool:** This drives the selection toward clones with lower equilibrium dissociation constants ($K_D$). According to the law of mass action, when $[Ag]$ is significantly lower than the $K_D$ of a phage-displayed variant, the fraction of bound phage decreases. By lowering $[Ag]$ below the $K_D$ of the parental clone (e.g., from **100 nM** in Round 1 down to **10–100 pM**"
+This is the most common method for driving **equilibrium-based selection**.
+
+*   **The Mechanism:** In early rounds, antigen concentration is kept relatively high to ensure
+that even moderate binders are captured. In later rounds, the concentration of the target antigen
+is lowered (often 10-fold to 100-fold) to a level near or below the desired dissociation constant
+($K_D$).
+*   **Expected Effect on the Enriched Pool:**
+    *   **Thermodynamic Selection:** When the antigen is limiting, phage clones must compete for
+a finite number of binding sites. According to the law of mass action, clones with a lower $K_D$
+(higher affinity) will occupy the limited sites more effectively than those with higher $K_D$.
+    *   **Outcome:** The pool becomes significantly less diverse, but the average affinity
+increases. Clones with the highest equilibrium binding constants dominate the population.
+
+### 2. Increasing Wash Stringency or Duration (Off-rate Selection)
+This method focuses on **kinetic-based selection**, specifically targeting the dissociation rate
+($k_{off}$).
+
+*   **The Mechanism:** This can be achieved by increasing the number and duration of wash steps,
+or by adding a ""chase"" step. In a chase, an excess of soluble, non-labeled antigen is added after
+the phage has already bound to the immobilized target. Any phage that dissociates from the
+surface will bind to the soluble competitor and be washed away, preventing it from re-binding to
+the surface.
+*   **Expected Effect on the Enriched Pool:**
+    *   **Kinetic Selection:** This specifically selects against ""fast-off"" binders. Even if a
+clone has a fast ""on-rate"" ($k_{on}$), if it falls off the target quickly during a 30-minute
+wash, it will be lost.
+    *   **Outcome:** The enriched pool will be biased toward clones with **slow dissociation
+rates ($k_{off}$)**. This is often the most effective way to reach sub-nanomolar or picomolar
+affinities, as increasing the ""residence time"" of the antibody on its target is a hallmark of
+high-affinity maturation.
+
+---
+
+### Summary Table
+
+| Experimental Knob | Action across rounds | Primary Target | Expected Effect on Pool |
+| :--- | :--- | :--- | :--- |
+| **Antigen Concentration** | Decrease (e.g., 100nM $\to$ 1nM) | Equilibrium ($K_D$) | Favors
+clones that can bind even when target sites are scarce. |
+| **Washing/Competitor** | Increase time/volume or add ""chase"" | Off-rate ($k_{off}$) | Favors
+clones with high kinetic stability (slowest dissociation). |
+"
 deepseek-v3.2:cloud|ASSAY-SM-02,Assay Interpretation,A dose–response curve fit yields a Hill slope of 0.5 (much shallower than 1). Give two mechanistic interpretations relevant to small-molecule assays.,"A Hill slope of 0.5 in a small-molecule dose–response curve suggests a shallower transition than expected for simple one-site binding (nH = 1). Two key mechanistic interpretations are:
 
 1. **Negative cooperativity**: Binding of the small molecule to one site on a multimeric receptor or protein complex reduces the affinity for subsequent molecules, leading to a less steep curve.
 2. **Multiple binding sites or receptor subtypes**: The compound may interact with multiple targets or receptor subtypes with differing affinities, or a single target with multiple independent sites of different affinities, resulting in a composite shallow curve.
 
 These interpretations are relevant in small-molecule assays for understanding binding kinetics, receptor behavior, and potential polypharmacology."
-gemini-3-flash-preview:cloud|OPT-PEP-08,Optimization Approaches,"In designing an affinity-maturation library for a peptide, why do you typically limit the number of mutated positions per variant, and how does this relate to epistasis and library size?","In affinity maturation, the goal is to optimize a ""lead"" peptide sequence to increase its binding affinity ($K_D$) for a target. Limiting the number of mutated positions per variant (typically to **2–5 residues**) is a strategic decision driven by the mathematical constraints of library size and the biological complexity of epistasis.
+gemini-3-flash-preview:cloud|OPT-PEP-08,Optimization Approaches,"In designing an affinity-maturation library for a peptide, why do you typically limit the number of mutated positions per variant, and how does this relate to epistasis and library size?","In designing an affinity-maturation library for a peptide (or a protein), researchers typically
+restrict the number of mutations to a small number—often 1 to 5 per variant—even if the peptide
+is 15–20 residues long.
 
-### 1. Library Size and Sampling Density
-The primary constraint is the physical limit of screening platforms. The theoretical diversity of a library grows exponentially with the number of mutated positions ($N$):
-*   **The Math:** For a peptide using the 20 standard amino acids, the number of possible variants is $20^N$. 
-*   **Screening Limits:** 
-    *   **Phage Display:** $\sim 10^9$ to $10^{11}$ unique variants.
-    *   **Yeast Display:** $\sim 10^7$ to $10^9$ unique variants.
-    *   **mRNA/Ribosome Display:** $\sim 10^{12}$ to $10^{13}$ unique variants.
+This constraint is a strategic balance between the **physical limits of screening technology**
+and the **biological complexity of protein interactions.** Here is how this relates to library
+size and epistasis.
 
-If you mutate 10 positions simultaneously, the diversity is $20^{10} \approx 10^{13}$. In a phage display format ($10^{10}$), you would sample less than 0.1% of the potential sequence space. By limiting mutations to 3–4 positions ($20^4 = 160,000$), you ensure **comprehensive coverage** (sampling every possible combination multiple times), which increases the probability of identifying the true global optimum within that subspace.
+---
 
-### 2. Epistasis and the Fitness Landscape
-Epistasis refers to the phenomenon where the effect of one mutation depends on the presence of another. In peptide engineering, this relates to the ""ruggedness"" of the fitness landscape.
+### 1. Library Size and the ""Searchable Space""
+The primary reason for limiting mutations is the exponential growth of sequence space. For a
+peptide, if you allow all 20 standard amino acids at $n$ positions, the number of possible
+variants is $20^n$.
 
-*   **Additive vs. Non-additive Effects:** Ideally, mutations are additive (the"
+*   **The Math:**
+    *   3 mutations: $20^3 = 8,000$ variants.
+    *   5 mutations: $20^5 = 3.2 \times 10^6$ variants.
+    *   10 mutations: $20^{10} \approx 10^{13}$ variants.
+*   **The Constraint:** Most laboratory display technologies have physical limits on
+""transformable"" library size.
+    *   **Phage Display:** ~ $10^9$ to $10^{10}$ variants.
+    *   **Yeast Display:** ~ $10^7$ to $10^8$ variants.
+    *   **Ribosome Display:** ~ $10^{12}$ variants.
+
+If you mutate 10 positions simultaneously, a library of $10^9$ variants would only sample
+**0.01%** of the possible sequence space. By limiting mutations to 3 or 4 positions, you ensure
+that your library **fully covers** every possible combination, increasing the statistical
+probability of finding the absolute ""best"" variant within that defined space.
+
+### 2. Epistasis and the ""Fitness Landscape""
+Epistasis refers to the phenomenon where the effect of one mutation depends on the presence of
+another. In the context of affinity maturation, it describes the non-additive interactions
+between residues.
+
+*   **Negative Epistasis (The ""Too Much of a Good Thing"" Problem):** Often, two mutations that
+are beneficial individually become detrimental when combined. For example, two large hydrophobic
+mutations might individually improve binding, but together they may cause the peptide to
+aggregate or clash sterically within the binding pocket.
+*   **The Rugged Fitness Landscape:** If you change too many residues at once, you are taking a
+giant ""leap"" across the fitness landscape. Because protein folding and binding are highly
+sensitive to cooperatives, most of these large leaps land in ""valleys"" (non-functional
+sequences).
+*   **Additive Strategy:** Affinity maturation is generally more successful when it follows an
+**iterative, additive approach.** By making few changes, you stay close to the ""parent"" peptide’s
+known functional fold while looking for small, incremental improvements. Once a few beneficial
+mutations are found, they can be combined in a second round of library design.
+
+### 3. Hit Deconvolution and SAR
+When you limit the number of mutations, the data you get back from the screen is much more
+interpretable:
+
+*   **Structure-Activity Relationship (SAR):** If a variant with 2 mutations shows a 10-fold
+increase in affinity, it is relatively easy to determine which residue (or the synergy between
+the two) caused the improvement.
+*   **Noise Reduction:** If you have 10 mutations in a ""hit,"" 2 might be doing the actual work of
+improving affinity, while the other 8 are ""hitchhikers""—neutral or slightly deleterious mutations
+that just happened to be on the same sequence. Limiting mutations reduces this noise and prevents
+the selection of ""junk"" mutations that could compromise the peptide’s solubility or stability.
+
+### 4. Preservation of the Binding Mode
+Peptides usually have a specific ""pharmacophore"" or binding motif (e.g., a specific triad of
+residues that fit into a pocket).
+*   If you mutate too many positions, you risk disrupting the fundamental scaffold that allows
+the peptide to bind in the first place.
+*   By limiting mutations, you perform ""fine-tuning"" (affinity maturation) rather than ""de novo
+discovery."" You preserve the orientation of the peptide while optimizing the side-chain contacts
+with the target.
+
+### Summary
+You limit the number of mutations to ensure **complete library coverage** (staying within the
+$10^7 – 10^9$ limit) and to navigate the **fitness landscape** without being trapped by
+**negative epistasis**. This approach treats affinity maturation as an incremental optimization
+of a known binder rather than a random search through an impossibly large sequence space.
+"
 gemini-3-flash-preview:cloud|ASSAY-PEP-04,Assay Interpretation,A peptide is degraded by a protease with apparent first-order rate constant k = 0.023 min^-1 (measured under pseudo-first-order conditions). Compute the degradation half-life and interpret what this means for a 2-hour incubation assay.,"### 1. Calculation of Half-Life ($t_{1/2}$)
 For a first-order (or pseudo-first-order) reaction, the relationship between the rate constant ($k$) and the half-life is defined by the equation:
 $$t_{1/2} = \frac{\ln(2)}{k}$$
@@ -674,36 +1082,225 @@ deepseek-v3.2:cloud|OPT-PEP-02,Optimization Approaches,"Define a Pareto-optimal 
 - Serum stability(A) ≥ Serum stability(B) (higher is better),
 - Hemolysis(A) ≤ Hemolysis(B) (lower is better),
 with at least one inequality being strict (e.g., strictly higher potency or lower hemolysis). If A dominates B, B is not Pareto-optimal, as A is superior without sacrificing any objective."
-qwen3-next:80b-cloud|ADMET-SM-09,ADMET / Pharmacokinetic Properties,"How do you experimentally distinguish reversible CYP inhibition from mechanism-based (time-dependent) inhibition in vitro, and why does time-dependent inhibition elevate clinical DDI risk?","
+qwen3-next:80b-cloud|ADMET-SM-09,ADMET / Pharmacokinetic Properties,"How do you experimentally distinguish reversible CYP inhibition from mechanism-based (time-dependent) inhibition in vitro, and why does time-dependent inhibition elevate clinical DDI risk?","### Experimentally Distinguishing Reversible vs. Mechanism-Based CYP Inhibition *In Vitro*
+Mechanism-based inhibition (MBI) is **time-dependent and irreversible** (or quasi-irreversible),
+while reversible inhibition is **immediate and concentration-dependent only**. Key experimental
+approaches to distinguish them:
 
-### Experimental Distinction of Re"
-qwen3-next:80b-cloud|SAR-SM-05,SAR Reasoning,"A ligand’s secondary amide NH donates a hydrogen bond to the target (N–O distance ~2.9 Å) and is critical for potency. What is the expected potency effect of replacing that amide with an ester at the same position, and what other property often changes in parallel?","
+#### 1. **Pre-Incubation Time-Dependence Assay**
+   - **Procedure**:
+     - Incubate the test compound with human liver microsomes (or recombinant CYP enzyme) **+
+NADPH** for 0, 15, 30, and 60 minutes.
+     - Add a CYP-specific probe substrate (e.g., testosterone for CYP3A4) and measure metabolite
+formation.
+     - Compare inhibition potency (IC₅₀) **with vs. without pre-incubation**.
+   - **Interpretation**:
+     - **Reversible inhibition**: IC₅₀ remains **unchanged** regardless of pre-incubation time.
+Inhibition is immediate and concentration-dependent only.
+     - **MBI**: IC₅₀ **decreases significantly** (e.g., ≥2- to 5-fold) with longer pre-incubation
+time. Inhibition intensifies over time due to enzyme inactivation.
+   - *Why?* MBI requires metabolic activation by the CYP enzyme itself (NADPH-dependent), forming
+a reactive intermediate that covalently modifies the enzyme. Reversible inhibitors bind
+non-covalently and do not require time for activation.
 
-Replacing the secondary amide NH (hydrogen bond donor) with an ester eliminates the hydrogen bond donation capability to the target (N–O distance ~2.9 Å), which is critical for potency. This typically results in a **10- to 100-fold decrease in potency** due to loss of this key interaction. Concurrently, **lipophilicity (logP) increases** by approximately 0.5–1.5 units, as esters are less polar than amides and lack the strong hydrogen-bonding capacity of the amide NH group. This change often reduces aqueous solubility and may impact pharmacokinetic properties like metabolic stability (esters are more prone to hydrolysis).  
+#### 2. **NADPH Dependence Test**
+   - **Procedure**:
+     - Pre-incubate the compound with microsomes **± NADPH** for 30 minutes.
+     - Add probe substrate and measure activity.
+   - **Interpretation**:
+     - **Reversible inhibition**: Inhibition occurs **with or without NADPH** (binds directly to
+enzyme).
+     - **MBI**: Inhibition **only occurs with NADPH** (requires metabolic activation). Without
+NADPH, no inhibition is observed.
+   - *Why?* MBI depends on catalytic turnover to generate the inactivating species; reversible
+inhibition does not.
+
+#### 3. **Dilution/Recovery Assay**
+   - **Procedure**:
+     - Pre-incubate compound + microsomes + NADPH for 30 min.
+     - **Dilute the mixture 10- to 20-fold** (to reduce inhibitor concentration below IC₅₀).
+     - Add probe substrate and measure activity.
+   - **Interpretation**:
+     - **Reversible inhibition**: Activity **recovers fully** after dilution (binding is
+equilibrium-driven).
+     - **MBI**: Activity **does not recover** after dilution (enzyme is permanently inactivated;
+new enzyme synthesis is needed).
+   - *Why?* MBI causes irreversible covalent modification; reversible inhibitors dissociate upon
+dilution.
+
+#### 4. **Kinetic Analysis of Inactivation**
+   - **Procedure**:
+     - Measure residual enzyme activity after pre-incubation with varying inhibitor
+concentrations and times.
+     - Fit data to the **inactivation rate constant (k<sub>inact</sub>)** and **inhibitor
+concentration for half-maximal inactivation (K<sub>I</sub>)**.
+   - **Interpretation**:
+     - **MBI**: Shows **time- and concentration-dependent inactivation** (e.g., hyperbolic curve
+for k<sub>obs</sub> vs. [inhibitor]).
+     - **Reversible inhibition**: Follows **classical Michaelis-Menten kinetics** for
+competitive/non-competitive inhibition (no time-dependence).
+
+> **Key Takeaway**: MBI is confirmed if inhibition **increases with pre-incubation time**,
+**requires NADPH**, **persists after dilution**, and shows characteristic **kinetic inactivation
+parameters**. Reversible inhibition lacks all these features.
+
+---
+
+### Why Mechanism-Based Inhibition Elevates Clinical DDI Risk
+MBI poses a **significantly higher risk for clinically relevant drug-drug interactions (DDIs)**
+than reversible inhibition due to:
+
+#### 1. **Irreversible Enzyme Inactivation**
+   - MBI **permanently destroys CYP enzyme activity**. The body must synthesize new enzyme
+protein to restore function.
+   - **Recovery time** depends on the CYP enzyme's half-life (typically **24–72 hours** for major
+CYPs like CYP3A4).
+   - *Example*: After stopping a MBI inhibitor (e.g., clarithromycin for CYP3A4), enzyme activity
+may take **3–5 days** to recover fully.
+
+#### 2. **Prolonged DDI Duration**
+   - DDIs from MBI persist **long after the inhibitor is discontinued**.
+   - *Clinical impact*: A victim drug (e.g., simvastatin metabolized by CYP3A4) may remain at
+**dangerously high exposure** for days after the MBI inhibitor is stopped, increasing toxicity
+risk (e.g., rhabdomyolysis).
+
+#### 3. **Non-Linear Pharmacokinetics**
+   - MBI causes **time-dependent increases in victim drug exposure** (AUC). Even small changes in
+inhibitor dose or duration can cause disproportionate rises in victim drug levels.
+   - *Example*: A 20% increase in MBI inhibitor dose may cause a **>100% increase in victim drug
+AUC** due to cumulative enzyme loss.
+
+#### 4. **Difficulty in Mitigation**
+   - **Dose adjustment of the victim drug alone is insufficient** (unlike reversible inhibition,
+where dose reduction during co-administration often suffices).
+   - **Concurrent dosing is often contraindicated** (e.g., FDA labeling for CYP3A4 MBIs like
+erythromycin or ritonavir).
+
+#### 5. **Higher Magnitude of Interaction**
+   - MBI typically causes **larger DDI magnitudes** than reversible inhibition:
+     - Reversible inhibition: AUC increase ≤2–5 fold (for moderate inhibitors).
+     - MBI: AUC increase often **>5-fold** (e.g., paroxetine for CYP2D6: 10–20 fold increase in
+dextromethorphan exposure).
+
+> **Regulatory Impact**: FDA/EMA guidelines classify MBIs as **""high-risk""** for DDIs. Drugs
+showing MBI *in vitro* **require clinical DDI studies** and often carry **black-box warnings**
+(e.g., ""avoid co-administration with sensitive CYP substrates"").
+
+### Summary
+| **Feature**               | **Reversible Inhibition**      | **Mechanism-Based Inhibition** |
+|---------------------------|--------------------------------|--------------------------------|
+| **Time-dependence**       | None (immediate)               | **Yes** (increases with
+pre-incubation) |
+| **NADPH required**        | No                             | **Yes**                        |
+| **Recovery after dilution**| Full recovery                  | **No recovery**                |
+
+| **Clinical DDI risk**     | Moderate (short-lived)         | **High (prolonged, severe)**   |
+| **Recovery time**         | Hours (inhibitor clearance)    | **Days (new enzyme synthesis)**|
+
+**Why this matters**: MBI’s irreversible nature and slow recovery make DDIs **unpredictable,
+persistent, and clinically dangerous**. This necessitates rigorous *in vitro* screening early in
+drug development to avoid costly clinical failures or post-marketing withdrawals."
+qwen3-next:80b-cloud|SAR-SM-05,SAR Reasoning,"A ligand’s secondary amide NH donates a hydrogen bond to the target (N–O distance ~2.9 Å) and is critical for potency. What is the expected potency effect of replacing that amide with an ester at the same position, and what other property often changes in parallel?","Replacing the secondary amide NH (hydrogen bond donor) with an ester eliminates the hydrogen bond donation capability to the target (N–O distance ~2.9 Å), which is critical for potency. This typically results in a **10- to 100-fold decrease in potency** due to loss of this key interaction. Concurrently, **lipophilicity (logP) increases** by approximately 0.5–1.5 units, as esters are less polar than amides and lack the strong hydrogen-bonding capacity of the amide NH group. This change often reduces aqueous solubility and may impact pharmacokinetic properties like metabolic stability (esters are more prone to hydrolysis).  
 
 *Example*: In HIV protease inhibitors (e.g., replacing a key amide with ester), potency drops >50-fold and logP increases by ~1.0 unit."
-qwen3-next:80b-cloud|ADMET-SM-02,ADMET / Pharmacokinetic Properties,A benzylic CH2 is identified as the major CYP oxidation soft spot (rapid benzylic hydroxylation). Name one structural change that typically reduces this metabolism and explain the mechanism (include a typical magnitude of intrinsic clearance reduction).,"
+qwen3-next:80b-cloud|ADMET-SM-02,ADMET / Pharmacokinetic Properties,A benzylic CH2 is identified as the major CYP oxidation soft spot (rapid benzylic hydroxylation). Name one structural change that typically reduces this metabolism and explain the mechanism (include a typical magnitude of intrinsic clearance reduction).,"### Structural Change: **Benzylic Fluorination**
+Replacing the benzylic hydrogen (CH₂) with **fluorine** (i.e., converting –CH₂– to –CHF– or
+–CF₂–) is a highly effective strategy to reduce benzylic hydroxylation.
 
-**Structural change:** Monofluorination at the benzylic carbon (replacing the CH₂ hydrogen with fluorine).  
+#### Mechanism:
+- CYP-mediated benzylic hydroxylation proceeds via a **radical mechanism**:
+  1. CYP450 abstracts a hydrogen atom (H•) from the benzylic carbon, forming a benzylic radical
+intermediate.
+  2. This radical rapidly recombines with an oxygen atom (from CYP-bound oxygen) to yield the
+alcohol product.
+- **Fluorine substitution blocks this process**:
+  - **No abstractable hydrogen**: Fluorine has no H-atom to donate, eliminating the initial
+H-atom abstraction step.
+  - **High bond dissociation energy (BDE)**: The C–F bond (BDE ≈ 116 kcal/mol) is significantly
+stronger than C–H (BDE ≈ 85–90 kcal/mol). This makes homolytic cleavage of C–F virtually
+impossible under physiological conditions.
+  - **Electronic effects**: Fluorine’s high electronegativity reduces electron density at the
+benzylic carbon, disfavoring radical formation and oxidative attack.
 
-**Mechanism:**  
-- CYP-mediated oxidation proceeds via hydrogen atom transfer (HAT), forming a benzylic radical intermediate stabilized by resonance with the aromatic ring.  
-- Fluorine substitution eliminates the abstractable hydrogen and introduces a strong C–F bond (bond dissociation energy ≈ 116 kcal/mol vs. ≈ 85 kcal/mol for C–H).  
-- The high electronegativity of fluorine reduces electron density at the benzylic carbon, destabilizing the radical transition state and increasing the activation energy for HAT.  
+#### Typical Magnitude of Reduction:
+- Intrinsic clearance (CL<sub>int</sub>) is reduced by **5- to 50-fold** (often 10- to 30-fold)
+in *in vitro* systems (e.g., human liver microsomes).
+- **Example**: In the drug **diazepam**, benzylic fluorination of the 3-methyl group reduced
+hydroxylation clearance by **>20-fold**. Similarly, fluorination of the benzylic position in
+**tolbutamide** analogs decreased CL<sub>int</sub> by **~15-fold**.
 
-**Typical magnitude of intrinsic clearance (CL<sub>int</sub>) reduction:**  
-- **10- to 50-fold decrease** in CL<sub>int</sub> (e.g., from 28 μL/min/mg to 0.7 μL/min/mg in a benzylamine analog; *J. Med. Chem.* **2010**, *53*, 3983–3990).  
-- In some cases (e.g., toluene derivatives), reductions exceed 100-fold, but 10- to 50-fold is consistently observed across diverse scaffolds.  
+#### Why This Works Better Than Alternatives:
+- **Deuterium substitution** (CH₂ → CD₂) only provides a modest reduction (2- to 7-fold) due to
+the kinetic isotope effect (KIE), which is limited by the rate-limiting step of C–H cleavage.
+- **Methyl substitution** (CH₂ → CH₃) shifts oxidation to the new methyl group, often failing to
+reduce overall metabolism.
+- **Fluorine** is uniquely effective because it **completely blocks the radical mechanism** while
+maintaining steric and electronic similarity to hydrogen (minimizing unintended effects on target
+binding).
 
-*Note"
-kimi-k2.5:cloud|OPT-SM-02,Optimization Approaches,"In multi-parameter optimization (MPO) for small molecules, how does a weighted desirability function combine objectives, and what is the limitation when objectives conflict?"," In multi-parameter optimization (MPO), weighted desirability functions combine objectives by first scaling each property (e.g., potency, logP, solubility) to a common 0–1 scale using individual desirability functions (*d*ᵢ), where 0 = unacceptable and 1 = ideal. These are aggregated using a weighted geometric mean:
+> **Note**: Fluorination is a cornerstone strategy in medicinal chemistry for blocking benzylic
+oxidation, especially in CNS drugs where metabolic stability is critical. However, careful
+assessment is needed to avoid unintended consequences (e.g., altered pK<sub>a</sub> or off-target
+effects)."
+kimi-k2.5:cloud|OPT-SM-02,Optimization Approaches,"In multi-parameter optimization (MPO) for small molecules, how does a weighted desirability function combine objectives, and what is the limitation when objectives conflict?"," In multi-parameter optimization (MPO) for small molecules, the weighted desirability function
+(commonly based on the Derringer-Suich approach) combines objectives through a **two-step
+transformation process**:
 
-**D = (Π *d*ᵢ^wᵢ)^(1/Σwᵢ)**
+## How Objectives Are Combined
 
-where *w*ᵢ represents the relative importance of parameter *i*. The overall desirability *D* (0–1) enables compound ranking.
+**Step 1: Normalization** — Each raw objective value (e.g., solubility, potency, logD) is converted
+to an individual desirability score $d_i$ ranging from 0 (unacceptable) to 1 (ideal) using
+objective-specific utility curves (linear, sigmoidal, or step functions).
 
-**Limitation with conflicting objectives:**
-The primary limitation is **compensation masking**: high desirability in one objective can mathematically compensate for unacceptable performance in another, potentially selecting compounds that violate critical constraints. For example, with equal weights (*w* = 1), a compound with excellent potency (*d* = 1.0) but poor aqueous sol"
+**Step 2: Aggregation** — Individual desirabilities are combined using a **weighted geometric
+mean**:
+
+$$D = \prod_{i=1}^{n} d_i^{w_i}$$
+
+where $w_i$ are normalized weights ($\sum w_i = 1$) reflecting the relative importance of each
+parameter. Sometimes this is written as $D = \left(\prod d_i^{w_i}\right)^{1/\sum w_i}$ for
+unnormalized weights.
+
+The geometric mean creates a single composite score $D \in [0,1]$ where $D = 1$ represents the
+ideal compound and $D = 0$ indicates that at least one critical parameter is unacceptable.
+
+## Limitation When Objectives Conflict
+
+The fundamental limitation is that **the geometric mean cannot represent compensatory trade-offs
+and collapses the Pareto frontier into a single point**, leading to three specific issues:
+
+**1. The ""Zero-Absorbing"" Penalty**
+If any single objective has $d_i \rightarrow 0$ (e.g., extremely poor solubility), then $D
+\rightarrow 0$ regardless of how excellent other properties are. This means you cannot compensate a
+critical weakness in one area with exceptional performance in another. In medicinal chemistry, this
+is problematic because a compound with outstanding potency ($d=1.0$) but marginal solubility
+($d=0.3$) might be more valuable than a mediocre compound with $d=0.6$ in both—but the desirability
+function scores the latter higher ($0.6$ vs. $0.3$ or lower depending on weights).
+
+**2. Preference for ""Jack of All Trades""**
+The multiplicative nature mathematically penalizes variance across objectives. The function
+inherently favors compounds that are uniformly ""good enough"" ($0.7 \times 0.7 = 0.49$) over
+unbalanced candidates ($1.0 \times 0.4 = 0.40$), even when the latter might represent a superior
+strategic choice for a specific program (e.g., optimizing potency first, then fixing solubility
+later).
+
+**3. Inability to Map Pareto Frontiers**
+When objectives truly conflict (e.g., increasing molecular weight improves binding but hurts
+permeability), valid optimal solutions lie on a Pareto frontier representing different acceptable
+trade-offs. A single weighted desirability score can only identify **one** point on this frontier
+(dictated by the specific weight vector). To explore alternative viable compromises (e.g., high
+potency/low permeability vs. moderate potency/high permeability), you must run multiple
+optimizations with different weight combinations—a process that is inefficient and may miss
+non-convex regions of the Pareto front.
+
+**4. Weight Sensitivity**
+Because conflicting objectives create steep gradients in the optimization landscape, small changes
+in weights ($w_i$) can cause large, discontinuous shifts in which chemical series are prioritized,
+making the optimization unstable and highly dependent on subjective weight selection.
+
+Modern MPO approaches often address these limitations by using **Pareto ranking algorithms** or
+**utility functions that allow compensation thresholds** rather than strict multiplicative
+combinations."
 gemini-3-flash-preview:cloud|ASSAY-SM-05,Assay Interpretation,"A compound’s apparent IC50 shifts from 1.0 µM with 5-minute preincubation to 50 nM with 60-minute preincubation. What mechanism does this suggest, and what follow-up assay distinguishes covalent from slow-tight binding?","This shift in potency over time suggests a **time-dependent inhibition (TDI)** mechanism. Specifically, it indicates that the inhibitor has a slow $k_{on}$ rate or undergoes a two-step binding process where an initial reversible complex ($EI$) isomerizes into a more stable, higher-affinity complex ($EI^*$) or forms a covalent bond.
 
 ### Mechanism
@@ -719,24 +1316,108 @@ The most common functional assay to distinguish these two is a **Jump-Dilution R
     2.  Rapidly dilute the mixture (e.g., 100-fold or 1,000-fold) into a buffer containing a high concentration of substrate. The final inhibitor concentration must be well below its $IC_{50}$.
     3.  Monitor the recovery of enzyme catalytic activity over time.
 
-*   **Interpretation:**
-"
-gemini-3-flash-preview:cloud|GEN-SM-04,Generative Design Strategies,"What is reaction-aware molecular generation, and why does it typically produce a higher fraction of synthesizable proposals than unconstrained SMILES generation?","**Reaction-aware molecular generation** is a drug design strategy where new molecules are constructed by simulating chemical reactions using a defined library of available building blocks and a set of reaction templates. Instead of generating a molecular string (SMILES) or a graph atom-by-atom, the model generates a **synthetic recipe**—a sequence of precursors and chemical transformations—that results in the final product.
+*   **Interpretation:**"
+gemini-3-flash-preview:cloud|GEN-SM-04,Generative Design Strategies,"What is reaction-aware molecular generation, and why does it typically produce a higher fraction of synthesizable proposals than unconstrained SMILES generation?","**Reaction-aware molecular generation** is a strategy in computational chemistry and drug
+discovery where new molecules are designed not just by assembling atoms and bonds, but by
+simulating the actual chemical reactions and building blocks used in a laboratory.
 
-### Why it produces higher synthesizability than unconstrained SMILES generation:
+In this approach, the generative model is constrained to explore ""chemical space"" by following
+the rules of organic synthesis. Instead of treating a molecule as a simple string of text
+(SMILES) or a graph, the model treats it as the result of a sequence of reactions (e.g., an amide
+coupling followed by a Suzuki reaction) using a library of commercially available starting
+materials.
 
-Unconstrained SMILES generation (e.g., using RNNs or VAEs) explores the theoretical chemical space (estimated at $10^{60}$ molecules) based on statistical patterns in training data. While these models often produce ""chemically valid"" molecules (correct valency), they frequently generate ""synthetic nightmares"" that are impossible or prohibitively expensive to manufacture.
+---
 
-Reaction-aware generation outperforms these methods for several reasons:
+### Why it Produces Higher Synthesizability
 
-1.  **Search Space Restriction:** It limits the generative process to the **synthetically accessible space**. By definition, every molecule generated is the product of a known reaction (e.g., Suzuki coupling, Buchwald-Hartwig amination, or amide bond formation) using commercially available building blocks (e.g., from libraries like Enamine or Mcule).
-2.  **Implicit Feasibility:** In unconstrained generation, synthesizability is often an afterthought, measured by proxy scores like **SAscore** (Synthetic Accessibility score) or **SCScore**. In reaction-aware models, synthesizability is a hard constraint built into the architecture. If the model uses a library of $10^5$ building blocks and 50 robust reactions, the resulting molecule is, by design, synthesizable.
-3.  **Avoidance of Unstable Motifs:** Unconstrained models often place atoms in configurations that are energetically unfavorable or prone to decomposition (e.g., strained rings or reactive functional groups). Reaction templates are derived from established medicinal chemistry, which naturally avoids these unstable motifs.
+Traditional **unconstrained SMILES generation** (using models like RNNs, VAEs, or Transformers)
+often produces ""valid"" molecules—meaning they follow the basic rules of valence—but those
+molecules are frequently impossible or prohibitively expensive to actually manufacture.
 
-### Specific Examples and Metrics:
+Reaction-aware generation solves this through three primary mechanisms:
 
-*   **Success Rates:** In comparative studies, unconstrained SMILES or graph-based models often produce molecules where only **10–30%** are rated as ""highly synthesizable"" by expert chemists or retrosynthetic software (like Manifold or ICSYNTH). In contrast, reaction-aware models (e.g., **PGLearn** or **Dogma**) typically achieve **>90%** synthesizability because they provide the exact synthetic"
-gemini-3-flash-preview:cloud|ADMET-SM-06,ADMET / Pharmacokinetic Properties,"A candidate has TPSA = 140 Å², HBD = 3, and is a P-gp substrate. Name two design strategies that can increase oral absorption and briefly explain the mechanism.","To increase the oral absorption of a candidate with high TPSA (140 Å²), multiple HBDs, and P-gp substrate affinity, the following two design strategies are commonly employed"
+#### 1. ""Synthesizability by Construction""
+In unconstrained generation, the model learns the statistical patterns of chemical strings. It
+might suggest a molecule that looks ""drug-like"" but contains a bridgehead nitrogen or a
+4-membered ring system that no known reaction can produce.
+
+Reaction-aware models use **reaction templates** (standardized rules for how molecules bond).
+Because the model is only allowed to ""click"" pieces together using these predefined templates,
+every molecule it generates comes with a pre-defined ""recipe."" By definition, if the model can
+build it, a chemist has a starting point to make it.
+
+#### 2. Restriction to Available Building Blocks
+A major hurdle in synthesis is the availability of precursors. Unconstrained models might propose
+a molecule that requires a very specific, rare, or unstable starting material.
+
+Reaction-aware systems typically operate on a **defined library of building blocks** (e.g., the
+Enamine or ZINC databases). By restricting the ""vocabulary"" of the model to chemicals that can be
+bought off-the-shelf, the gap between a computer-generated idea and a physical vial in the lab is
+drastically reduced.
+
+#### 3. Avoiding ""Med-Chem Horrors""
+Deep learning models trained only on SMILES strings often fall into the trap of ""over-optimizing""
+for a goal. For example, if a model is told to maximize ""binding affinity,"" it might add dozens
+of halogens or create highly unstable, strained structures that are mathematically ""good"" but
+chemically non-existent.
+
+Reaction-aware models are naturally biased against these ""monsters"" because:
+*   **Reaction rules are conservative:** They generally represent well-understood, robust
+transformations.
+*   **Physical Realism:** Known reactions rarely produce the unstable, high-energy motifs that
+unconstrained models often hallucinate.
+
+### Comparison Summary
+
+| Feature | Unconstrained SMILES Generation | Reaction-Aware Generation |
+| :--- | :--- | :--- |
+| **Logic** | Statistical patterns in text/strings. | Chemical transformations (Rules). |
+| **Search Space** | Infinite (virtually all atomic combinations). | Restricted to ""reachable""
+chemical space. |
+| **Synthesis Path** | Must be figured out *after* generation (Retrosynthesis). | Generated
+*during* the design process. |
+| **Success Rate** | High ""validity,"" low ""synthesizability."" | High ""synthesizability."" |
+
+### Conclusion
+The shift toward reaction-aware generation represents a move from **""What molecule is best?""** to
+**""What molecule that we can actually make is best?""** While it slightly limits the total
+diversity of molecules the AI can imagine, it ensures that the proposals are practical,
+significantly reducing the time and cost of drug development."
+gemini-3-flash-preview:cloud|ADMET-SM-06,ADMET / Pharmacokinetic Properties,"A candidate has TPSA = 140 Å², HBD = 3, and is a P-gp substrate. Name two design strategies that can increase oral absorption and briefly explain the mechanism.","Based on the candidate's profile (High TPSA, moderate HBD count, and P-gp efflux susceptibility),
+oral absorption is likely limited by both poor passive permeability and active efflux. Here are
+two design strategies to improve its oral absorption:
+
+### 1. Prodrug Formation (Masking Polar Groups)
+*   **Strategy:** Convert the drug into a more lipophilic, temporary derivative (e.g., converting
+a carboxylic acid/alcohol into an ester or an amine into an amide).
+*   **Mechanism:** By masking **Hydrogen Bond Donors (HBD)** and reducing the **TPSA**, the
+molecule becomes more lipophilic. This facilitates **passive transcellular diffusion** across the
+intestinal epithelial cell membrane. Once the prodrug enters the systemic circulation or the
+enterocytes, endogenous enzymes (like esterases) cleave the promoiety to release the active drug.
+This strategy ""tricks"" the membrane into allowing a polar cargo to pass through.
+
+### 2. Structural Modification to Reduce P-gp Affinity
+*   **Strategy:** Identify and modify the specific pharmacophore features recognized by
+P-glycoprotein, such as reducing the **basicity of an amine** or adding **steric hindrance** near
+hydrogen-bonding groups.
+*   **Mechanism:** P-gp functions as an ATP-dependent ""vacuum cleaner"" that recognizes specific
+patterns (often basic nitrogens or specific spatial arrangements of H-bond acceptors/donors) and
+pumps the drug out of the cell back into the intestinal lumen. By **reducing the pKa** of a basic
+nitrogen (making it less ionized at physiological pH) or introducing **steric bulk** to shield
+recognition sites, the molecule's affinity for the P-gp transporter is decreased. This lowers the
+**efflux ratio**, ensuring that more of the drug that enters the cell actually reaches the portal
+circulation rather than being pumped back out.
+
+***
+
+**Summary Table of the Problem and Solution:**
+| Feature | Barrier to Absorption | Strategy |
+| :--- | :--- | :--- |
+| **TPSA 140 Å² / HBD 3** | High desolvation energy; poor passive diffusion. | **Prodrugs**
+(Increases passive influx). |
+| **P-gp Substrate** | Active efflux back into the gut lumen. | **Structural Shielding/Basicity
+reduction** (Decreases active efflux). |"
 deepseek-v3.2:cloud|GEN-SM-06,Generative Design Strategies,Name two generation-time techniques that increase diversity of generated small molecules and one quantitative metric commonly used to measure diversity in molecular sets.,"Two generation-time techniques that enhance diversity in small molecule generation are:
 
 1. **High-temperature sampling in probabilistic models**: Increasing the temperature parameter during sampling from models like variational autoencoders (VAEs) or recurrent neural networks (RNNs) flattens the output probability distribution, promoting exploration of less likely but more diverse molecular structures.
@@ -756,12 +1437,114 @@ deepseek-v3.2:cloud|ADMET-PEP-03,ADMET / Pharmacokinetic Properties,Name three c
     *  Sterically hindering proteolytic degradation and uptake by antigen-presenting cells.
     *  Reducing aggregation propensity.
     *  Increasing hydrodynamic size, which can limit lymphatic trafficking."
-gemini-3-flash-preview:cloud|GEN-PEP-03,Generative Design Strategies,"A peptide binder design strategy fixes a short epitope (e.g., 4 residues) and generates sequences by varying flanking positions. Why can this improve success rates, and what constraint is commonly applied to keep candidates developable?","As a pharmaceutical scientist, I can confirm that fixing a short epitope (often called an ""anchor"" or ""hotspot"") while varying flanking residues is a cornerstone of rational peptide design.
+gemini-3-flash-preview:cloud|GEN-PEP-03,Generative Design Strategies,"A peptide binder design strategy fixes a short epitope (e.g., 4 residues) and generates sequences by varying flanking positions. Why can this improve success rates, and what constraint is commonly applied to keep candidates developable?","This strategy, often referred to as **motif-based** or **anchor-guided design**, is a common
+approach in computational protein design and deep learning-based peptide generation.
 
-"
-gemini-3-flash-preview:cloud|ASSAY-PEP-09,Assay Interpretation,"Protease degradation of a peptide shows biphasic kinetics: 60% loss in the first 10 minutes, then slow decay over the next 2 hours. Give one kinetic explanation and one experiment that tests it.","### Kinetic Explanation: Substrate Heterogeneity (Cis-Trans Isomerization)
-The peptide likely exists in an equilibrium of two distinct conformational states, such as **cis/trans proline isomers**. Prote"
-kimi-k2.5:cloud|ADMET-SM-04,ADMET / Pharmacokinetic Properties,A small molecule has systemic clearance CL = 30 L/h and volume of distribution Vd = 300 L in humans. Estimate the terminal half-life and interpret what a Vd this large typically implies about tissue distribution.," **Terminal half-life:**  
+Here is an explanation of why it improves success rates and the constraints used to ensure
+developability.
+
+---
+
+### 1. Why It Improves Success Rates
+
+Designing a binder *de novo* (from scratch) is a high-dimensional search problem. By fixing a
+4-residue epitope (the ""anchor"" or ""seed""), designers provide a template that significantly
+increases the probability of binding for several reasons:
+
+*   **Reduction of Search Space:** The sequence space for a 15-mer peptide is $20^{15}$. By
+fixing 4 residues, you reduce the combinatorial complexity by orders of magnitude. More
+importantly, you fix the **geometric search space**; the model doesn't have to ""guess"" where the
+peptide should sit on the target protein.
+*   **Targeting ""Hotspots"":** Most protein-protein interactions (PPIs) are driven by a small
+number of ""hotspot"" residues that contribute the majority of the binding free energy. By starting
+with a known motif (e.g., a fragment from a natural ligand or a predicted pocket-filler), the
+design is guaranteed to engage with a high-affinity site on the target.
+*   **Pre-defined Binding Pose:** Fixing the epitope ensures a specific orientation (pose). The
+flanking residues are then optimized to provide supplementary interactions (hydrogen bonds, Van
+der Waals forces) that ""lock"" the anchor into place, increasing the residence time and overall
+affinity.
+*   **Enthalpic ""Head Start"":** Designing a binder requires overcoming a large entropic penalty
+(losing the freedom of movement in solution). Starting with a fixed anchor ensures there is
+enough initial enthalpic gain (binding energy) to make the overall design thermodynamically
+favorable.
+
+---
+
+### 2. Common Constraint for Developability
+
+The most common constraint applied to keep these candidates developable is a **limit on
+Hydrophobicity (or a minimum Solubility score).**
+
+#### The Challenge:
+In the pursuit of high affinity, computational algorithms (and evolution) often favor hydrophobic
+residues (like Leucine, Isoleucine, Tryptophan, and Phenylalanine). These residues pack tightly
+into protein pockets, creating strong binding signals. However, ""greasy"" peptides suffer from
+several developability issues:
+*   **Poor Solubility:** They precipitate in aqueous buffers.
+*   **Aggregation:** They tend to stick to themselves, forming dimers or fibrils.
+*   **Non-specific Binding:** They stick to other proteins or cell membranes, leading to toxicity
+and fast clearance.
+
+#### The Constraints Applied:
+To prevent ""un-developable"" greasy peptides, designers apply the following constraints during the
+sequence generation phase:
+
+1.  **Maximum Hydrophobic Ratio:** Ensuring that the percentage of hydrophobic residues does not
+exceed a certain threshold (e.g., <40%).
+2.  **Net Charge/Isoelectric Point (pI):** Designers often enforce a minimum net charge (e.g., +2
+or -2) to ensure electrostatic repulsion between peptide molecules, which prevents aggregation.
+3.  **Pattern Constraints:** Avoiding ""hydrophobic patches"" (e.g., no more than 3 hydrophobic
+residues in a row).
+4.  **Compositional Bias:** Using ""negative design"" to penalize residues like Cysteine (to avoid
+unwanted disulfide shuffling) or Methionine (to avoid oxidation).
+5.  **Heuristic Scores:** Using tools like **CamSol** or **SAP (Spatial Aggregation Propensity)**
+to score sequences in real-time and discard those predicted to be insoluble before they are ever
+synthesized in the lab.
+
+### Summary
+By **anchoring** the design on a known 4-residue motif, the designer ensures **potency and
+specificity**; by **constraining hydrophobicity** in the flanking regions, the designer ensures
+**solubility and stability**."
+gemini-3-flash-preview:cloud|ASSAY-PEP-09,Assay Interpretation,"Protease degradation of a peptide shows biphasic kinetics: 60% loss in the first 10 minutes, then slow decay over the next 2 hours. Give one kinetic explanation and one experiment that tests it.","### Kinetic Explanation: Substrate Heterogeneity (Conformational Equilibrium)
+
+The biphasic kinetics can be explained by the existence of the peptide in **two distinct
+interconverting conformational states** (e.g., a ""cleavable"" state and a ""resistant"" state).
+
+In this model, the peptide population is at equilibrium:
+$$P_{cleavable} \rightleftharpoons P_{resistant}$$
+
+1.  **Phase 1 (Fast):** At the start of the reaction, approximately 60% of the peptide molecules
+are in a ""protease-accessible"" conformation (e.g., an extended loop or a specific *trans*-proline
+isomer). The protease rapidly degrades this population, leading to the initial 60% loss in 10
+minutes.
+2.  **Phase 2 (Slow):** The remaining 40% of the peptide is in a ""protease-resistant""
+conformation (e.g., a folded structure, an aggregate, or a *cis*-proline isomer). The rate of
+degradation in this phase is no longer limited by the enzyme's catalytic speed, but by the **slow
+rate of conversion** from the resistant state back to the cleavable state.
+
+---
+
+### Experiment to Test the Explanation: The ""Fresh Substrate Spike""
+
+To determine if the slow second phase is caused by the properties of the remaining substrate
+(heterogeneity) rather than the exhaustion or inactivation of the enzyme, you can perform a
+**Spike Experiment**.
+
+**The Procedure:**
+1.  Allow the reaction to proceed until it enters the slow phase (e.g., at the 20-minute mark,
+where ~60% is already gone).
+2.  Add a **fresh batch of the same peptide** to the existing reaction mixture (the ""spike"").
+3.  Monitor the degradation rate of the newly added peptide.
+
+**Interpreting the Results:**
+*   **If the explanation is correct (Substrate Heterogeneity):** The protease will immediately
+degrade 60% of the *newly added* peptide at the original ""fast"" rate, followed by a transition
+back to the slow rate. This proves the enzyme is still fully active and that the biphasic nature
+is intrinsic to the peptide population.
+*   **If the explanation is incorrect (e.g., Enzyme Inactivation):** The newly added peptide will
+be degraded slowly (at the same rate as the second phase) because the enzyme has lost its potency
+or has been inhibited by products."
+kimi-k2.5:cloud|ADMET-SM-04,ADMET / Pharmacokinetic Properties,A small molecule has systemic clearance CL = 30 L/h and volume of distribution Vd = 300 L in humans. Estimate the terminal half-life and interpret what a Vd this large typically implies about tissue distribution.,"**Terminal half-life:**  
 Using \( t_{1/2} = \frac{0.693 \times V_d}{CL} \):
 
 \[
@@ -770,52 +1553,322 @@ t_{1/2} = \frac{0.693 \times 300\ \text{L}}{30\ \text{L/h}} \approx \mathbf{6.9\
 
 **Interpretation of \( V_d = 300\ \text{L} \):**  
 This value is **~7–8× total body water** (~40–42 L in a 70 kg adult) and indicates **extensive tissue distribution**. It implies the drug is highly lipophilic or binds avidly to tissue proteins/phospholipids (e.g., in adipose, muscle, or organ parenchyma), such that only a small fraction of the total drug in the body remains in plasma at equilibrium. Consequently, plasma concentrations will be low relative to the total amount of drug present systemically."
-qwen3-next:80b-cloud|OPT-PEP-02,Optimization Approaches,"Define a Pareto-optimal set for peptides optimized simultaneously for higher potency, higher serum stability, and lower hemolysis. What does it mean for one peptide to dominate another?","
+qwen3-next:80b-cloud|OPT-PEP-02,Optimization Approaches,"Define a Pareto-optimal set for peptides optimized simultaneously for higher potency, higher serum stability, and lower hemolysis. What does it mean for one peptide to dominate another?","### Pareto-Optimal Set for Peptides Optimized for Potency, Serum Stability, and Hemolysis
 
-A **Pareto-optimal set** for peptides optimized simultaneously for **higher potency** (lower IC₅₀/EC₅₀), **higher serum stability** (longer half-life in serum), and **lower hemolysis** (reduced % hemolysis at a standard concentration, e.g., 100 μM) consists of all peptides where **no single peptide is superior in all three objectives**. Specifically:  
-- A peptide is Pareto-optimal if"
-kimi-k2.5:cloud|GEN-PEP-10,Generative Design Strategies,You expand a peptide generator to include several non-natural amino acids. What must be updated in the model representation and in downstream scoring to keep generation physically and chemically coherent?," To incorporate non-natural amino acids (UAAs) into a peptide generative model while maintaining physical and chemical coherence, you must update both the **representation layer** and **scoring functions** as follows:
+In multi-objective optimization, a **Pareto-optimal set** (or **Pareto front**) for peptides
+targeting **higher potency**, **higher serum stability**, and **lower hemolysis** is the
+collection of all peptide candidates where **no single peptide is superior to another in all
+three objectives simultaneously**. This set represents the best possible trade-offs between the
+conflicting goals.
+
+#### Key Characteristics:
+- **Conflicting Objectives**:
+  - **Potency** (e.g., IC₅₀ or EC₅₀): *Higher values are better* (e.g., lower IC₅₀ means higher
+potency, but we often frame it as ""higher potency"" for simplicity).
+  - **Serum stability** (e.g., half-life in serum): *Higher values are better*.
+  - **Hemolysis** (e.g., % red blood cell lysis): *Lower values are better* (since hemolysis is
+toxic and undesirable).
+  These goals often conflict:
+  - Increasing potency might reduce stability (e.g., due to structural instability).
+  - Improving stability might increase hemolysis (e.g., via hydrophobic modifications).
+  - Reducing hemolysis might compromise potency (e.g., by reducing membrane interaction).
+
+- **The Pareto-Optimal Set**:
+  - Contains peptides where **you cannot improve one objective without worsening at least one
+other**.
+  - *Example*: If Peptide A has higher potency than Peptide B but lower stability, and Peptide B
+has higher stability but higher hemolysis than A, neither is strictly better—both belong to the
+Pareto set.
+  - **Not a single ""best"" peptide**: Instead, it is a set of solutions representing all
+non-dominated trade-offs. Designers select from this set based on application-specific priorities
+(e.g., prioritizing low hemolysis for intravenous drugs, or high stability for oral delivery).
+
+---
+
+### What Does It Mean for One Peptide to ""Dominate"" Another?
+A peptide **A dominates peptide B** if:
+1. **A is at least as good as B in all objectives**, and
+2. **A is strictly better than B in at least one objective**.
+
+#### Formal Definition (for the three objectives):
+Let:
+- \( P_A, P_B \) = Potency values (higher = better),
+- \( S_A, S_B \) = Serum stability values (higher = better),
+- \( H_A, H_B \) = Hemolysis values (lower = better).
+
+**Peptide A dominates Peptide B** if and only if:
+- \( P_A \geq P_B \) **and** \( S_A \geq S_B \) **and** \( H_A \leq H_B \),
+- **AND at least one of these inequalities is strict**:
+  - \( P_A > P_B \) **or** \( S_A > S_B \) **or** \( H_A < H_B \).
+
+#### Why This Definition?
+- **""At least as good in all""**: Ensures no objective is worse.
+- **""Strictly better in at least one""**: Prevents equivalence (e.g., identical peptides don't
+dominate each other).
+- **Hemolysis is inverted**: Since lower hemolysis is better, \( H_A \leq H_B \) means A has
+*equal or lower* hemolysis (i.e., better or equal safety).
+
+#### Examples:
+| Peptide | Potency | Serum Stability | Hemolysis | Dominance Relationship |
+|---------|---------|-----------------|-----------|------------------------|
+| **A**   | 10      | 8               | 2%        | **Dominates B** (better in all) |
+| **B**   | 8       | 6               | 5%        | Dominated by A |
+| **C**   | 12      | 5               | 3%        | **Does NOT dominate A**: Worse stability (5 <
+8) and worse hemolysis (3% > 2%) |
+| **D**   | 9       | 10              | 1%        | **Does NOT dominate A**: Worse potency (9 <
+10), but better stability (10 > 8) and better hemolysis (1% < 2%) → *neither dominates the other*
+|
+| **E**   | 10      | 10              | 1%        | **Dominates A** (better stability and
+hemolysis; potency equal) |
+
+- **Key Insight**:
+  - A dominates B only if A is **unambiguously superior** (no objective worse, and at least one
+better).
+  - If peptides are better in some objectives but worse in others (e.g., A vs. D above),
+**neither dominates the other**—both belong to the Pareto-optimal set.
+
+---
+
+### Practical Implications for Peptide Design
+- **The Pareto set visualizes trade-offs**: A designer can choose a peptide from this set based
+on clinical needs (e.g., a cancer therapeutic might prioritize potency over hemolysis, while a
+topical anti-infective might prioritize low hemolysis).
+- **No single ""optimal"" solution**: This reflects real-world constraints—improving one property
+often compromises others.
+- **Tools for identification**: Algorithms like NSGA-II (Non-dominated Sorting Genetic Algorithm)
+or MOEA/D (Multi-Objective Evolutionary Algorithm) are used to generate the Pareto set from
+experimental or computational data.
+
+> 💡 **Remember**: The Pareto-optimal set is the *only* set of candidates worth considering for
+final selection. Any peptide *outside* this set is **dominated** (i.e., there exists another
+peptide that is better in all aspects), making it irrelevant for optimization."
+kimi-k2.5:cloud|GEN-PEP-10,Generative Design Strategies,You expand a peptide generator to include several non-natural amino acids. What must be updated in the model representation and in downstream scoring to keep generation physically and chemically coherent?," When expanding a peptide generator to include non-natural amino acids (ncAAs), you must update
+both the **structural representation** (how the molecule is encoded) and **scoring functions** (how
+quality is evaluated) to maintain physical validity and chemical realism. Here is the systematic
+breakdown:
+
+---
 
 ## 1. Model Representation Updates
 
-**Vocabulary & Tokenization**
-- Expand the token dictionary to include new 3-letter codes (e.g., ""NLE"" for norleucine, ""BPA"" for *p*-benzoyl-L-phenylalanine) or SMILES/SELFIES substructures
-- Add stereochemistry flags (D- vs. L-configuration, R/S centers) to distinguish enantiomers
+### **Atomistic & Topologic Layer**
+- **Atom Typing & Force Field Parameters**: Add new atom types for functional groups absent in
+natural amino acids (e.g., fluorine, boron, azides, nitro groups, metal centers). Derive:
+  - Partial charges (RESP/AM1-BCC or QM-derived)
+  - Van der Waals parameters (σ, ε)
+  - Bond, angle, and dihedral force constants
+  - Improper torsions for new stereocenters
+- **Residue Templates**: Update the chemical graph dictionary/PDB residue library with:
+  - Backbone connectivity (critical for N-methyl, β-amino acids, or D-amino acids which invert
+stereochemistry)
+  - Side chain topology (e.g., stapled hydrocarbon linkers, bicyclic constraints)
+  - Ideal bond lengths/angles from QM optimization or crystallographic data
+- **Stereochemistry Flags**: Explicit encoding of R/S configuration and E/Z geometry for
+unsaturated ncAAs (e.g., dehydroalanine, allylglycine)
 
-**Feature Embeddings**
-- Initialize/train new embedding vectors for each UAA in the latent space
-- Update atomic feature vectors to include new elements (e.g., fluorine in trifluoromethyl-phenylalanine) or hybridization states (sp³ carbons in β-amino acids)
-- Extend graph neural network node features to account for novel side chain topologies (e.g., cyclic constraints in 1-aminocyclopentane-1-carboxylic acid)
+### **Conformational Libraries**
+- **Rotamer Libraries**: Generate new side-chain χ distributions specific to the ncAA (e.g.,
+trifluoromethyl-phenylalanine has different rotamer preferences than phenylalanine due to
+steric/electronic effects)
+- **Backbone Ramachandran Maps**: For N-methylated amino acids (N-Me-AA) or β-amino acids, the
+φ/ψ/θ preferences differ dramatically from canonical Ramachandran space and require distinct
+probability distributions
 
-**Geometric Priors**
-- Update rotamer libraries (χ angle distributions)"
-gemini-3-flash-preview:cloud|GEN-SM-05,Generative Design Strategies,"You condition a generator to maximize a QSAR-predicted property (e.g., potency) using classifier guidance. What is a common failure mode of this approach, and what is one practical way to detect it?","A common failure mode of using classifier guidance to maximize a QSAR-predicted property is **model exploitation** (also known as **reward hacking** or **adversarial vulnerability**).
+### **Vocabulary & Tokenization** (for ML generators)
+- Expand the residue vocabulary in sequence-based models (Transformers, RNNs) or node/edge features
+in graph neural networks to include new residue tokens
+- For 3D-aware models (diffusion, flow matching), update the conditioning features to encode
+ncAA-specific properties (aromaticity, charge state, H-bond capacity)
 
-### The Failure Mode: Model Exploitation
-Because QSAR models are surrogates trained on a finite dataset, they have a limited **Applicability Domain (AD)**. When a generator is conditioned to maximize the model's output, it often identifies and exploits ""blind spots"" or artifacts in the model’s decision boundary. 
+---
 
-The generator produces molecules that are chemically nonsensical, synthetically inaccessible, or physically impossible, yet receive a high predicted score because they fall into regions of chemical space where the QSAR model’s extrapolation is inaccurate. For example, the model might incorrectly associate an excessive number of halogen atoms or specific rare functional groups with high potency because those features were over-represented in the active class of the training set.
+## 2. Downstream Scoring Updates
 
-### Practical Way to Detect It: Uncertainty Quantification (UQ)
-One of the most effective ways to detect model exploitation is through **Uncertainty Quantification**, specifically using **Ensemble Methods** or **Monte Carlo (MC) Dropout**.
+### **Physics-Based Energy Functions**
+- **Force Field Compatibility**: Ensure the scoring function recognizes new atom types:
+  - Update Lennard-Jones parameters for novel elements (e.g., Se in selenocysteine analogs, F in
+fluoroproline)
+  - Add torsional profiles for new rotatable bonds (e.g., perfluoroalkyl chains)
+- **Implicit Solvation**: Recalculate atomic surface tension parameters (γᵢ) for GBSA/PBSA models;
+fluorinated side chains and hydrocarbon staples alter the effective Born radii significantly
+- **Protonation State Handling**: ncAAs often have non-standard pKa values (e.g., 4-fluoroglutamic
+acid has shifted acidity). The scoring must account for pH-dependent charge states using
+constant-pH methodologies or appropriate protonation sampling
 
-*   **How it works:** Instead of using a single QSAR model, you use an ensemble of $N$ models (e.g., 5–10 models trained with different seeds or data splits). 
-*   **Detection Metric:** Calculate the **predictive variance** (disagreement) among the models in the ensemble for the generated molecules. 
-*   **Interpretation:** If the generator produces a molecule with a high mean predicted score but also a **high variance** (e.g., a standard deviation $> 0.2$ for a normalized 0–1 classifier), it indicates the molecule is outside the training distribution. A high score accompanied by high uncertainty is a hallmark of model exploitation, suggesting the predicted potency is an artifact rather than a reliable biological signal.
+### **Binding & Interaction Scoring**
+- **Interaction Potentials**: Update docking/scoring functions to capture:
+  - **Halogen bonding** (for iodinated/fluorinated ncAAs)
+  - **Metal coordination** (for ncAAs with chelating side chains like bipyridyl or hydroxamic acid
+derivatives)
+  - **Cation-π interactions** with modified aromatic rings (e.g., pentafluorophenylalanine has
+quadrupole moment inversion)
+- **Desolvation Penalties**: ncAAs with extreme hydrophobicity (adamantyl) or hydrophilicity
+(sulfonated) require adjusted solvation terms in MM-PBSA/GBSA or explicit water thermodynamic
+integration calculations
 
-**Alternative Detection:** You can also monitor"
-kimi-k2.5:cloud|OPT-SM-04,Optimization Approaches,"In Bayesian optimization for molecules, what does Expected Improvement (EI) favor, and why is predictive uncertainty required for principled exploration?"," In Bayesian optimization (BO) for molecules, **Expected Improvement (EI) favors candidates with either high predicted property values (exploitation) or high predictive uncertainty (exploration)**, optimally balancing both via the acquisition function:
+### **Specialized Constraints**
+- **Macrocyclization Energy**: For stapled or cyclic peptides, add harmonic restraints or
+cyclization-specific scoring terms to enforce thioether/olefin linker geometry and ring strain
+penalties
+- **Strain Energy Filters**: Flag conformations with cis-amide bonds (except proline analogs) or
+unrealistic bond angles in constrained scaffolds (e.g., α,α-disubstituted amino acids)
 
-$$\text{EI}(x) = (\mu(x) - f^*)\Phi(Z) + \sigma(x)\phi(Z)$$
+---
 
-where $\mu(x)$ is the predicted mean, $\sigma(x)$ is the predictive standard deviation, $f^*$ is the current best observed value, $Z = (\mu(x) - f^*)/\sigma(x)$, and $\Phi/\phi$ are the standard normal CDF/PDF.
+## 3. Coherence Validation Layer
 
-**Why predictive uncertainty is required for principled exploration:**
+To ensure generated peptides are physically realizable:
 
-1. **Automatic exploration-exploitation trade-off**: Without $\sigma(x)$, the optimizer would greedily select molecules with highest predicted activity, ignoring whether those predictions are reliable. Uncertainty explicitly quantifies doubt, forcing exploration of chemical subspaces (e.g., novel scaffolds, unusual functional groups) where the surrogate model (often a Gaussian Process or neural network) lacks training data.
+| Check | Implementation |
+|-------|---------------|
+| **Valence Verification** | Hard constraints on bond order limits (e.g., prevent 5-coordinate
+carbon in standard organics) |
+| **Steric Clash Detection** | Updated vdW radii for bulky ncAAs (e.g., terphenylalanine) to
+prevent atomic overlap |
+| **Synthetic Accessibility** | Add retrosynthetic scoring (e.g., using SAscore or SCScore adapted
+for peptide synthesis) to ensure the ncAA can be incorporated via SPPS or biosynthesis |
+| **Stability Metrics** | Updated torsion angle checks for β-amino acids (different helical
+propensities) and D-amino acids (polyproline II vs. α-helix preferences) |
 
-2. **Avoiding spurious exploitation**: In vast chemical spaces ($\sim10^{60}$ drug-like molecules), machine learning models confidently mispredict properties for out-of-distribution structures. Predictive uncertainty prevents the"
-kimi-k2.5:cloud|ASSAY-SM-01,Assay Interpretation,Define IC50 in a biochemical inhibition assay and state one key assay-condition factor that can shift the measured IC50 without changing true binding affinity.," **IC50** (half-maximal inhibitory concentration) is the concentration of an inhibitor that reduces the activity of a target enzyme (or receptor) by 50% under specific experimental conditions. It is an operational measure of apparent potency, distinct from the intrinsic binding affinity (Ki).
+---
+
+## 4. Class-Specific Considerations
+
+| ncAA Class | Critical Update |
+|------------|----------------|
+| **N-Methylated** | Altered backbone H-bonding; update H-bond donor/acceptor counts in scoring;
+Ramachandran shifts |
+| **β-Amino acids** | Additional backbone dihedral (θ); different helical periodicity (14-helix vs.
+12-helix); spacing in binding pockets |
+| **D-Amino acids** | Inverted chirality at Cα; changes in protease resistance scoring; different
+propensity for polyproline II helices |
+| **Stapled/Bridged** | Macrocyclization constraints; linker length compatibility with helix
+geometry; entropic penalty terms |
+| **Photocrosslinkers** (e.g., diazirine) | Reactive state handling; excited state QM parameters if
+modeling photolysis |
+
+**Summary**: The generator requires new **chemical parameter files** (force field topology),
+expanded **conformational databases** (rotamers/Ramachandran), and recalibrated **energy
+landscapes** (solvation, binding, strain) that account for the electronic and steric peculiarities
+of each non-natural side chain or backbone modification. Without these updates, the model will
+produce physically implausible conformations or chemically nonsensical sequences.
+"
+gemini-3-flash-preview:cloud|GEN-SM-05,Generative Design Strategies,"You condition a generator to maximize a QSAR-predicted property (e.g., potency) using classifier guidance. What is a common failure mode of this approach, and what is one practical way to detect it?","In the context of molecule generation using classifier guidance (or regressor guidance), the most
+common failure mode is **Adversarial Exploitation** (often referred to as **Reward Hacking** or
+**Model Hacking**).
+
+### 1. The Failure Mode: Adversarial Exploitation
+When you use a QSAR (Quantitative Structure-Activity Relationship) model to guide a generator,
+the generator treats the QSAR model as an ""oracle."" However, QSAR models are surrogate
+approximations trained on a limited domain of chemical space.
+
+Because the generator is explicitly optimized to maximize the QSAR score, it eventually discovers
+**""blind spots""** or regions of high error in the QSAR model. The generator begins to produce
+""adversarial molecules""—structures that are chemically nonsensical, unstable, or physically
+impossible, but which happen to possess structural features that the QSAR model correlates with
+high potency.
+
+**Key characteristics of this failure:**
+*   **Out-of-Distribution (OOD) structures:** The generator moves into regions of chemical space
+where the QSAR model has no training data and its predictions are unreliable.
+*   **Pathological features:** The molecules may contain ""forbidden"" chemical groups (e.g.,
+multiple O-O bonds, strained rings, or valency violations) that the QSAR model wasn't penalized
+for during its training.
+
+---
+
+### 2. Practical Way to Detect It: Use an Independent ""Consensus"" Model or Oracle
+A practical and widely used method to detect reward hacking is to evaluate the generated
+molecules using a **validation suite of independent models** (different architectures or
+physics-based simulations) that were not used during the generation process.
+
+**How to implement this:**
+1.  **Ensemble Disagreement:** Use a secondary, differently architected model (e.g., if you used
+a Graph Neural Network for guidance, use a Random Forest trained on fingerprints for detection).
+If the guidance model gives a molecule a ""99th percentile"" score but the secondary model gives it
+a ""10th percentile"" score, the generator has likely exploited a flaw in the first model.
+2.  **Physics-Based Validation (The ""Ground Truth"" Check):** Pass the generated molecules through
+a more computationally expensive but more ""physically grounded"" method, such as **Molecular
+Docking** (if the protein target is known) or **Density Functional Theory (DFT)**.
+    *   **Detection Metric:** Calculate the correlation between the QSAR-predicted potency and
+the docking score. If the generator is working correctly, these should correlate. If the QSAR
+scores are sky-high but the docking scores are poor (or the molecules fail to even minimize in a
+force field), you have detected reward hacking.
+
+**Summary:** If the ""predicted potency"" increases over the course of training but the ""physically
+simulated potency"" or ""consensus score"" plateaus or crashes, the generator has successfully
+hacked the model."
+kimi-k2.5:cloud|OPT-SM-04,Optimization Approaches,"In Bayesian optimization for molecules, what does Expected Improvement (EI) favor, and why is predictive uncertainty required for principled exploration?"," In Bayesian optimization (BO) for molecular design, **Expected Improvement (EI)** has specific
+preferences, and **predictive uncertainty** is fundamental to the algorithm's ability to explore
+intelligently rather than greedily.
+
+## 1. What EI Favors
+
+EI favors candidate molecules that offer **high potential for improvement** over the current best
+observed value ($y^*$). Mathematically, for a surrogate model predicting $\mathcal{N}(\mu(x),
+\sigma^2(x))$:
+
+$$EI(x) = (\mu(x) - y^*)\Phi\left(\frac{\mu(x) - y^*}{\sigma(x)}\right) +
+\sigma(x)\phi\left(\frac{\mu(x) - y^*}{\sigma(x)}\right)$$
+
+where $\Phi$ and $\phi$ are the standard normal CDF and PDF.
+
+**EI explicitly favors two distinct regimes:**
+
+**A. Exploitation: High Predicted Mean**
+When $\mu(x) \gg y^*$ with low uncertainty, EI approaches $\mu(x) - y^*$. The acquisition function
+favors molecules predicted to be excellent.
+
+**B. Exploration: High Predictive Uncertainty**
+Crucially, EI also favors points where $\sigma(x)$ is large **even if $\mu(x) < y^*$**. The term
+$\sigma(x)\phi(\cdot)$ ensures that uncertain regions have non-zero EI because there's a chance the
+true value exceeds $y^*$ due to the ""upside"" of the uncertainty. For example, if $\mu(x)$ is
+mediocre but $\sigma(x)$ is huge, EI can be higher than for a ""safe"" point with slightly better
+mean but tiny variance.
+
+**In molecular terms:** EI balances optimizing within known chemical series (exploitation) against
+testing structurally novel scaffolds where the model admits ""I don't know"" (exploration).
+
+## 2. Why Uncertainty Enables Principled Exploration
+
+Predictive uncertainty is **required** because without it, BO collapses to pure greedy
+exploitation. Here is why it enables true exploration:
+
+**Distinguishes ""Bad"" from ""Unknown""**
+Without $\sigma(x)$, the model only outputs point estimates. You cannot distinguish between:
+- *""This molecule is predicted to be bad (confidently)""* (low $\mu$, low $\sigma$) → **Avoid**
+- *""This molecule is predicted to be bad, but I'm just guessing""* (low $\mu$, high $\sigma$) →
+**Explore**
+
+In vast chemical spaces, high uncertainty typically signals **distance from training
+data**—structural novelty, unusual functional groups, or extrapolation to unseen regions. Only with
+uncertainty quantification can you identify these high-potential ""frontier"" regions.
+
+**Enables the Exploration-Exploitation Tradeoff**
+The EI formula mathematically encodes the value of information. The $\sigma(x)$ term represents the
+**expected value of perfect information** for that point. You explore precisely where your
+uncertainty creates the possibility of finding something better than $y^*$.
+
+**Prevents Local Optima Entrapment**
+In molecular optimization, property landscapes are rugged. Pure exploitation around the current
+best scaffold misses discontinuous improvements (e.g., a completely different ring system).
+Uncertainty grows as you move away from training data, automatically encouraging the algorithm to
+""take risks"" on novel chemistry that might unlock superior properties.
+
+**Epistemic vs. Aleatoric in Molecules**
+In molecular BO, uncertainty captures **epistemic uncertainty** (lack of data in that region of
+chemical space) rather than just experimental noise. This is crucial because:
+- Molecular space is discrete and combinatorial ($\sim10^{60}$ drug-like molecules)
+- Experiments are expensive (synthesis/assay), so random exploration is wasteful
+- You need to generalize across chemical similarity—GP kernels or neural networks with uncertainty
+tell you when a molecule is ""far"" from anything you've tested
+
+**Summary:** Predictive uncertainty transforms the optimization from ""pick the best predicted
+molecule"" to ""pick the molecule most likely to raise the ceiling of what we've discovered."" Without
+uncertainty, you cannot implement **principled** exploration—you would either exploit locally or
+explore randomly. Uncertainty lets you explore exactly where your ignorance might hide the best
+molecules."
+kimi-k2.5:cloud|ASSAY-SM-01,Assay Interpretation,Define IC50 in a biochemical inhibition assay and state one key assay-condition factor that can shift the measured IC50 without changing true binding affinity.,"**IC50** (half-maximal inhibitory concentration) is the concentration of an inhibitor that reduces the activity of a target enzyme (or receptor) by 50% under specific experimental conditions. It is an operational measure of apparent potency, distinct from the intrinsic binding affinity (Ki).
 
 **Key assay-condition factor:** **Substrate concentration ([S])**.
 
@@ -899,7 +1952,7 @@ D best in half-life (highest 20).
 C best in HC50 (highest 200).  
 B is not best in any single objective, but it is second-best in half-life (8) and intermediate in others, so it’s not dominated:  
 Check if B is dominated by C: C better EC50 (15 vs 30) and HC50 (200 vs 40), but worse half-life (2 vs 8)"
-kimi-k2.5:cloud|SAR-PEP-04,SAR Reasoning,"A peptide binds its target as an α-helix, and residue i is buried in a helix-dependent interface. What is the most likely effect on activity of substituting that residue from an L-amino acid to the corresponding D-amino acid, and why?"," **Most likely effect: Complete loss of binding/activity**
+kimi-k2.5:cloud|SAR-PEP-04,SAR Reasoning,"A peptide binds its target as an α-helix, and residue i is buried in a helix-dependent interface. What is the most likely effect on activity of substituting that residue from an L-amino acid to the corresponding D-amino acid, and why?","**Most likely effect: Complete loss of binding/activity**
 
 **Why:**
 
@@ -912,14 +1965,125 @@ kimi-k2.5:cloud|SAR-PEP-04,SAR Reasoning,"A peptide binds its target as an α-he
 **Quantitative context**: In studies of p53/MDM2 inhibitors and Bcl-2 family helical peptides, single D-substitutions in buried positions routinely reduce IC₅₀ from **nM to >10 µM** or abolish detectable binding entirely.
 
 **Exception**: If the D-residue stabilizes an alternative bioactive conformation (rare) or if the interface tolerates side chain flipping (uncommon for buried positions), partial activity might remain—but this is not the most likely outcome."
-kimi-k2.5:cloud|OPT-PEP-04,Optimization Approaches,"How can Bayesian optimization be applied to peptide sequences using embeddings, and what does EI do in that setting?"," Bayesian optimization (BO) can be applied to peptide sequences by mapping discrete sequences into a continuous **embedding space** where standard BO operates, then using acquisition functions like Expected Improvement (EI) to guide the search. Here is the specific workflow and role of EI:
+kimi-k2.5:cloud|OPT-PEP-04,Optimization Approaches,"How can Bayesian optimization be applied to peptide sequences using embeddings, and what does EI do in that setting?"," Bayesian optimization (BO) can be applied to peptide sequences by mapping discrete,
+variable-length amino acid strings into a continuous **latent embedding space**, where standard BO
+tools (Gaussian Processes and acquisition functions) operate. Expected Improvement (EI) then guides
+exploration in this latent space by quantifying the potential upside of synthesizing and testing
+peptides from uncertain, high-promise regions.
 
-## 1. Embedding Peptides for BO
-Since peptides are discrete (sequences of 20 amino acids) and often variable-length, they are first encoded into fixed-dimensional continuous vectors (embeddings, **z** ∈ ℝᵈ, typically **d = 64–1024**):
+Here is the complete framework:
 
-- **Learned embeddings**: Variational autoencoders (VAEs) or protein language models (e.g., ESM-2, ProtBERT) trained on sequence databases map peptides to latent vectors that capture physicochemical and structural properties.
-- **Hand-crafted embeddings**: Physicochemical descriptors (hydrophobicity, charge, molecular weight) concatenated into feature vectors.
+---
 
-The BO surrogate model—typically a **Gaussian Process (GP)**—is then trained on the dataset **D = {(zᵢ, yᵢ)}**, where **zᵢ** is the embedding of peptide **i** and **yᵢ** is the experimental property (e.g., binding affinity, IC₅₀, stability).
+### 1. The Embedding Layer: Creating a Continuous Search Space
 
-## 2. Optimization"
+Because peptides are discrete combinatorial objects (sequences over a 20-letter alphabet), you
+cannot apply BO directly. Instead, you learn a continuous representation $z \in \mathbb{R}^d$ where
+Euclidean distance correlates with functional similarity.
+
+**Common embedding strategies:**
+
+| Method | Mechanism | Latent Space Properties |
+|--------|-----------|-------------------------|
+| **Variational Autoencoder (VAE)** | Encoder $q_\phi(z\|x)$ compresses sequence $x$; decoder
+$p_\theta(x\|z)$ reconstructs it | Differentiable; allows gradient-based optimization; may generate
+invalid sequences off-manifold |
+| **Protein Language Models** | ESM-2, ProtBERT, or specialized peptide LMs provide mean-pooled
+residue embeddings | Context-aware; captures long-range dependencies; not necessarily generative |
+| **Physicochemical Descriptors** | Concatenation of hydrophobicity, charge, isoelectric point, or
+k-mer frequency vectors | Interpretable but often miss non-linear sequence context |
+
+**Key requirement:** The embedding must be **smooth** with respect to the target property (e.g.,
+binding affinity, antimicrobial activity). If small changes in sequence produce large jumps in the
+embedding, the Gaussian Process surrogate will fail.
+
+---
+
+### 2. The BO Pipeline on Latent Peptide Space
+
+Once embeddings are established, the workflow proceeds as standard BO:
+
+1. **Surrogate Model**: Train a Gaussian Process (GP) on observed data $\{(z_i, y_i)\}_{i=1}^n$,
+where $y_i$ is the experimental readout for peptide $x_i$ mapped to $z_i$.
+
+   The GP defines a posterior $p(f(z) \| \mathcal{D}_n) = \mathcal{N}(\mu_n(z), \sigma_n^2(z))$
+over the latent space.
+
+2. **Acquisition**: Optimize an acquisition function $\alpha(z)$ over the continuous latent space
+to select the next point $z_{n+1}$.
+
+3. **Decoding/Projection**: Convert $z_{n+1}$ back to a peptide:
+   - **VAE**: Sample $x \sim p_\theta(x\|z_{n+1})$ (may require feasibility constraints or
+rejection sampling)
+   - **Nearest Neighbor**: Retrieve the closest $z$ from a virtual library using Euclidean or
+cosine distance
+   - **Local Search**: Run a genetic algorithm or simulated annealing in sequence space initialized
+near the decoding
+
+4. **Experiment**: Synthesize and assay the peptide, add $(z_{n+1}, y_{n+1})$ to
+$\mathcal{D}_{n+1}$, and repeat.
+
+---
+
+### 3. Expected Improvement (EI) in the Peptide Setting
+
+**Mathematical Definition:**
+In the latent space, EI at point $z$ is:
+$$\text{EI}(z) = \mathbb{E}\left[\max(0, f(z) - y^+)\right] = \sigma_n(z) \cdot \left[
+\frac{\mu_n(z) - y^+}{\sigma_n(z)} \Phi\left(\frac{\mu_n(z) - y^+}{\sigma_n(z)}\right) +
+\phi\left(\frac{\mu_n(z) - y^+}{\sigma_n(z)}\right) \right]$$
+
+Where:
+- $y^+ = \max_{i \leq n} y_i$ is the best observed property value so far
+- $\Phi, \phi$ are the standard normal CDF and PDF
+- $\mu_n(z), \sigma_n(z)$ are the GP posterior mean and uncertainty at latent coordinate $z$
+
+**What EI does for peptides:**
+
+1. **Exploitation**: EI is high in regions where $\mu_n(z) > y^+$ (the GP predicts better binding
+than current best). If the embedding of peptide ""FLPIVGKLL"" (known antimicrobial) is nearby, EI
+will favor points in that neighborhood to refine the lead.
+
+2. **Exploration**: EI is high where $\sigma_n(z)$ is large, even if $\mu_n(z)$ is modest. This
+drives the optimizer toward **unexplored islands of sequence space**—for example, a latent cluster
+representing cyclic peptides or D-amino acid analogs that are far from all tested training points.
+
+3. **Balanced Proposals**: The closed-form trade-off ensures you don't waste synthesis budget on
+peptides that are either obviously inferior (low $\mu$) or already well-characterized (low
+$\sigma$).
+
+**Peptide-Specific Interpretation:**
+When optimizing for cell penetration, EI might identify a latent point $z^*$ that sits between a
+known cell-penetrating peptide (CPP) cluster and a membrane-binding cluster. Even if the exact
+location is uncertain (high $\sigma$), the potential to discover a peptide with dual functionality
+(high $\mu$) makes the expected improvement large, justifying the synthesis cost.
+
+---
+
+### 4. Practical Challenges and Solutions
+
+**The ""Invalid Sequence"" Problem:** Not every $z \in \mathbb{R}^d$ decodes to a biologically valid
+peptide (e.g., VAEs may produce non-standard amino acids). Solutions include:
+- Constrained BO: Add a feasibility classifier $c(z)$ (probability of validity) as a constraint or
+second objective
+- Latent space regularization: Penalize distance from the training data manifold during acquisition
+optimization
+
+**Discrete vs. Continuous Mismatch:** If using static embeddings (e.g., ESM), the ""best"" $z^*$
+might not correspond to any realizable sequence. **Retractile BO** optimizes EI to find $z^*$, then
+projects to the nearest valid sequence in the embedding space, though this is suboptimal.
+**Combinatorial BO** (using string kernels like the weighted degree kernel with SMOTEO) avoids
+embeddings entirely but scales poorly with sequence length.
+
+**Batch EI (qEI):** For high-throughput screening, use the $q$-Expected Improvement to select a
+batch of $q$ latent points $\{z_{n+1}, \dots, z_{n+q}\}$ that are diverse in sequence space but all
+have high individual EI, maximizing parallel information gain.
+
+---
+
+### Summary
+Bayesian optimization navigates peptide space by treating **embeddings as coordinates** in a
+continuous landscape. Expected Improvement serves as the ""potential value"" compass, automatically
+balancing the refinement of known potent scaffolds (exploitation) against risky but potentially
+revolutionary sequence motifs distant from the training data (exploration).
+"
