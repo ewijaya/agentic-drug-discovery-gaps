@@ -106,6 +106,7 @@ def call_model_with_retry(
                 options={
                     "temperature": TEMPERATURE,
                     "num_predict": MAX_TOKENS,
+                    "think": False,
                 },
             )
             latency_ms = int((time.perf_counter() - start) * 1000)

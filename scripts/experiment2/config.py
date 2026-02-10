@@ -13,6 +13,11 @@ RESULTS_FIGURES_DIR = RESULTS_DIR / "figures"
 
 MODELS = [
     {
+        "name": "Kimi K2.5",
+        "tag": "kimi-k2.5:cloud",
+        "response_file": "kimi-k2.5.jsonl",
+    },
+    {
         "name": "DeepSeek V3.2",
         "tag": "deepseek-v3.2:cloud",
         "response_file": "deepseek-v3.2.jsonl",
