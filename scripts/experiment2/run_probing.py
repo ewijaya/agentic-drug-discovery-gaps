@@ -115,6 +115,10 @@ def call_model_with_retry(
             if model_tag == "kimi-k2.5:cloud":
                 chat_kwargs["think"] = False
                 options["think"] = False
+            elif model_tag == "qwen3-next:80b-cloud":
+                # Qwen may emit empty content under default reasoning settings.
+                # Use supported reasoning_effort instead of think=False.
+                options["reasoning_effort"] = "minimal"
 
             response = client.chat(**chat_kwargs)
             latency_ms = int((time.perf_counter() - start) * 1000)
