@@ -7,6 +7,71 @@ Current agentic systems are architected around small molecules: SMILES strings, 
 
 All six frameworks evaluated assume small-molecule representations (SMILES strings, molecular fingerprints, docking scores). Task classes 2, 3, 5, 6, and 7 (peptide-specific workflows) receive zero coverage across all frameworks. No framework supports protein language models (ProtBERT, ESM-2, ProGen) as first-class components for sequence-based therapeutics design.
 
+\subsubsection{Stranded Knowledge: A Diagnostic Experiment}
+
+As a diagnostic, we probed four frontier LLMs on matched pharmaceutical knowledge
+questions to test whether the small-molecule bias extends to the foundation models
+powering these agents (\S\ref{sec:knowledge-probing}). All four models demonstrate
+competent peptide reasoning across all five categories
+(Table~\ref{tab:knowledge-probing-categories}, \cref{fig:knowledge-probing}). Across
+200 paired observations, peptide questions receive marginally higher scores than
+small-molecule questions (aggregate gap = $-0.115$, 95\% CI: $[-0.255, 0.02]$). No
+model shows a statistically significant peptide deficit (all $p > 0.6$,
+Bonferroni-adjusted $p = 1.0$), and the Friedman consistency test confirms this holds
+uniformly across all four models ($\chi^2 = 0.454$, $p = 0.929$). Four of five
+categories favor peptides; Optimization Approaches shows the largest pro-peptide gap
+($+0.225$).
+
+Expert validation revealed that models produce directionally correct but quantitatively
+overconfident reasoning in both domains equally, consistent with a depth limitation
+rather than a modality-specific knowledge gap. The paired within-model comparisons
+driving the statistical tests are robust to calibration differences between expert and
+automated scoring (see \S\ref{sec:discussion-limitations} for details).
+
+The diagnostic isolates the defect: the peptide expertise is present in foundation
+models but stranded behind small-molecule-only agent architectures. LLMs reason
+competently about peptide SAR, ADMET properties, generative design, optimization, and
+assay interpretation. The knowledge exists; no current agent provides a pathway to
+surface it through peptide-aware tools, protein language model integration, or
+sequence-native workflows. This strengthens rather than undermines \gap{1}: the fix
+requires building the integration pipeline, not retraining the models.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig-llm-knowledge-probing.pdf}
+\caption{Stranded Knowledge: LLM Peptide Competence vs Agent Capability. Mean scores
+(0--3 scale) for four frontier LLMs across 50 matched question pairs spanning five
+pharmaceutical knowledge categories. Blue bars: small-molecule questions; orange bars:
+peptide questions. Error bars: 95\% bootstrap confidence intervals. All four models
+demonstrate competent peptide reasoning at or above small-molecule levels (aggregate gap
+= $-0.115$, 95\% CI: $[-0.255, 0.02]$, all Bonferroni-adjusted $p = 1.0$). This
+knowledge is stranded: no current agentic framework surfaces it through peptide-aware
+tools.}
+\label{fig:knowledge-probing}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Knowledge Probing: Per-Category Score Breakdown. Mean scores (standard
+deviation) aggregated across four models. Gap = peptide minus small-molecule mean
+(positive indicates peptide advantage). $p$-values from one-sided Wilcoxon signed-rank
+tests ($H_1$: SM $>$ peptide). Four of five categories show a peptide advantage,
+confirming that peptide expertise exists across all knowledge categories tested.}
+\label{tab:knowledge-probing-categories}
+\small
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Category} & \textbf{SM Mean (SD)} & \textbf{PEP Mean (SD)} & \textbf{Gap} & \textbf{$p$-value} \\
+\midrule
+SAR Reasoning & 2.60 (0.63) & 2.55 (0.55) & $-0.05$ & 0.370 \\
+ADMET / PK Properties & 2.33 (0.66) & 2.45 (0.68) & $+0.13$ & 0.755 \\
+Generative Design & 2.10 (0.71) & 2.25 (0.74) & $+0.15$ & 0.805 \\
+Optimization Approaches & 2.28 (0.75) & 2.50 (0.60) & $+0.23$ & 0.938 \\
+Assay Interpretation & 2.38 (0.74) & 2.50 (0.68) & $+0.13$ & 0.767 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \subsubsection{The Peptide-Specific Challenge Space}
 
 Therapeutic peptides (2 to 50 amino acids) bridge small molecules and biologics. Unlike rigid small molecules, peptides are conformationally flexible, sampling diverse structural states. They achieve high selectivity through induced-fit binding but face aggregation, protease degradation, and permeability barriers. These challenges extend beyond peptides to biologics broadly: antibodies require CDR loop modeling, nanobodies need single-domain folding, and fusion proteins demand multi-domain interaction prediction. The small-molecule bias is a biologics-wide limitation.

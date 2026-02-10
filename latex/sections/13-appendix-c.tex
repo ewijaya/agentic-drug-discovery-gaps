@@ -1,0 +1,96 @@
+\section{Knowledge Probing Experiment: Supplementary Details}
+\label{appendix:knowledge-probing}
+
+This appendix provides additional detail for the LLM knowledge probing experiment described in \S\ref{sec:knowledge-probing}.
+
+\subsection{Question Design}
+
+We constructed 50 matched question pairs (100 questions total) spanning five pharmaceutical knowledge categories: SAR reasoning, ADMET and pharmacokinetic properties, generative design strategies, optimization approaches, and assay interpretation (10 pairs per category). Each pair tested the same cognitive skill in two modality contexts: one small-molecule question and one peptide question. Questions were balanced for difficulty and format across domains. The full question set is available in the supplementary materials.
+
+\subsection{Scoring Rubric}
+
+Responses were scored on a four-point ordinal scale:
+
+\begin{table}[htbp]
+\centering
+\caption{Knowledge Probing Scoring Rubric}
+\label{tab:scoring-rubric}
+\small
+\begin{tabular}{cl}
+\toprule
+\textbf{Score} & \textbf{Criteria} \\
+\midrule
+0 & Wrong or hallucinated: factually incorrect, fabricated data, or nonsensical \\
+1 & Partially correct: some correct elements but missing key nuance or significant errors \\
+2 & Correct: accurate and reasonably complete \\
+3 & Expert-level: correct with domain-expert nuance and specific quantitative details \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Per-Model Results}
+
+Table~\ref{tab:per-model-results} presents the full per-model statistical breakdown.
+
+\begin{table}[htbp]
+\centering
+\caption{Knowledge Probing: Per-Model Results. SM and PEP columns show mean scores on
+a 0--3 scale. Gap = SM minus PEP (negative indicates peptide advantage). Wilcoxon
+signed-rank tests are one-sided ($H_1$: SM $>$ PEP), Bonferroni-corrected
+($\alpha = 0.0125$). Rank-biserial $r$ is the matched-pairs effect size.}
+\label{tab:per-model-results}
+\small
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Model} & \textbf{SM Mean} & \textbf{PEP Mean} & \textbf{Gap} & \textbf{$p$} & \textbf{$p$ (Bonf.)} & \textbf{$r$} \\
+\midrule
+Kimi K2.5 & 2.54 & 2.60 & $-0.06$ & 0.680 & 1.0 & $-0.095$ \\
+DeepSeek V3.2 & 2.30 & 2.44 & $-0.14$ & 0.880 & 1.0 & $-0.232$ \\
+Qwen 3 Next 80B & 2.22 & 2.28 & $-0.06$ & 0.619 & 1.0 & $-0.057$ \\
+Gemini 3 Flash & 2.28 & 2.48 & $-0.20$ & 0.901 & 1.0 & $-0.265$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Expert Validation Protocol}
+
+A domain expert independently scored a stratified 20\% subset ($N = 80$) under a blind protocol. The subset was drawn by stratified random sampling (2 responses per cell in a 4 models $\times$ 5 categories $\times$ 2 domains grid; 40 cells total; random seed = 42). Model identity and domain labels were stripped, and row order was randomized before presentation to the expert.
+
+\subsection{Inter-Rater Agreement}
+
+Table~\ref{tab:confusion-matrix} shows the confusion matrix between expert and automated (Claude Sonnet 4.5) scores.
+
+\begin{table}[htbp]
+\centering
+\caption{Confusion Matrix: Expert vs Automated Scoring. Rows are expert scores,
+columns are Claude Sonnet 4.5 scores. The dominant disagreement pattern is expert
+score 2 vs Claude score 3 (34 of 80 cases, 42.5\%), indicating systematic calibration
+differences at the correct/expert-level boundary.}
+\label{tab:confusion-matrix}
+\small
+\begin{tabular}{lcccc}
+\toprule
+& \textbf{Claude 0} & \textbf{Claude 1} & \textbf{Claude 2} & \textbf{Claude 3} \\
+\midrule
+\textbf{Expert 0} & 0 & 0 & 0 & 0 \\
+\textbf{Expert 1} & 1 & 2 & 8 & 4 \\
+\textbf{Expert 2} & 2 & 7 & 13 & 34 \\
+\textbf{Expert 3} & 0 & 0 & 1 & 8 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Quadratic-weighted Cohen's $\kappa = 0.22$, reflecting systematic calibration differences rather than random noise. Of 57 disagreements (71.25\%), the automated scorer assigned a higher score in 46 cases (80.7\%), concentrated at the score 2/3 boundary (expert gives 2, Claude gives 3 in 34 of 56 expert-score-2 cases, 60.7\%). Disagreements were balanced across domains (peptide: 27, small-molecule: 30).
+
+An additional sensitivity check rescored a 40-response stratified subset using Claude Opus. Opus-Sonnet agreement was substantially higher: quadratic-weighted $\kappa = 0.78$, exact agreement 80\%, within-one agreement 100\%, mean signed shift $+0.15$.
+
+\subsection{Category Heatmap}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig-llm-knowledge-heatmap.pdf}
+\caption{Knowledge Probing: Per-Category Score Heatmap. Mean scores for each model
+across five pharmaceutical knowledge categories, split by domain (small-molecule vs
+peptide). Color intensity reflects mean score on a 0--3 scale.}
+\label{fig:knowledge-heatmap}
+\end{figure}

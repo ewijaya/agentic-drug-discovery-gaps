@@ -8,6 +8,10 @@ Recent agentic AI systems have made tangible progress. Coscientist autonomously 
 The architectural pattern is consistent: a large language model orchestrates tool calls, synthesizes results, and generates explanations. ChemCrow routes requests to RDKit, PubChem, and reaction prediction APIs. ChatInvent generates molecular designs informed by literature. Coscientist interfaces with laboratory automation. This LLM-centric design works for text-based reasoning tasks: literature review, synthesis enumeration, protocol documentation, and safety analysis. However, these demonstrations are narrowly scoped to specific contexts. Most systems are optimized for small-molecule workflows, high-throughput in vitro assays, and organizations with large datasets and extensive compute. When those assumptions break, performance degrades in ways the demos do not reveal.
 
 An important distinction underlies the analysis that follows. Individual tools addressing aspects of each gap are emerging: peptide-aware generative models, multi-objective optimizers, and omics analysis platforms exist as standalone capabilities. The capability gaps we identify are not the absence of individual tools but the absence of agentic \textit{workflow integration} that chains these capabilities into end-to-end pipelines supporting iterative design-test cycles, proprietary data, and human-in-the-loop decision-making.
+To test whether this bias extends to the foundation models themselves, we probe four
+frontier LLMs on matched small-molecule and peptide questions as a diagnostic: all four
+models demonstrate competent peptide reasoning, isolating the bottleneck to agent
+architecture rather than model capability (\S\ref{sec:knowledge-probing}).
 
 \subsection{Scope and Motivation}
 

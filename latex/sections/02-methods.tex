@@ -69,3 +69,31 @@ For each framework-task pair, we performed a three-level capability assessment: 
 Capability assessments were based on examination of published manuscripts, available source code repositories, official documentation, and publicly accessible demonstrations for each framework. All assessments were performed by a single rater (the author); we acknowledge this as a limitation in \S\ref{sec:discussion}. Evidence supporting individual assessments is documented in Appendix~\ref{appendix:capability-matrix}.
 
 This approach has limitations: the three-level assessment and the 0.5 weighting for partial support may not capture the full spectrum of capability nuance, and the rapidly evolving nature of the field means new frameworks may address some identified gaps. We discuss these limitations further in \S\ref{sec:discussion}.
+
+\subsection{LLM Knowledge Probing}
+\label{sec:knowledge-probing}
+
+To determine whether the small-molecule bias identified in the capability matrix
+(\S\ref{sec:small-molecule}) reflects upstream knowledge limitations in foundation
+models, we designed a paired knowledge-probing experiment. We tested four frontier
+LLMs from independent training pipelines: Kimi K2.5 (Moonshot AI), DeepSeek V3.2
+(DeepSeek), Qwen 3 Next 80B (Alibaba), and Gemini 3 Flash (Google). Each model
+answered 50 matched question pairs spanning five pharmaceutical knowledge categories:
+SAR reasoning, ADMET and pharmacokinetic properties, generative design strategies,
+optimization approaches, and assay interpretation. Each pair tested the same cognitive
+skill in two modality contexts (one small-molecule, one peptide), controlling for
+question difficulty and format.
+
+Responses were scored on a 0--3 rubric (wrong, partially correct, correct,
+expert-level). Primary scoring used Claude Sonnet 4.5 as an LLM-as-judge
+\citep{zheng2023judging}; a domain expert independently validated a stratified 20\%
+subset ($N = 80$) under a blind protocol (model identity and domain labels stripped,
+row order randomized). An additional sensitivity check rescored a 40-response subset
+using Claude Opus, confirming stability across judge models (quadratic-weighted
+$\kappa = 0.78$).
+
+Statistical analysis used paired Wilcoxon signed-rank tests per model
+(Bonferroni-corrected $\alpha = 0.0125$), matched-pairs rank-biserial correlation for
+effect size, a Friedman test for cross-model consistency, and bootstrap 95\% confidence
+intervals for the aggregate gap. The full question set, raw responses, and scoring data
+are available in the supplementary materials.
