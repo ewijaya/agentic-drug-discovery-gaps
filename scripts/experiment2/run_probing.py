@@ -97,19 +97,26 @@ def call_model_with_retry(
         attempt += 1
         start = time.perf_counter()
         try:
-            response = client.chat(
-                model=model_tag,
-                messages=[
+            options: dict[str, Any] = {
+                "temperature": TEMPERATURE,
+                "num_predict": MAX_TOKENS,
+            }
+            chat_kwargs: dict[str, Any] = {
+                "model": model_tag,
+                "messages": [
                     {"role": "system", "content": SYSTEM_PROMPT},
                     {"role": "user", "content": question_text},
                 ],
-                think=False,
-                options={
-                    "temperature": TEMPERATURE,
-                    "num_predict": MAX_TOKENS,
-                    "think": False,
-                },
-            )
+                "options": options,
+            }
+
+            # Kimi K2.5 can return empty message.content unless thinking is disabled.
+            # Other models may reject this flag, so keep it model-specific.
+            if model_tag == "kimi-k2.5:cloud":
+                chat_kwargs["think"] = False
+                options["think"] = False
+
+            response = client.chat(**chat_kwargs)
             latency_ms = int((time.perf_counter() - start) * 1000)
             response_text = extract_response_text(response)
             if response_text.strip():
