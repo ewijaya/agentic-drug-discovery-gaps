@@ -1,0 +1,25 @@
+response_id,question_id,pair_id,category,domain,model,claude_score,parse_success,timestamp
+deepseek-v3.2:cloud|ADMET-PEP-01,ADMET-PEP-01,ADMET-01,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,3,True,2026-02-10T02:31:34.748668+00:00
+deepseek-v3.2:cloud|ADMET-PEP-02,ADMET-PEP-02,ADMET-02,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,2,True,2026-02-10T02:31:44.755796+00:00
+deepseek-v3.2:cloud|ADMET-PEP-03,ADMET-PEP-03,ADMET-03,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,3,True,2026-02-10T02:31:54.182864+00:00
+deepseek-v3.2:cloud|ADMET-PEP-04,ADMET-PEP-04,ADMET-04,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,2,True,2026-02-10T02:32:03.605664+00:00
+deepseek-v3.2:cloud|ADMET-PEP-05,ADMET-PEP-05,ADMET-05,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,3,True,2026-02-10T02:32:13.046153+00:00
+deepseek-v3.2:cloud|ADMET-PEP-06,ADMET-PEP-06,ADMET-06,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,3,True,2026-02-10T02:32:22.137676+00:00
+deepseek-v3.2:cloud|ADMET-PEP-07,ADMET-PEP-07,ADMET-07,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,3,True,2026-02-10T02:32:31.415685+00:00
+deepseek-v3.2:cloud|ADMET-PEP-08,ADMET-PEP-08,ADMET-08,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,3,True,2026-02-10T02:32:40.488456+00:00
+deepseek-v3.2:cloud|ADMET-PEP-09,ADMET-PEP-09,ADMET-09,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,3,True,2026-02-10T02:32:50.780069+00:00
+deepseek-v3.2:cloud|ADMET-PEP-10,ADMET-PEP-10,ADMET-10,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,3,True,2026-02-10T02:33:00.180406+00:00
+deepseek-v3.2:cloud|ADMET-SM-01,ADMET-SM-01,ADMET-01,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,3,True,2026-02-10T02:33:09.784020+00:00
+deepseek-v3.2:cloud|ADMET-SM-02,ADMET-SM-02,ADMET-02,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,2,True,2026-02-10T02:33:19.108020+00:00
+deepseek-v3.2:cloud|ADMET-SM-03,ADMET-SM-03,ADMET-03,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,3,True,2026-02-10T02:33:30.068164+00:00
+deepseek-v3.2:cloud|ADMET-SM-04,ADMET-SM-04,ADMET-04,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,3,True,2026-02-10T02:33:38.842835+00:00
+deepseek-v3.2:cloud|ADMET-SM-05,ADMET-SM-05,ADMET-05,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,,False,2026-02-10T02:34:00.236460+00:00
+deepseek-v3.2:cloud|ADMET-SM-06,ADMET-SM-06,ADMET-06,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,2,True,2026-02-10T02:34:09.417911+00:00
+deepseek-v3.2:cloud|ADMET-SM-07,ADMET-SM-07,ADMET-07,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,2,True,2026-02-10T02:34:19.213615+00:00
+deepseek-v3.2:cloud|ADMET-SM-08,ADMET-SM-08,ADMET-08,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,2,True,2026-02-10T02:34:28.530528+00:00
+deepseek-v3.2:cloud|ADMET-SM-09,ADMET-SM-09,ADMET-09,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,3,True,2026-02-10T02:34:37.585519+00:00
+deepseek-v3.2:cloud|ADMET-SM-10,ADMET-SM-10,ADMET-10,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,3,True,2026-02-10T02:34:46.761156+00:00
+deepseek-v3.2:cloud|ASSAY-PEP-01,ASSAY-PEP-01,ASSAY-01,Assay Interpretation,peptide,DeepSeek V3.2,3,True,2026-02-10T02:34:55.995793+00:00
+deepseek-v3.2:cloud|ASSAY-PEP-02,ASSAY-PEP-02,ASSAY-02,Assay Interpretation,peptide,DeepSeek V3.2,3,True,2026-02-10T02:35:05.304619+00:00
+deepseek-v3.2:cloud|ASSAY-PEP-03,ASSAY-PEP-03,ASSAY-03,Assay Interpretation,peptide,DeepSeek V3.2,3,True,2026-02-10T02:35:15.067442+00:00
+deepseek-v3.2:cloud|ASSAY-PEP-04,ASSAY-PEP-04,ASSAY-04,Assay Interpretation,peptide,DeepSeek V3.2,3,True,2026-02-10T02:35:23.924761+00:00

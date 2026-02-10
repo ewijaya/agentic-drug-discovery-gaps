@@ -54,7 +54,7 @@ def load_questions() -> dict[str, dict[str, Any]]:
 
 
 def load_response_rows() -> list[dict[str, Any]]:
-    rows: list[dict[str, Any]] = []
+    rows_by_id: dict[str, dict[str, Any]] = {}
     for model_cfg in MODELS:
         path = RESPONSES_DIR / model_cfg["response_file"]
         if not path.exists():
@@ -69,8 +69,19 @@ def load_response_rows() -> list[dict[str, Any]]:
                     row = json.loads(line)
                 except json.JSONDecodeError:
                     continue
-                rows.append(row)
-    return rows
+                response_id = row.get("response_id")
+                if not response_id:
+                    continue
+
+                # Only score successful responses with non-empty text.
+                if row.get("success") is not True:
+                    continue
+                if not str(row.get("response_text", "")).strip():
+                    continue
+
+                # Keep the latest successful row for each response_id.
+                rows_by_id[str(response_id)] = row
+    return list(rows_by_id.values())
 
 
 def load_scored_response_ids(path: Path) -> set[str]:
