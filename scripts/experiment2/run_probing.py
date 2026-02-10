@@ -103,6 +103,7 @@ def call_model_with_retry(
                     {"role": "system", "content": SYSTEM_PROMPT},
                     {"role": "user", "content": question_text},
                 ],
+                think=False,
                 options={
                     "temperature": TEMPERATURE,
                     "num_predict": MAX_TOKENS,
