@@ -1,39 +1,34 @@
-# Beyond SMILES: Evaluating Agentic AI for Drug Discovery
+# Beyond SMILES: Evaluating Agentic Systems for Drug Discovery
 
 **Edward Wijaya, StemRIM, Inc.**
 
+> Submitted to arXiv cs.AI on 2026-02-10 (submit/7253518)
+
 ## Abstract
 
-Agentic AI systems have advanced drug discovery automation, with frameworks such as ChatInvent, Coscientist, and ChemCrow demonstrating autonomous synthesis planning, literature mining, and molecular design. However, no systematic evaluation of these frameworks against real-world drug discovery requirements beyond small-molecule, target-based workflows has been conducted. We evaluate six agentic AI frameworks against 15 task classes spanning peptide discovery, in vivo modeling, and resource-constrained settings across five evaluation dimensions: molecular representation coverage, computational paradigm support, data modality integration, resource assumptions, and optimization framework. Our analysis reveals five critical capability gaps:
-
-1. **Small-molecule representation bias** excluding protein language models and peptide-specific prediction
-2. **Absent in vivo-in silico bridges** for longitudinal, multi-modal animal data
-3. **Limited computational paradigm support** excluding ML training, reinforcement learning, and multi-paradigm coordination
-4. **Resource assumptions mismatched** to small biotech realities
-5. **Single-objective optimization** ignoring multi-objective trade-offs in safety, efficacy, and stability
-
-From these gaps, we derive design requirements for next-generation frameworks and provide a capability matrix with concrete use cases to guide development toward computational partners that augment practitioner judgment under realistic constraints.
+Agentic systems for drug discovery have demonstrated autonomous synthesis planning, literature mining, and molecular design. We ask how well they generalize. Evaluating six frameworks against 15 task classes drawn from peptide therapeutics, in vivo pharmacology, and resource-constrained settings, we find five capability gaps: no support for protein language models or peptide-specific prediction, no bridges between in vivo and in silico data, reliance on LLM inference with no pathway to ML training or reinforcement learning, assumptions tied to large-pharma resources, and single-objective optimization that ignores safety-efficacy-stability trade-offs. A paired knowledge-probing experiment suggests the bottleneck is architectural rather than epistemic: four frontier LLMs reason about peptides at levels comparable to small molecules, yet no framework exposes this capability. We propose design requirements and a capability matrix for next-generation frameworks that function as computational partners under realistic constraints.
 
 ## Paper Structure
 
 | Section | File | Words |
 |---|---|---|
-| Abstract | `00-abstract.tex` | 171 |
-| Introduction | `01-introduction.tex` | 732 |
-| Evaluation Framework | `02-methods.tex` | 852 |
-| Capability Matrix | `03a-capability-matrix.tex` | 546 |
-| Gap 1: Small-Molecule Bias | `03-gap-small-molecule.tex` | 1,025 |
-| Gap 2: In Vivo-In Silico | `04-gap-invivo-insilico.tex` | 1,036 |
-| Gap 3: Multi-Paradigm | `05-gap-multi-paradigm.tex` | 1,018 |
-| Gap 4: Small Biotech | `06-gap-small-biotech.tex` | 949 |
-| Gap 5: Multi-Objective | `07-gap-multi-objective.tex` | 974 |
-| Design Requirements | `08-design-requirements.tex` | 706 |
-| Discussion | `09-discussion.tex` | 552 |
-| Conclusion | `10-conclusion.tex` | 180 |
-| Appendix A: Task Classes | `11-appendix-a.tex` | 1,256 |
-| Appendix B: Capability Matrix | `12-appendix-b.tex` | 1,315 |
+| Abstract | `00-abstract.tex` | 135 |
+| Introduction | `01-introduction.tex` | 696 |
+| Evaluation Framework | `02-methods.tex` | 980 |
+| Capability Matrix | `03a-capability-matrix.tex` | 349 |
+| Gap 1: Small-Molecule Bias | `03-gap-small-molecule.tex` | 1,369 |
+| Gap 2: In Vivo-In Silico | `04-gap-invivo-insilico.tex` | 888 |
+| Gap 3: Multi-Paradigm | `05-gap-multi-paradigm.tex` | 891 |
+| Gap 4: Small Biotech | `06-gap-small-biotech.tex` | 848 |
+| Gap 5: Multi-Objective | `07-gap-multi-objective.tex` | 877 |
+| Design Requirements | `08-design-requirements.tex` | 632 |
+| Discussion | `09-discussion.tex` | 624 |
+| Conclusion | `10-conclusion.tex` | 211 |
+| Appendix A: Task Classes | `11-appendix-a.tex` | 1,024 |
+| Appendix B: Capability Matrix | `12-appendix-b.tex` | 1,073 |
+| Appendix C: LLM Probing | `13-appendix-c.tex` | 526 |
 
-**Total: ~11,300 words** (main body ~8,700 + appendices ~2,600)
+**Total: ~11,100 words** (main body ~8,500 + appendices ~2,600) | 46 pages, 8 figures, 15 tables
 
 ## Frameworks Evaluated
 
@@ -51,12 +46,13 @@ From these gaps, we derive design requirements for next-generation frameworks an
 ```
 ├── CLAUDE.md                 # Project context for AI-assisted writing
 ├── README.md                 # This file
+├── arxiv-submission.tar       # arXiv submission archive (monolithic main.tex + PDF figures)
 ├── latex/
 │   ├── main.tex              # Master LaTeX file
 │   ├── preamble.tex          # Packages and formatting
 │   ├── references.bib        # BibTeX bibliography
-│   ├── sections/             # 14 independent .tex files per section
-│   └── figures/              # 6 figures (JPEG + SVG)
+│   ├── sections/             # 15 independent .tex files per section
+│   └── figures/              # 8 figures (6 JPEG + 2 PDF)
 ├── outline/
 │   ├── full-outline.md       # Complete paper outline
 │   ├── illustrations.md      # Figure specifications
@@ -82,17 +78,16 @@ From these gaps, we derive design requirements for next-generation frameworks an
 ## Key Contributions
 
 1. **Capability matrix** evaluating 6 frameworks against 15 task classes across 5 dimensions
-2. **Practitioner perspective** grounded in 14+ real projects, not benchmarks
-3. **Peptide-specific analysis** exposing the small-molecule bias in current agents
-4. **In vivo gap identification** absent from all existing surveys
-5. **Design requirements** for next-generation agent architectures
-6. **Small biotech lens** representing the majority of pharma companies
+2. **LLM knowledge-probing experiment** showing the bottleneck is architectural, not epistemic
+3. **Practitioner perspective** grounded in 14+ real projects, not benchmarks
+4. **Peptide-specific analysis** exposing the small-molecule bias in current agents
+5. **In vivo gap identification** absent from all existing surveys
+6. **Design requirements** for next-generation agent architectures
+7. **Small biotech lens** representing the majority of pharma companies
 
-## Target Venues
+## Venue
 
-- **arXiv cs.AI** (primary)
-- **Drug Discovery Today** (perspectives)
-- **Nature Machine Intelligence** (perspective piece)
+Submitted to **arXiv cs.AI** on 2026-02-10.
 
 ## Related Work
 
