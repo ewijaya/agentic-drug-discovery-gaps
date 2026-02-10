@@ -1,0 +1,18 @@
+response_id,question_id,pair_id,category,domain,model,judge_model,judge_score,parse_success,timestamp
+deepseek-v3.2:cloud|ADMET-PEP-02,ADMET-PEP-02,ADMET-02,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,opus,3,True,2026-02-10T03:51:03.317418+00:00
+deepseek-v3.2:cloud|ADMET-SM-01,ADMET-SM-01,ADMET-01,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,opus,3,True,2026-02-10T03:51:12.473302+00:00
+deepseek-v3.2:cloud|ASSAY-PEP-09,ASSAY-PEP-09,ASSAY-09,Assay Interpretation,peptide,DeepSeek V3.2,opus,1,True,2026-02-10T03:51:22.287356+00:00
+deepseek-v3.2:cloud|ASSAY-SM-01,ASSAY-SM-01,ASSAY-01,Assay Interpretation,small_molecule,DeepSeek V3.2,opus,3,True,2026-02-10T03:51:31.782524+00:00
+deepseek-v3.2:cloud|GEN-PEP-04,GEN-PEP-04,GEN-04,Generative Design Strategies,peptide,DeepSeek V3.2,opus,3,True,2026-02-10T03:51:40.922465+00:00
+deepseek-v3.2:cloud|GEN-SM-04,GEN-SM-04,GEN-04,Generative Design Strategies,small_molecule,DeepSeek V3.2,opus,3,True,2026-02-10T03:51:50.179591+00:00
+deepseek-v3.2:cloud|OPT-PEP-10,OPT-PEP-10,OPT-10,Optimization Approaches,peptide,DeepSeek V3.2,opus,3,True,2026-02-10T03:51:59.628300+00:00
+deepseek-v3.2:cloud|OPT-SM-09,OPT-SM-09,OPT-09,Optimization Approaches,small_molecule,DeepSeek V3.2,opus,3,True,2026-02-10T03:52:09.532816+00:00
+deepseek-v3.2:cloud|SAR-PEP-01,SAR-PEP-01,SAR-01,SAR Reasoning,peptide,DeepSeek V3.2,opus,3,True,2026-02-10T03:52:19.223388+00:00
+deepseek-v3.2:cloud|SAR-SM-07,SAR-SM-07,SAR-07,SAR Reasoning,small_molecule,DeepSeek V3.2,opus,2,True,2026-02-10T03:52:29.223478+00:00
+gemini-3-flash-preview:cloud|ADMET-PEP-04,ADMET-PEP-04,ADMET-04,ADMET / Pharmacokinetic Properties,peptide,Gemini 3 Flash,opus,3,True,2026-02-10T03:52:39.006135+00:00
+gemini-3-flash-preview:cloud|ADMET-SM-03,ADMET-SM-03,ADMET-03,ADMET / Pharmacokinetic Properties,small_molecule,Gemini 3 Flash,opus,2,True,2026-02-10T03:52:48.991457+00:00
+gemini-3-flash-preview:cloud|ASSAY-PEP-06,ASSAY-PEP-06,ASSAY-06,Assay Interpretation,peptide,Gemini 3 Flash,opus,3,True,2026-02-10T03:52:58.293843+00:00
+gemini-3-flash-preview:cloud|ASSAY-SM-02,ASSAY-SM-02,ASSAY-02,Assay Interpretation,small_molecule,Gemini 3 Flash,opus,1,True,2026-02-10T03:53:07.832529+00:00
+gemini-3-flash-preview:cloud|GEN-PEP-02,GEN-PEP-02,GEN-02,Generative Design Strategies,peptide,Gemini 3 Flash,opus,3,True,2026-02-10T03:53:17.295735+00:00
+gemini-3-flash-preview:cloud|GEN-SM-06,GEN-SM-06,GEN-06,Generative Design Strategies,small_molecule,Gemini 3 Flash,opus,3,True,2026-02-10T03:53:26.746505+00:00
+gemini-3-flash-preview:cloud|OPT-PEP-07,OPT-PEP-07,OPT-07,Optimization Approaches,peptide,Gemini 3 Flash,opus,2,True,2026-02-10T03:53:36.355811+00:00
