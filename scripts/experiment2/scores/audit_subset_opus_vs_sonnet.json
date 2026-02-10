@@ -1,0 +1,22 @@
+{
+  "created_at": "2026-02-10T03:57:24.834855+00:00",
+  "judge_model": "opus",
+  "manifest_rows": 40,
+  "compared_rows": 40,
+  "exact_agreement_rate": 0.8,
+  "within_one_rate": 1.0,
+  "mean_signed_shift_opus_minus_sonnet": 0.15,
+  "mean_absolute_shift": 0.2,
+  "quadratic_weighted_kappa": 0.7777777777777778,
+  "shift_counts": {
+    "-3": 0,
+    "-2": 0,
+    "-1": 1,
+    "0": 32,
+    "1": 7,
+    "2": 0,
+    "3": 0
+  },
+  "comparison_rows_path": "/home/ubuntu/storage1/agentic-drug-discovery-gaps/scripts/experiment2/scores/audit_subset_opus_vs_sonnet.csv",
+  "opus_subset_scores_path": "/home/ubuntu/storage1/agentic-drug-discovery-gaps/scripts/experiment2/scores/audit_subset_opus_scores.csv"
+}

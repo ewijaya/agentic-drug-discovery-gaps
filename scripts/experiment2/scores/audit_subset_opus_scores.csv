@@ -16,3 +16,26 @@ gemini-3-flash-preview:cloud|ASSAY-SM-02,ASSAY-SM-02,ASSAY-02,Assay Interpretati
 gemini-3-flash-preview:cloud|GEN-PEP-02,GEN-PEP-02,GEN-02,Generative Design Strategies,peptide,Gemini 3 Flash,opus,3,True,2026-02-10T03:53:17.295735+00:00
 gemini-3-flash-preview:cloud|GEN-SM-06,GEN-SM-06,GEN-06,Generative Design Strategies,small_molecule,Gemini 3 Flash,opus,3,True,2026-02-10T03:53:26.746505+00:00
 gemini-3-flash-preview:cloud|OPT-PEP-07,OPT-PEP-07,OPT-07,Optimization Approaches,peptide,Gemini 3 Flash,opus,2,True,2026-02-10T03:53:36.355811+00:00
+gemini-3-flash-preview:cloud|OPT-SM-02,OPT-SM-02,OPT-02,Optimization Approaches,small_molecule,Gemini 3 Flash,opus,3,True,2026-02-10T03:53:46.154159+00:00
+gemini-3-flash-preview:cloud|SAR-PEP-05,SAR-PEP-05,SAR-05,SAR Reasoning,peptide,Gemini 3 Flash,opus,3,True,2026-02-10T03:53:56.660882+00:00
+gemini-3-flash-preview:cloud|SAR-SM-06,SAR-SM-06,SAR-06,SAR Reasoning,small_molecule,Gemini 3 Flash,opus,3,True,2026-02-10T03:54:06.485364+00:00
+kimi-k2.5:cloud|ADMET-PEP-04,ADMET-PEP-04,ADMET-04,ADMET / Pharmacokinetic Properties,peptide,Kimi K2.5,opus,3,True,2026-02-10T03:54:16.461549+00:00
+kimi-k2.5:cloud|ADMET-SM-05,ADMET-SM-05,ADMET-05,ADMET / Pharmacokinetic Properties,small_molecule,Kimi K2.5,opus,3,True,2026-02-10T03:54:26.492046+00:00
+kimi-k2.5:cloud|ASSAY-PEP-10,ASSAY-PEP-10,ASSAY-10,Assay Interpretation,peptide,Kimi K2.5,opus,3,True,2026-02-10T03:54:36.222419+00:00
+kimi-k2.5:cloud|ASSAY-SM-02,ASSAY-SM-02,ASSAY-02,Assay Interpretation,small_molecule,Kimi K2.5,opus,2,True,2026-02-10T03:54:45.664494+00:00
+kimi-k2.5:cloud|GEN-PEP-03,GEN-PEP-03,GEN-03,Generative Design Strategies,peptide,Kimi K2.5,opus,2,True,2026-02-10T03:54:54.945931+00:00
+kimi-k2.5:cloud|GEN-SM-04,GEN-SM-04,GEN-04,Generative Design Strategies,small_molecule,Kimi K2.5,opus,3,True,2026-02-10T03:55:04.237402+00:00
+kimi-k2.5:cloud|OPT-PEP-09,OPT-PEP-09,OPT-09,Optimization Approaches,peptide,Kimi K2.5,opus,3,True,2026-02-10T03:55:13.717401+00:00
+kimi-k2.5:cloud|OPT-SM-02,OPT-SM-02,OPT-02,Optimization Approaches,small_molecule,Kimi K2.5,opus,3,True,2026-02-10T03:55:23.172381+00:00
+kimi-k2.5:cloud|SAR-PEP-01,SAR-PEP-01,SAR-01,SAR Reasoning,peptide,Kimi K2.5,opus,3,True,2026-02-10T03:55:32.800445+00:00
+kimi-k2.5:cloud|SAR-SM-02,SAR-SM-02,SAR-02,SAR Reasoning,small_molecule,Kimi K2.5,opus,2,True,2026-02-10T03:55:43.541369+00:00
+qwen3-next:80b-cloud|ADMET-PEP-04,ADMET-PEP-04,ADMET-04,ADMET / Pharmacokinetic Properties,peptide,Qwen 3 Next 80B,opus,3,True,2026-02-10T03:55:53.264789+00:00
+qwen3-next:80b-cloud|ADMET-SM-07,ADMET-SM-07,ADMET-07,ADMET / Pharmacokinetic Properties,small_molecule,Qwen 3 Next 80B,opus,3,True,2026-02-10T03:56:02.877465+00:00
+qwen3-next:80b-cloud|ASSAY-PEP-07,ASSAY-PEP-07,ASSAY-07,Assay Interpretation,peptide,Qwen 3 Next 80B,opus,3,True,2026-02-10T03:56:12.011416+00:00
+qwen3-next:80b-cloud|ASSAY-SM-03,ASSAY-SM-03,ASSAY-03,Assay Interpretation,small_molecule,Qwen 3 Next 80B,opus,2,True,2026-02-10T03:56:21.983277+00:00
+qwen3-next:80b-cloud|GEN-PEP-10,GEN-PEP-10,GEN-10,Generative Design Strategies,peptide,Qwen 3 Next 80B,opus,2,True,2026-02-10T03:56:32.475047+00:00
+qwen3-next:80b-cloud|GEN-SM-08,GEN-SM-08,GEN-08,Generative Design Strategies,small_molecule,Qwen 3 Next 80B,opus,1,True,2026-02-10T03:56:42.277014+00:00
+qwen3-next:80b-cloud|OPT-PEP-01,OPT-PEP-01,OPT-01,Optimization Approaches,peptide,Qwen 3 Next 80B,opus,3,True,2026-02-10T03:56:54.129494+00:00
+qwen3-next:80b-cloud|OPT-SM-05,OPT-SM-05,OPT-05,Optimization Approaches,small_molecule,Qwen 3 Next 80B,opus,3,True,2026-02-10T03:57:03.996603+00:00
+qwen3-next:80b-cloud|SAR-PEP-09,SAR-PEP-09,SAR-09,SAR Reasoning,peptide,Qwen 3 Next 80B,opus,3,True,2026-02-10T03:57:14.005632+00:00
+qwen3-next:80b-cloud|SAR-SM-04,SAR-SM-04,SAR-04,SAR Reasoning,small_molecule,Qwen 3 Next 80B,opus,3,True,2026-02-10T03:57:23.833495+00:00
