@@ -1,0 +1,603 @@
+{
+  "overlap_count": 80,
+  "quadratic_weighted_kappa": 0.21589127025614196,
+  "confusion_matrix_expert_rows_claude_cols": [
+    [
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      2,
+      8,
+      4
+    ],
+    [
+      2,
+      7,
+      13,
+      34
+    ],
+    [
+      0,
+      0,
+      1,
+      8
+    ]
+  ],
+  "disagreement_count": 57,
+  "disagreement_cases": [
+    {
+      "response_id": "deepseek-v3.2:cloud|ADMET-PEP-01",
+      "question_id": "ADMET-PEP-01",
+      "pair_id": "ADMET-01",
+      "category": "ADMET / Pharmacokinetic Properties",
+      "domain": "peptide",
+      "model": "DeepSeek V3.2",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "deepseek-v3.2:cloud|ADMET-PEP-03",
+      "question_id": "ADMET-PEP-03",
+      "pair_id": "ADMET-03",
+      "category": "ADMET / Pharmacokinetic Properties",
+      "domain": "peptide",
+      "model": "DeepSeek V3.2",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "deepseek-v3.2:cloud|ADMET-SM-05",
+      "question_id": "ADMET-SM-05",
+      "pair_id": "ADMET-05",
+      "category": "ADMET / Pharmacokinetic Properties",
+      "domain": "small_molecule",
+      "model": "DeepSeek V3.2",
+      "claude_score": 1,
+      "expert_score": 2
+    },
+    {
+      "response_id": "deepseek-v3.2:cloud|ADMET-SM-10",
+      "question_id": "ADMET-SM-10",
+      "pair_id": "ADMET-10",
+      "category": "ADMET / Pharmacokinetic Properties",
+      "domain": "small_molecule",
+      "model": "DeepSeek V3.2",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "deepseek-v3.2:cloud|ASSAY-PEP-06",
+      "question_id": "ASSAY-PEP-06",
+      "pair_id": "ASSAY-06",
+      "category": "Assay Interpretation",
+      "domain": "peptide",
+      "model": "DeepSeek V3.2",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "deepseek-v3.2:cloud|ASSAY-PEP-10",
+      "question_id": "ASSAY-PEP-10",
+      "pair_id": "ASSAY-10",
+      "category": "Assay Interpretation",
+      "domain": "peptide",
+      "model": "DeepSeek V3.2",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "deepseek-v3.2:cloud|ASSAY-SM-02",
+      "question_id": "ASSAY-SM-02",
+      "pair_id": "ASSAY-02",
+      "category": "Assay Interpretation",
+      "domain": "small_molecule",
+      "model": "DeepSeek V3.2",
+      "claude_score": 1,
+      "expert_score": 2
+    },
+    {
+      "response_id": "deepseek-v3.2:cloud|GEN-SM-06",
+      "question_id": "GEN-SM-06",
+      "pair_id": "GEN-06",
+      "category": "Generative Design Strategies",
+      "domain": "small_molecule",
+      "model": "DeepSeek V3.2",
+      "claude_score": 2,
+      "expert_score": 1
+    },
+    {
+      "response_id": "deepseek-v3.2:cloud|GEN-SM-07",
+      "question_id": "GEN-SM-07",
+      "pair_id": "GEN-07",
+      "category": "Generative Design Strategies",
+      "domain": "small_molecule",
+      "model": "DeepSeek V3.2",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "deepseek-v3.2:cloud|OPT-PEP-02",
+      "question_id": "OPT-PEP-02",
+      "pair_id": "OPT-02",
+      "category": "Optimization Approaches",
+      "domain": "peptide",
+      "model": "DeepSeek V3.2",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "deepseek-v3.2:cloud|OPT-PEP-10",
+      "question_id": "OPT-PEP-10",
+      "pair_id": "OPT-10",
+      "category": "Optimization Approaches",
+      "domain": "peptide",
+      "model": "DeepSeek V3.2",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "deepseek-v3.2:cloud|OPT-SM-04",
+      "question_id": "OPT-SM-04",
+      "pair_id": "OPT-04",
+      "category": "Optimization Approaches",
+      "domain": "small_molecule",
+      "model": "DeepSeek V3.2",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "deepseek-v3.2:cloud|OPT-SM-06",
+      "question_id": "OPT-SM-06",
+      "pair_id": "OPT-06",
+      "category": "Optimization Approaches",
+      "domain": "small_molecule",
+      "model": "DeepSeek V3.2",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "deepseek-v3.2:cloud|SAR-PEP-04",
+      "question_id": "SAR-PEP-04",
+      "pair_id": "SAR-04",
+      "category": "SAR Reasoning",
+      "domain": "peptide",
+      "model": "DeepSeek V3.2",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "deepseek-v3.2:cloud|SAR-SM-09",
+      "question_id": "SAR-SM-09",
+      "pair_id": "SAR-09",
+      "category": "SAR Reasoning",
+      "domain": "small_molecule",
+      "model": "DeepSeek V3.2",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "gemini-3-flash-preview:cloud|ADMET-PEP-06",
+      "question_id": "ADMET-PEP-06",
+      "pair_id": "ADMET-06",
+      "category": "ADMET / Pharmacokinetic Properties",
+      "domain": "peptide",
+      "model": "Gemini 3 Flash",
+      "claude_score": 0,
+      "expert_score": 2
+    },
+    {
+      "response_id": "gemini-3-flash-preview:cloud|ADMET-SM-03",
+      "question_id": "ADMET-SM-03",
+      "pair_id": "ADMET-03",
+      "category": "ADMET / Pharmacokinetic Properties",
+      "domain": "small_molecule",
+      "model": "Gemini 3 Flash",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "gemini-3-flash-preview:cloud|ADMET-SM-06",
+      "question_id": "ADMET-SM-06",
+      "pair_id": "ADMET-06",
+      "category": "ADMET / Pharmacokinetic Properties",
+      "domain": "small_molecule",
+      "model": "Gemini 3 Flash",
+      "claude_score": 1,
+      "expert_score": 2
+    },
+    {
+      "response_id": "gemini-3-flash-preview:cloud|ASSAY-PEP-09",
+      "question_id": "ASSAY-PEP-09",
+      "pair_id": "ASSAY-09",
+      "category": "Assay Interpretation",
+      "domain": "peptide",
+      "model": "Gemini 3 Flash",
+      "claude_score": 0,
+      "expert_score": 2
+    },
+    {
+      "response_id": "gemini-3-flash-preview:cloud|ASSAY-SM-05",
+      "question_id": "ASSAY-SM-05",
+      "pair_id": "ASSAY-05",
+      "category": "Assay Interpretation",
+      "domain": "small_molecule",
+      "model": "Gemini 3 Flash",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "gemini-3-flash-preview:cloud|GEN-PEP-02",
+      "question_id": "GEN-PEP-02",
+      "pair_id": "GEN-02",
+      "category": "Generative Design Strategies",
+      "domain": "peptide",
+      "model": "Gemini 3 Flash",
+      "claude_score": 2,
+      "expert_score": 1
+    },
+    {
+      "response_id": "gemini-3-flash-preview:cloud|GEN-PEP-03",
+      "question_id": "GEN-PEP-03",
+      "pair_id": "GEN-03",
+      "category": "Generative Design Strategies",
+      "domain": "peptide",
+      "model": "Gemini 3 Flash",
+      "claude_score": 1,
+      "expert_score": 2
+    },
+    {
+      "response_id": "gemini-3-flash-preview:cloud|GEN-SM-04",
+      "question_id": "GEN-SM-04",
+      "pair_id": "GEN-04",
+      "category": "Generative Design Strategies",
+      "domain": "small_molecule",
+      "model": "Gemini 3 Flash",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "gemini-3-flash-preview:cloud|GEN-SM-05",
+      "question_id": "GEN-SM-05",
+      "pair_id": "GEN-05",
+      "category": "Generative Design Strategies",
+      "domain": "small_molecule",
+      "model": "Gemini 3 Flash",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "gemini-3-flash-preview:cloud|OPT-PEP-08",
+      "question_id": "OPT-PEP-08",
+      "pair_id": "OPT-08",
+      "category": "Optimization Approaches",
+      "domain": "peptide",
+      "model": "Gemini 3 Flash",
+      "claude_score": 2,
+      "expert_score": 3
+    },
+    {
+      "response_id": "gemini-3-flash-preview:cloud|OPT-SM-04",
+      "question_id": "OPT-SM-04",
+      "pair_id": "OPT-04",
+      "category": "Optimization Approaches",
+      "domain": "small_molecule",
+      "model": "Gemini 3 Flash",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "gemini-3-flash-preview:cloud|OPT-SM-09",
+      "question_id": "OPT-SM-09",
+      "pair_id": "OPT-09",
+      "category": "Optimization Approaches",
+      "domain": "small_molecule",
+      "model": "Gemini 3 Flash",
+      "claude_score": 2,
+      "expert_score": 1
+    },
+    {
+      "response_id": "gemini-3-flash-preview:cloud|SAR-PEP-05",
+      "question_id": "SAR-PEP-05",
+      "pair_id": "SAR-05",
+      "category": "SAR Reasoning",
+      "domain": "peptide",
+      "model": "Gemini 3 Flash",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "gemini-3-flash-preview:cloud|SAR-PEP-08",
+      "question_id": "SAR-PEP-08",
+      "pair_id": "SAR-08",
+      "category": "SAR Reasoning",
+      "domain": "peptide",
+      "model": "Gemini 3 Flash",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "gemini-3-flash-preview:cloud|SAR-SM-02",
+      "question_id": "SAR-SM-02",
+      "pair_id": "SAR-02",
+      "category": "SAR Reasoning",
+      "domain": "small_molecule",
+      "model": "Gemini 3 Flash",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "gemini-3-flash-preview:cloud|SAR-SM-07",
+      "question_id": "SAR-SM-07",
+      "pair_id": "SAR-07",
+      "category": "SAR Reasoning",
+      "domain": "small_molecule",
+      "model": "Gemini 3 Flash",
+      "claude_score": 2,
+      "expert_score": 1
+    },
+    {
+      "response_id": "kimi-k2.5:cloud|ADMET-PEP-02",
+      "question_id": "ADMET-PEP-02",
+      "pair_id": "ADMET-02",
+      "category": "ADMET / Pharmacokinetic Properties",
+      "domain": "peptide",
+      "model": "Kimi K2.5",
+      "claude_score": 2,
+      "expert_score": 1
+    },
+    {
+      "response_id": "kimi-k2.5:cloud|ADMET-PEP-09",
+      "question_id": "ADMET-PEP-09",
+      "pair_id": "ADMET-09",
+      "category": "ADMET / Pharmacokinetic Properties",
+      "domain": "peptide",
+      "model": "Kimi K2.5",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "kimi-k2.5:cloud|ADMET-SM-03",
+      "question_id": "ADMET-SM-03",
+      "pair_id": "ADMET-03",
+      "category": "ADMET / Pharmacokinetic Properties",
+      "domain": "small_molecule",
+      "model": "Kimi K2.5",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "kimi-k2.5:cloud|ASSAY-PEP-04",
+      "question_id": "ASSAY-PEP-04",
+      "pair_id": "ASSAY-04",
+      "category": "Assay Interpretation",
+      "domain": "peptide",
+      "model": "Kimi K2.5",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "kimi-k2.5:cloud|ASSAY-SM-10",
+      "question_id": "ASSAY-SM-10",
+      "pair_id": "ASSAY-10",
+      "category": "Assay Interpretation",
+      "domain": "small_molecule",
+      "model": "Kimi K2.5",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "kimi-k2.5:cloud|GEN-PEP-01",
+      "question_id": "GEN-PEP-01",
+      "pair_id": "GEN-01",
+      "category": "Generative Design Strategies",
+      "domain": "peptide",
+      "model": "Kimi K2.5",
+      "claude_score": 2,
+      "expert_score": 1
+    },
+    {
+      "response_id": "kimi-k2.5:cloud|GEN-SM-02",
+      "question_id": "GEN-SM-02",
+      "pair_id": "GEN-02",
+      "category": "Generative Design Strategies",
+      "domain": "small_molecule",
+      "model": "Kimi K2.5",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "kimi-k2.5:cloud|OPT-PEP-09",
+      "question_id": "OPT-PEP-09",
+      "pair_id": "OPT-09",
+      "category": "Optimization Approaches",
+      "domain": "peptide",
+      "model": "Kimi K2.5",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "kimi-k2.5:cloud|SAR-PEP-04",
+      "question_id": "SAR-PEP-04",
+      "pair_id": "SAR-04",
+      "category": "SAR Reasoning",
+      "domain": "peptide",
+      "model": "Kimi K2.5",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "kimi-k2.5:cloud|SAR-PEP-05",
+      "question_id": "SAR-PEP-05",
+      "pair_id": "SAR-05",
+      "category": "SAR Reasoning",
+      "domain": "peptide",
+      "model": "Kimi K2.5",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "kimi-k2.5:cloud|SAR-SM-01",
+      "question_id": "SAR-SM-01",
+      "pair_id": "SAR-01",
+      "category": "SAR Reasoning",
+      "domain": "small_molecule",
+      "model": "Kimi K2.5",
+      "claude_score": 3,
+      "expert_score": 1
+    },
+    {
+      "response_id": "qwen3-next:80b-cloud|ADMET-PEP-02",
+      "question_id": "ADMET-PEP-02",
+      "pair_id": "ADMET-02",
+      "category": "ADMET / Pharmacokinetic Properties",
+      "domain": "peptide",
+      "model": "Qwen 3 Next 80B",
+      "claude_score": 1,
+      "expert_score": 2
+    },
+    {
+      "response_id": "qwen3-next:80b-cloud|ADMET-SM-02",
+      "question_id": "ADMET-SM-02",
+      "pair_id": "ADMET-02",
+      "category": "ADMET / Pharmacokinetic Properties",
+      "domain": "small_molecule",
+      "model": "Qwen 3 Next 80B",
+      "claude_score": 3,
+      "expert_score": 1
+    },
+    {
+      "response_id": "qwen3-next:80b-cloud|ADMET-SM-09",
+      "question_id": "ADMET-SM-09",
+      "pair_id": "ADMET-09",
+      "category": "ADMET / Pharmacokinetic Properties",
+      "domain": "small_molecule",
+      "model": "Qwen 3 Next 80B",
+      "claude_score": 1,
+      "expert_score": 2
+    },
+    {
+      "response_id": "qwen3-next:80b-cloud|ASSAY-PEP-02",
+      "question_id": "ASSAY-PEP-02",
+      "pair_id": "ASSAY-02",
+      "category": "Assay Interpretation",
+      "domain": "peptide",
+      "model": "Qwen 3 Next 80B",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "qwen3-next:80b-cloud|ASSAY-SM-04",
+      "question_id": "ASSAY-SM-04",
+      "pair_id": "ASSAY-04",
+      "category": "Assay Interpretation",
+      "domain": "small_molecule",
+      "model": "Qwen 3 Next 80B",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "qwen3-next:80b-cloud|ASSAY-SM-05",
+      "question_id": "ASSAY-SM-05",
+      "pair_id": "ASSAY-05",
+      "category": "Assay Interpretation",
+      "domain": "small_molecule",
+      "model": "Qwen 3 Next 80B",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "qwen3-next:80b-cloud|GEN-PEP-06",
+      "question_id": "GEN-PEP-06",
+      "pair_id": "GEN-06",
+      "category": "Generative Design Strategies",
+      "domain": "peptide",
+      "model": "Qwen 3 Next 80B",
+      "claude_score": 0,
+      "expert_score": 1
+    },
+    {
+      "response_id": "qwen3-next:80b-cloud|GEN-PEP-10",
+      "question_id": "GEN-PEP-10",
+      "pair_id": "GEN-10",
+      "category": "Generative Design Strategies",
+      "domain": "peptide",
+      "model": "Qwen 3 Next 80B",
+      "claude_score": 2,
+      "expert_score": 1
+    },
+    {
+      "response_id": "qwen3-next:80b-cloud|GEN-SM-09",
+      "question_id": "GEN-SM-09",
+      "pair_id": "GEN-09",
+      "category": "Generative Design Strategies",
+      "domain": "small_molecule",
+      "model": "Qwen 3 Next 80B",
+      "claude_score": 2,
+      "expert_score": 1
+    },
+    {
+      "response_id": "qwen3-next:80b-cloud|OPT-PEP-01",
+      "question_id": "OPT-PEP-01",
+      "pair_id": "OPT-01",
+      "category": "Optimization Approaches",
+      "domain": "peptide",
+      "model": "Qwen 3 Next 80B",
+      "claude_score": 3,
+      "expert_score": 1
+    },
+    {
+      "response_id": "qwen3-next:80b-cloud|OPT-SM-04",
+      "question_id": "OPT-SM-04",
+      "pair_id": "OPT-04",
+      "category": "Optimization Approaches",
+      "domain": "small_molecule",
+      "model": "Qwen 3 Next 80B",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "qwen3-next:80b-cloud|OPT-SM-10",
+      "question_id": "OPT-SM-10",
+      "pair_id": "OPT-10",
+      "category": "Optimization Approaches",
+      "domain": "small_molecule",
+      "model": "Qwen 3 Next 80B",
+      "claude_score": 1,
+      "expert_score": 2
+    },
+    {
+      "response_id": "qwen3-next:80b-cloud|SAR-PEP-01",
+      "question_id": "SAR-PEP-01",
+      "pair_id": "SAR-01",
+      "category": "SAR Reasoning",
+      "domain": "peptide",
+      "model": "Qwen 3 Next 80B",
+      "claude_score": 3,
+      "expert_score": 1
+    },
+    {
+      "response_id": "qwen3-next:80b-cloud|SAR-SM-05",
+      "question_id": "SAR-SM-05",
+      "pair_id": "SAR-05",
+      "category": "SAR Reasoning",
+      "domain": "small_molecule",
+      "model": "Qwen 3 Next 80B",
+      "claude_score": 3,
+      "expert_score": 2
+    },
+    {
+      "response_id": "qwen3-next:80b-cloud|SAR-SM-10",
+      "question_id": "SAR-SM-10",
+      "pair_id": "SAR-10",
+      "category": "SAR Reasoning",
+      "domain": "small_molecule",
+      "model": "Qwen 3 Next 80B",
+      "claude_score": 3,
+      "expert_score": 2
+    }
+  ]
+}

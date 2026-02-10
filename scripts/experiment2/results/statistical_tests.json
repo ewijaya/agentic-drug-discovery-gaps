@@ -1,0 +1,63 @@
+{
+  "alpha": 0.05,
+  "bonferroni_alpha": 0.0125,
+  "model_wise_tests": [
+    {
+      "model": "Kimi K2.5",
+      "n_pairs": 50,
+      "wilcoxon_statistic": 171.0,
+      "p_value": 0.6801665533377501,
+      "p_value_bonferroni": 1.0,
+      "significant_bonferroni": false,
+      "rank_biserial_correlation": -0.09523809523809523,
+      "mean_small_molecule": 2.54,
+      "mean_peptide": 2.6
+    },
+    {
+      "model": "DeepSeek V3.2",
+      "n_pairs": 50,
+      "wilcoxon_statistic": 156.0,
+      "p_value": 0.8797824555917476,
+      "p_value_bonferroni": 1.0,
+      "significant_bonferroni": false,
+      "rank_biserial_correlation": -0.2315270935960591,
+      "mean_small_molecule": 2.3,
+      "mean_peptide": 2.44
+    },
+    {
+      "model": "Qwen 3 Next 80B",
+      "n_pairs": 50,
+      "wilcoxon_statistic": 264.5,
+      "p_value": 0.6188825267472919,
+      "p_value_bonferroni": 1.0,
+      "significant_bonferroni": false,
+      "rank_biserial_correlation": -0.0570409982174688,
+      "mean_small_molecule": 2.22,
+      "mean_peptide": 2.28
+    },
+    {
+      "model": "Gemini 3 Flash",
+      "n_pairs": 50,
+      "wilcoxon_statistic": 139.0,
+      "p_value": 0.9008656125773918,
+      "p_value_bonferroni": 1.0,
+      "significant_bonferroni": false,
+      "rank_biserial_correlation": -0.26455026455026454,
+      "mean_small_molecule": 2.28,
+      "mean_peptide": 2.48
+    }
+  ],
+  "friedman_consistency_test": {
+    "n_pairs": 50,
+    "statistic": 0.4543080939948695,
+    "p_value": 0.9288087310970261
+  },
+  "aggregate_gap": {
+    "n_paired_observations": 200,
+    "mean_small_minus_peptide": -0.115,
+    "bootstrap_95ci": {
+      "low": -0.255,
+      "high": 0.02
+    }
+  }
+}

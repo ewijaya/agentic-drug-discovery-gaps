@@ -1,0 +1,6 @@
+category,sm_mean_sd,pep_mean_sd,gap,p_value
+SAR Reasoning,2.600 (0.632),2.550 (0.552),-0.050,0.370426
+ADMET / Pharmacokinetic Properties,2.325 (0.656),2.450 (0.677),0.125,0.754921
+Generative Design Strategies,2.100 (0.709),2.250 (0.742),0.150,0.804968
+Optimization Approaches,2.275 (0.751),2.500 (0.599),0.225,0.937685
+Assay Interpretation,2.375 (0.740),2.500 (0.679),0.125,0.766524

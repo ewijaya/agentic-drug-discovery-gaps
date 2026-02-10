@@ -1,0 +1,401 @@
+response_id,question_id,pair_id,category,domain,model,final_score,score_source
+deepseek-v3.2:cloud|ADMET-PEP-01,ADMET-PEP-01,ADMET-01,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,2,expert
+deepseek-v3.2:cloud|ADMET-PEP-02,ADMET-PEP-02,ADMET-02,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|ADMET-PEP-03,ADMET-PEP-03,ADMET-03,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,2,expert
+deepseek-v3.2:cloud|ADMET-PEP-04,ADMET-PEP-04,ADMET-04,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|ADMET-PEP-05,ADMET-PEP-05,ADMET-05,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|ADMET-PEP-06,ADMET-PEP-06,ADMET-06,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|ADMET-PEP-07,ADMET-PEP-07,ADMET-07,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|ADMET-PEP-08,ADMET-PEP-08,ADMET-08,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|ADMET-PEP-09,ADMET-PEP-09,ADMET-09,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|ADMET-PEP-10,ADMET-PEP-10,ADMET-10,ADMET / Pharmacokinetic Properties,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|ADMET-SM-01,ADMET-SM-01,ADMET-01,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|ADMET-SM-02,ADMET-SM-02,ADMET-02,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|ADMET-SM-03,ADMET-SM-03,ADMET-03,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|ADMET-SM-04,ADMET-SM-04,ADMET-04,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|ADMET-SM-05,ADMET-SM-05,ADMET-05,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,2,expert
+deepseek-v3.2:cloud|ADMET-SM-06,ADMET-SM-06,ADMET-06,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|ADMET-SM-07,ADMET-SM-07,ADMET-07,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|ADMET-SM-08,ADMET-SM-08,ADMET-08,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|ADMET-SM-09,ADMET-SM-09,ADMET-09,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|ADMET-SM-10,ADMET-SM-10,ADMET-10,ADMET / Pharmacokinetic Properties,small_molecule,DeepSeek V3.2,2,expert
+deepseek-v3.2:cloud|ASSAY-PEP-01,ASSAY-PEP-01,ASSAY-01,Assay Interpretation,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|ASSAY-PEP-02,ASSAY-PEP-02,ASSAY-02,Assay Interpretation,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|ASSAY-PEP-03,ASSAY-PEP-03,ASSAY-03,Assay Interpretation,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|ASSAY-PEP-04,ASSAY-PEP-04,ASSAY-04,Assay Interpretation,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|ASSAY-PEP-05,ASSAY-PEP-05,ASSAY-05,Assay Interpretation,peptide,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|ASSAY-PEP-06,ASSAY-PEP-06,ASSAY-06,Assay Interpretation,peptide,DeepSeek V3.2,2,expert
+deepseek-v3.2:cloud|ASSAY-PEP-07,ASSAY-PEP-07,ASSAY-07,Assay Interpretation,peptide,DeepSeek V3.2,1,claude
+deepseek-v3.2:cloud|ASSAY-PEP-08,ASSAY-PEP-08,ASSAY-08,Assay Interpretation,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|ASSAY-PEP-09,ASSAY-PEP-09,ASSAY-09,Assay Interpretation,peptide,DeepSeek V3.2,1,claude
+deepseek-v3.2:cloud|ASSAY-PEP-10,ASSAY-PEP-10,ASSAY-10,Assay Interpretation,peptide,DeepSeek V3.2,2,expert
+deepseek-v3.2:cloud|ASSAY-SM-01,ASSAY-SM-01,ASSAY-01,Assay Interpretation,small_molecule,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|ASSAY-SM-02,ASSAY-SM-02,ASSAY-02,Assay Interpretation,small_molecule,DeepSeek V3.2,2,expert
+deepseek-v3.2:cloud|ASSAY-SM-03,ASSAY-SM-03,ASSAY-03,Assay Interpretation,small_molecule,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|ASSAY-SM-04,ASSAY-SM-04,ASSAY-04,Assay Interpretation,small_molecule,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|ASSAY-SM-05,ASSAY-SM-05,ASSAY-05,Assay Interpretation,small_molecule,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|ASSAY-SM-06,ASSAY-SM-06,ASSAY-06,Assay Interpretation,small_molecule,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|ASSAY-SM-07,ASSAY-SM-07,ASSAY-07,Assay Interpretation,small_molecule,DeepSeek V3.2,1,expert
+deepseek-v3.2:cloud|ASSAY-SM-08,ASSAY-SM-08,ASSAY-08,Assay Interpretation,small_molecule,DeepSeek V3.2,1,claude
+deepseek-v3.2:cloud|ASSAY-SM-09,ASSAY-SM-09,ASSAY-09,Assay Interpretation,small_molecule,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|ASSAY-SM-10,ASSAY-SM-10,ASSAY-10,Assay Interpretation,small_molecule,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|GEN-PEP-01,GEN-PEP-01,GEN-01,Generative Design Strategies,peptide,DeepSeek V3.2,1,claude
+deepseek-v3.2:cloud|GEN-PEP-02,GEN-PEP-02,GEN-02,Generative Design Strategies,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|GEN-PEP-03,GEN-PEP-03,GEN-03,Generative Design Strategies,peptide,DeepSeek V3.2,2,expert
+deepseek-v3.2:cloud|GEN-PEP-04,GEN-PEP-04,GEN-04,Generative Design Strategies,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|GEN-PEP-05,GEN-PEP-05,GEN-05,Generative Design Strategies,peptide,DeepSeek V3.2,2,expert
+deepseek-v3.2:cloud|GEN-PEP-06,GEN-PEP-06,GEN-06,Generative Design Strategies,peptide,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|GEN-PEP-07,GEN-PEP-07,GEN-07,Generative Design Strategies,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|GEN-PEP-08,GEN-PEP-08,GEN-08,Generative Design Strategies,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|GEN-PEP-09,GEN-PEP-09,GEN-09,Generative Design Strategies,peptide,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|GEN-PEP-10,GEN-PEP-10,GEN-10,Generative Design Strategies,peptide,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|GEN-SM-01,GEN-SM-01,GEN-01,Generative Design Strategies,small_molecule,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|GEN-SM-02,GEN-SM-02,GEN-02,Generative Design Strategies,small_molecule,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|GEN-SM-03,GEN-SM-03,GEN-03,Generative Design Strategies,small_molecule,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|GEN-SM-04,GEN-SM-04,GEN-04,Generative Design Strategies,small_molecule,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|GEN-SM-05,GEN-SM-05,GEN-05,Generative Design Strategies,small_molecule,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|GEN-SM-06,GEN-SM-06,GEN-06,Generative Design Strategies,small_molecule,DeepSeek V3.2,1,expert
+deepseek-v3.2:cloud|GEN-SM-07,GEN-SM-07,GEN-07,Generative Design Strategies,small_molecule,DeepSeek V3.2,2,expert
+deepseek-v3.2:cloud|GEN-SM-08,GEN-SM-08,GEN-08,Generative Design Strategies,small_molecule,DeepSeek V3.2,1,claude
+deepseek-v3.2:cloud|GEN-SM-09,GEN-SM-09,GEN-09,Generative Design Strategies,small_molecule,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|GEN-SM-10,GEN-SM-10,GEN-10,Generative Design Strategies,small_molecule,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|OPT-PEP-01,OPT-PEP-01,OPT-01,Optimization Approaches,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|OPT-PEP-02,OPT-PEP-02,OPT-02,Optimization Approaches,peptide,DeepSeek V3.2,2,expert
+deepseek-v3.2:cloud|OPT-PEP-03,OPT-PEP-03,OPT-03,Optimization Approaches,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|OPT-PEP-04,OPT-PEP-04,OPT-04,Optimization Approaches,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|OPT-PEP-05,OPT-PEP-05,OPT-05,Optimization Approaches,peptide,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|OPT-PEP-06,OPT-PEP-06,OPT-06,Optimization Approaches,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|OPT-PEP-07,OPT-PEP-07,OPT-07,Optimization Approaches,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|OPT-PEP-08,OPT-PEP-08,OPT-08,Optimization Approaches,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|OPT-PEP-09,OPT-PEP-09,OPT-09,Optimization Approaches,peptide,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|OPT-PEP-10,OPT-PEP-10,OPT-10,Optimization Approaches,peptide,DeepSeek V3.2,2,expert
+deepseek-v3.2:cloud|OPT-SM-01,OPT-SM-01,OPT-01,Optimization Approaches,small_molecule,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|OPT-SM-02,OPT-SM-02,OPT-02,Optimization Approaches,small_molecule,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|OPT-SM-03,OPT-SM-03,OPT-03,Optimization Approaches,small_molecule,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|OPT-SM-04,OPT-SM-04,OPT-04,Optimization Approaches,small_molecule,DeepSeek V3.2,2,expert
+deepseek-v3.2:cloud|OPT-SM-05,OPT-SM-05,OPT-05,Optimization Approaches,small_molecule,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|OPT-SM-06,OPT-SM-06,OPT-06,Optimization Approaches,small_molecule,DeepSeek V3.2,2,expert
+deepseek-v3.2:cloud|OPT-SM-07,OPT-SM-07,OPT-07,Optimization Approaches,small_molecule,DeepSeek V3.2,1,claude
+deepseek-v3.2:cloud|OPT-SM-08,OPT-SM-08,OPT-08,Optimization Approaches,small_molecule,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|OPT-SM-09,OPT-SM-09,OPT-09,Optimization Approaches,small_molecule,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|OPT-SM-10,OPT-SM-10,OPT-10,Optimization Approaches,small_molecule,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|SAR-PEP-01,SAR-PEP-01,SAR-01,SAR Reasoning,peptide,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|SAR-PEP-02,SAR-PEP-02,SAR-02,SAR Reasoning,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|SAR-PEP-03,SAR-PEP-03,SAR-03,SAR Reasoning,peptide,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|SAR-PEP-04,SAR-PEP-04,SAR-04,SAR Reasoning,peptide,DeepSeek V3.2,2,expert
+deepseek-v3.2:cloud|SAR-PEP-05,SAR-PEP-05,SAR-05,SAR Reasoning,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|SAR-PEP-06,SAR-PEP-06,SAR-06,SAR Reasoning,peptide,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|SAR-PEP-07,SAR-PEP-07,SAR-07,SAR Reasoning,peptide,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|SAR-PEP-08,SAR-PEP-08,SAR-08,SAR Reasoning,peptide,DeepSeek V3.2,3,expert
+deepseek-v3.2:cloud|SAR-PEP-09,SAR-PEP-09,SAR-09,SAR Reasoning,peptide,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|SAR-PEP-10,SAR-PEP-10,SAR-10,SAR Reasoning,peptide,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|SAR-SM-01,SAR-SM-01,SAR-01,SAR Reasoning,small_molecule,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|SAR-SM-02,SAR-SM-02,SAR-02,SAR Reasoning,small_molecule,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|SAR-SM-03,SAR-SM-03,SAR-03,SAR Reasoning,small_molecule,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|SAR-SM-04,SAR-SM-04,SAR-04,SAR Reasoning,small_molecule,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|SAR-SM-05,SAR-SM-05,SAR-05,SAR Reasoning,small_molecule,DeepSeek V3.2,2,claude
+deepseek-v3.2:cloud|SAR-SM-06,SAR-SM-06,SAR-06,SAR Reasoning,small_molecule,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|SAR-SM-07,SAR-SM-07,SAR-07,SAR Reasoning,small_molecule,DeepSeek V3.2,2,expert
+deepseek-v3.2:cloud|SAR-SM-08,SAR-SM-08,SAR-08,SAR Reasoning,small_molecule,DeepSeek V3.2,3,claude
+deepseek-v3.2:cloud|SAR-SM-09,SAR-SM-09,SAR-09,SAR Reasoning,small_molecule,DeepSeek V3.2,2,expert
+deepseek-v3.2:cloud|SAR-SM-10,SAR-SM-10,SAR-10,SAR Reasoning,small_molecule,DeepSeek V3.2,3,claude
+gemini-3-flash-preview:cloud|ADMET-PEP-01,ADMET-PEP-01,ADMET-01,ADMET / Pharmacokinetic Properties,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|ADMET-PEP-02,ADMET-PEP-02,ADMET-02,ADMET / Pharmacokinetic Properties,peptide,Gemini 3 Flash,1,claude
+gemini-3-flash-preview:cloud|ADMET-PEP-03,ADMET-PEP-03,ADMET-03,ADMET / Pharmacokinetic Properties,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|ADMET-PEP-04,ADMET-PEP-04,ADMET-04,ADMET / Pharmacokinetic Properties,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|ADMET-PEP-05,ADMET-PEP-05,ADMET-05,ADMET / Pharmacokinetic Properties,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|ADMET-PEP-06,ADMET-PEP-06,ADMET-06,ADMET / Pharmacokinetic Properties,peptide,Gemini 3 Flash,2,expert
+gemini-3-flash-preview:cloud|ADMET-PEP-07,ADMET-PEP-07,ADMET-07,ADMET / Pharmacokinetic Properties,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|ADMET-PEP-08,ADMET-PEP-08,ADMET-08,ADMET / Pharmacokinetic Properties,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|ADMET-PEP-09,ADMET-PEP-09,ADMET-09,ADMET / Pharmacokinetic Properties,peptide,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|ADMET-PEP-10,ADMET-PEP-10,ADMET-10,ADMET / Pharmacokinetic Properties,peptide,Gemini 3 Flash,2,expert
+gemini-3-flash-preview:cloud|ADMET-SM-01,ADMET-SM-01,ADMET-01,ADMET / Pharmacokinetic Properties,small_molecule,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|ADMET-SM-02,ADMET-SM-02,ADMET-02,ADMET / Pharmacokinetic Properties,small_molecule,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|ADMET-SM-03,ADMET-SM-03,ADMET-03,ADMET / Pharmacokinetic Properties,small_molecule,Gemini 3 Flash,2,expert
+gemini-3-flash-preview:cloud|ADMET-SM-04,ADMET-SM-04,ADMET-04,ADMET / Pharmacokinetic Properties,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|ADMET-SM-05,ADMET-SM-05,ADMET-05,ADMET / Pharmacokinetic Properties,small_molecule,Gemini 3 Flash,0,claude
+gemini-3-flash-preview:cloud|ADMET-SM-06,ADMET-SM-06,ADMET-06,ADMET / Pharmacokinetic Properties,small_molecule,Gemini 3 Flash,2,expert
+gemini-3-flash-preview:cloud|ADMET-SM-07,ADMET-SM-07,ADMET-07,ADMET / Pharmacokinetic Properties,small_molecule,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|ADMET-SM-08,ADMET-SM-08,ADMET-08,ADMET / Pharmacokinetic Properties,small_molecule,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|ADMET-SM-09,ADMET-SM-09,ADMET-09,ADMET / Pharmacokinetic Properties,small_molecule,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|ADMET-SM-10,ADMET-SM-10,ADMET-10,ADMET / Pharmacokinetic Properties,small_molecule,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|ASSAY-PEP-01,ASSAY-PEP-01,ASSAY-01,Assay Interpretation,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|ASSAY-PEP-02,ASSAY-PEP-02,ASSAY-02,Assay Interpretation,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|ASSAY-PEP-03,ASSAY-PEP-03,ASSAY-03,Assay Interpretation,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|ASSAY-PEP-04,ASSAY-PEP-04,ASSAY-04,Assay Interpretation,peptide,Gemini 3 Flash,3,expert
+gemini-3-flash-preview:cloud|ASSAY-PEP-05,ASSAY-PEP-05,ASSAY-05,Assay Interpretation,peptide,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|ASSAY-PEP-06,ASSAY-PEP-06,ASSAY-06,Assay Interpretation,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|ASSAY-PEP-07,ASSAY-PEP-07,ASSAY-07,Assay Interpretation,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|ASSAY-PEP-08,ASSAY-PEP-08,ASSAY-08,Assay Interpretation,peptide,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|ASSAY-PEP-09,ASSAY-PEP-09,ASSAY-09,Assay Interpretation,peptide,Gemini 3 Flash,2,expert
+gemini-3-flash-preview:cloud|ASSAY-PEP-10,ASSAY-PEP-10,ASSAY-10,Assay Interpretation,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|ASSAY-SM-01,ASSAY-SM-01,ASSAY-01,Assay Interpretation,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|ASSAY-SM-02,ASSAY-SM-02,ASSAY-02,Assay Interpretation,small_molecule,Gemini 3 Flash,0,claude
+gemini-3-flash-preview:cloud|ASSAY-SM-03,ASSAY-SM-03,ASSAY-03,Assay Interpretation,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|ASSAY-SM-04,ASSAY-SM-04,ASSAY-04,Assay Interpretation,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|ASSAY-SM-05,ASSAY-SM-05,ASSAY-05,Assay Interpretation,small_molecule,Gemini 3 Flash,2,expert
+gemini-3-flash-preview:cloud|ASSAY-SM-06,ASSAY-SM-06,ASSAY-06,Assay Interpretation,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|ASSAY-SM-07,ASSAY-SM-07,ASSAY-07,Assay Interpretation,small_molecule,Gemini 3 Flash,2,expert
+gemini-3-flash-preview:cloud|ASSAY-SM-08,ASSAY-SM-08,ASSAY-08,Assay Interpretation,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|ASSAY-SM-09,ASSAY-SM-09,ASSAY-09,Assay Interpretation,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|ASSAY-SM-10,ASSAY-SM-10,ASSAY-10,Assay Interpretation,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|GEN-PEP-01,GEN-PEP-01,GEN-01,Generative Design Strategies,peptide,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|GEN-PEP-02,GEN-PEP-02,GEN-02,Generative Design Strategies,peptide,Gemini 3 Flash,1,expert
+gemini-3-flash-preview:cloud|GEN-PEP-03,GEN-PEP-03,GEN-03,Generative Design Strategies,peptide,Gemini 3 Flash,2,expert
+gemini-3-flash-preview:cloud|GEN-PEP-04,GEN-PEP-04,GEN-04,Generative Design Strategies,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|GEN-PEP-05,GEN-PEP-05,GEN-05,Generative Design Strategies,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|GEN-PEP-06,GEN-PEP-06,GEN-06,Generative Design Strategies,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|GEN-PEP-07,GEN-PEP-07,GEN-07,Generative Design Strategies,peptide,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|GEN-PEP-08,GEN-PEP-08,GEN-08,Generative Design Strategies,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|GEN-PEP-09,GEN-PEP-09,GEN-09,Generative Design Strategies,peptide,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|GEN-PEP-10,GEN-PEP-10,GEN-10,Generative Design Strategies,peptide,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|GEN-SM-01,GEN-SM-01,GEN-01,Generative Design Strategies,small_molecule,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|GEN-SM-02,GEN-SM-02,GEN-02,Generative Design Strategies,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|GEN-SM-03,GEN-SM-03,GEN-03,Generative Design Strategies,small_molecule,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|GEN-SM-04,GEN-SM-04,GEN-04,Generative Design Strategies,small_molecule,Gemini 3 Flash,2,expert
+gemini-3-flash-preview:cloud|GEN-SM-05,GEN-SM-05,GEN-05,Generative Design Strategies,small_molecule,Gemini 3 Flash,2,expert
+gemini-3-flash-preview:cloud|GEN-SM-06,GEN-SM-06,GEN-06,Generative Design Strategies,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|GEN-SM-07,GEN-SM-07,GEN-07,Generative Design Strategies,small_molecule,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|GEN-SM-08,GEN-SM-08,GEN-08,Generative Design Strategies,small_molecule,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|GEN-SM-09,GEN-SM-09,GEN-09,Generative Design Strategies,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|GEN-SM-10,GEN-SM-10,GEN-10,Generative Design Strategies,small_molecule,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|OPT-PEP-01,OPT-PEP-01,OPT-01,Optimization Approaches,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|OPT-PEP-02,OPT-PEP-02,OPT-02,Optimization Approaches,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|OPT-PEP-03,OPT-PEP-03,OPT-03,Optimization Approaches,peptide,Gemini 3 Flash,2,expert
+gemini-3-flash-preview:cloud|OPT-PEP-04,OPT-PEP-04,OPT-04,Optimization Approaches,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|OPT-PEP-05,OPT-PEP-05,OPT-05,Optimization Approaches,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|OPT-PEP-06,OPT-PEP-06,OPT-06,Optimization Approaches,peptide,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|OPT-PEP-07,OPT-PEP-07,OPT-07,Optimization Approaches,peptide,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|OPT-PEP-08,OPT-PEP-08,OPT-08,Optimization Approaches,peptide,Gemini 3 Flash,3,expert
+gemini-3-flash-preview:cloud|OPT-PEP-09,OPT-PEP-09,OPT-09,Optimization Approaches,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|OPT-PEP-10,OPT-PEP-10,OPT-10,Optimization Approaches,peptide,Gemini 3 Flash,1,claude
+gemini-3-flash-preview:cloud|OPT-SM-01,OPT-SM-01,OPT-01,Optimization Approaches,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|OPT-SM-02,OPT-SM-02,OPT-02,Optimization Approaches,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|OPT-SM-03,OPT-SM-03,OPT-03,Optimization Approaches,small_molecule,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|OPT-SM-04,OPT-SM-04,OPT-04,Optimization Approaches,small_molecule,Gemini 3 Flash,2,expert
+gemini-3-flash-preview:cloud|OPT-SM-05,OPT-SM-05,OPT-05,Optimization Approaches,small_molecule,Gemini 3 Flash,1,claude
+gemini-3-flash-preview:cloud|OPT-SM-06,OPT-SM-06,OPT-06,Optimization Approaches,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|OPT-SM-07,OPT-SM-07,OPT-07,Optimization Approaches,small_molecule,Gemini 3 Flash,1,claude
+gemini-3-flash-preview:cloud|OPT-SM-08,OPT-SM-08,OPT-08,Optimization Approaches,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|OPT-SM-09,OPT-SM-09,OPT-09,Optimization Approaches,small_molecule,Gemini 3 Flash,1,expert
+gemini-3-flash-preview:cloud|OPT-SM-10,OPT-SM-10,OPT-10,Optimization Approaches,small_molecule,Gemini 3 Flash,1,claude
+gemini-3-flash-preview:cloud|SAR-PEP-01,SAR-PEP-01,SAR-01,SAR Reasoning,peptide,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|SAR-PEP-02,SAR-PEP-02,SAR-02,SAR Reasoning,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|SAR-PEP-03,SAR-PEP-03,SAR-03,SAR Reasoning,peptide,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|SAR-PEP-04,SAR-PEP-04,SAR-04,SAR Reasoning,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|SAR-PEP-05,SAR-PEP-05,SAR-05,SAR Reasoning,peptide,Gemini 3 Flash,2,expert
+gemini-3-flash-preview:cloud|SAR-PEP-06,SAR-PEP-06,SAR-06,SAR Reasoning,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|SAR-PEP-07,SAR-PEP-07,SAR-07,SAR Reasoning,peptide,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|SAR-PEP-08,SAR-PEP-08,SAR-08,SAR Reasoning,peptide,Gemini 3 Flash,2,expert
+gemini-3-flash-preview:cloud|SAR-PEP-09,SAR-PEP-09,SAR-09,SAR Reasoning,peptide,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|SAR-PEP-10,SAR-PEP-10,SAR-10,SAR Reasoning,peptide,Gemini 3 Flash,2,claude
+gemini-3-flash-preview:cloud|SAR-SM-01,SAR-SM-01,SAR-01,SAR Reasoning,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|SAR-SM-02,SAR-SM-02,SAR-02,SAR Reasoning,small_molecule,Gemini 3 Flash,2,expert
+gemini-3-flash-preview:cloud|SAR-SM-03,SAR-SM-03,SAR-03,SAR Reasoning,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|SAR-SM-04,SAR-SM-04,SAR-04,SAR Reasoning,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|SAR-SM-05,SAR-SM-05,SAR-05,SAR Reasoning,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|SAR-SM-06,SAR-SM-06,SAR-06,SAR Reasoning,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|SAR-SM-07,SAR-SM-07,SAR-07,SAR Reasoning,small_molecule,Gemini 3 Flash,1,expert
+gemini-3-flash-preview:cloud|SAR-SM-08,SAR-SM-08,SAR-08,SAR Reasoning,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|SAR-SM-09,SAR-SM-09,SAR-09,SAR Reasoning,small_molecule,Gemini 3 Flash,3,claude
+gemini-3-flash-preview:cloud|SAR-SM-10,SAR-SM-10,SAR-10,SAR Reasoning,small_molecule,Gemini 3 Flash,3,claude
+kimi-k2.5:cloud|ADMET-PEP-01,ADMET-PEP-01,ADMET-01,ADMET / Pharmacokinetic Properties,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ADMET-PEP-02,ADMET-PEP-02,ADMET-02,ADMET / Pharmacokinetic Properties,peptide,Kimi K2.5,1,expert
+kimi-k2.5:cloud|ADMET-PEP-03,ADMET-PEP-03,ADMET-03,ADMET / Pharmacokinetic Properties,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ADMET-PEP-04,ADMET-PEP-04,ADMET-04,ADMET / Pharmacokinetic Properties,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ADMET-PEP-05,ADMET-PEP-05,ADMET-05,ADMET / Pharmacokinetic Properties,peptide,Kimi K2.5,2,claude
+kimi-k2.5:cloud|ADMET-PEP-06,ADMET-PEP-06,ADMET-06,ADMET / Pharmacokinetic Properties,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ADMET-PEP-07,ADMET-PEP-07,ADMET-07,ADMET / Pharmacokinetic Properties,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ADMET-PEP-08,ADMET-PEP-08,ADMET-08,ADMET / Pharmacokinetic Properties,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ADMET-PEP-09,ADMET-PEP-09,ADMET-09,ADMET / Pharmacokinetic Properties,peptide,Kimi K2.5,2,expert
+kimi-k2.5:cloud|ADMET-PEP-10,ADMET-PEP-10,ADMET-10,ADMET / Pharmacokinetic Properties,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ADMET-SM-01,ADMET-SM-01,ADMET-01,ADMET / Pharmacokinetic Properties,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ADMET-SM-02,ADMET-SM-02,ADMET-02,ADMET / Pharmacokinetic Properties,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ADMET-SM-03,ADMET-SM-03,ADMET-03,ADMET / Pharmacokinetic Properties,small_molecule,Kimi K2.5,2,expert
+kimi-k2.5:cloud|ADMET-SM-04,ADMET-SM-04,ADMET-04,ADMET / Pharmacokinetic Properties,small_molecule,Kimi K2.5,3,expert
+kimi-k2.5:cloud|ADMET-SM-05,ADMET-SM-05,ADMET-05,ADMET / Pharmacokinetic Properties,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ADMET-SM-06,ADMET-SM-06,ADMET-06,ADMET / Pharmacokinetic Properties,small_molecule,Kimi K2.5,2,claude
+kimi-k2.5:cloud|ADMET-SM-07,ADMET-SM-07,ADMET-07,ADMET / Pharmacokinetic Properties,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ADMET-SM-08,ADMET-SM-08,ADMET-08,ADMET / Pharmacokinetic Properties,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ADMET-SM-09,ADMET-SM-09,ADMET-09,ADMET / Pharmacokinetic Properties,small_molecule,Kimi K2.5,2,claude
+kimi-k2.5:cloud|ADMET-SM-10,ADMET-SM-10,ADMET-10,ADMET / Pharmacokinetic Properties,small_molecule,Kimi K2.5,2,claude
+kimi-k2.5:cloud|ASSAY-PEP-01,ASSAY-PEP-01,ASSAY-01,Assay Interpretation,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ASSAY-PEP-02,ASSAY-PEP-02,ASSAY-02,Assay Interpretation,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ASSAY-PEP-03,ASSAY-PEP-03,ASSAY-03,Assay Interpretation,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ASSAY-PEP-04,ASSAY-PEP-04,ASSAY-04,Assay Interpretation,peptide,Kimi K2.5,2,expert
+kimi-k2.5:cloud|ASSAY-PEP-05,ASSAY-PEP-05,ASSAY-05,Assay Interpretation,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ASSAY-PEP-06,ASSAY-PEP-06,ASSAY-06,Assay Interpretation,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ASSAY-PEP-07,ASSAY-PEP-07,ASSAY-07,Assay Interpretation,peptide,Kimi K2.5,1,claude
+kimi-k2.5:cloud|ASSAY-PEP-08,ASSAY-PEP-08,ASSAY-08,Assay Interpretation,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ASSAY-PEP-09,ASSAY-PEP-09,ASSAY-09,Assay Interpretation,peptide,Kimi K2.5,2,expert
+kimi-k2.5:cloud|ASSAY-PEP-10,ASSAY-PEP-10,ASSAY-10,Assay Interpretation,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ASSAY-SM-01,ASSAY-SM-01,ASSAY-01,Assay Interpretation,small_molecule,Kimi K2.5,3,expert
+kimi-k2.5:cloud|ASSAY-SM-02,ASSAY-SM-02,ASSAY-02,Assay Interpretation,small_molecule,Kimi K2.5,2,claude
+kimi-k2.5:cloud|ASSAY-SM-03,ASSAY-SM-03,ASSAY-03,Assay Interpretation,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ASSAY-SM-04,ASSAY-SM-04,ASSAY-04,Assay Interpretation,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ASSAY-SM-05,ASSAY-SM-05,ASSAY-05,Assay Interpretation,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ASSAY-SM-06,ASSAY-SM-06,ASSAY-06,Assay Interpretation,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ASSAY-SM-07,ASSAY-SM-07,ASSAY-07,Assay Interpretation,small_molecule,Kimi K2.5,2,claude
+kimi-k2.5:cloud|ASSAY-SM-08,ASSAY-SM-08,ASSAY-08,Assay Interpretation,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ASSAY-SM-09,ASSAY-SM-09,ASSAY-09,Assay Interpretation,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|ASSAY-SM-10,ASSAY-SM-10,ASSAY-10,Assay Interpretation,small_molecule,Kimi K2.5,2,expert
+kimi-k2.5:cloud|GEN-PEP-01,GEN-PEP-01,GEN-01,Generative Design Strategies,peptide,Kimi K2.5,1,expert
+kimi-k2.5:cloud|GEN-PEP-02,GEN-PEP-02,GEN-02,Generative Design Strategies,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|GEN-PEP-03,GEN-PEP-03,GEN-03,Generative Design Strategies,peptide,Kimi K2.5,2,claude
+kimi-k2.5:cloud|GEN-PEP-04,GEN-PEP-04,GEN-04,Generative Design Strategies,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|GEN-PEP-05,GEN-PEP-05,GEN-05,Generative Design Strategies,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|GEN-PEP-06,GEN-PEP-06,GEN-06,Generative Design Strategies,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|GEN-PEP-07,GEN-PEP-07,GEN-07,Generative Design Strategies,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|GEN-PEP-08,GEN-PEP-08,GEN-08,Generative Design Strategies,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|GEN-PEP-09,GEN-PEP-09,GEN-09,Generative Design Strategies,peptide,Kimi K2.5,2,claude
+kimi-k2.5:cloud|GEN-PEP-10,GEN-PEP-10,GEN-10,Generative Design Strategies,peptide,Kimi K2.5,3,expert
+kimi-k2.5:cloud|GEN-SM-01,GEN-SM-01,GEN-01,Generative Design Strategies,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|GEN-SM-02,GEN-SM-02,GEN-02,Generative Design Strategies,small_molecule,Kimi K2.5,2,expert
+kimi-k2.5:cloud|GEN-SM-03,GEN-SM-03,GEN-03,Generative Design Strategies,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|GEN-SM-04,GEN-SM-04,GEN-04,Generative Design Strategies,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|GEN-SM-05,GEN-SM-05,GEN-05,Generative Design Strategies,small_molecule,Kimi K2.5,2,claude
+kimi-k2.5:cloud|GEN-SM-06,GEN-SM-06,GEN-06,Generative Design Strategies,small_molecule,Kimi K2.5,2,claude
+kimi-k2.5:cloud|GEN-SM-07,GEN-SM-07,GEN-07,Generative Design Strategies,small_molecule,Kimi K2.5,2,expert
+kimi-k2.5:cloud|GEN-SM-08,GEN-SM-08,GEN-08,Generative Design Strategies,small_molecule,Kimi K2.5,1,claude
+kimi-k2.5:cloud|GEN-SM-09,GEN-SM-09,GEN-09,Generative Design Strategies,small_molecule,Kimi K2.5,1,claude
+kimi-k2.5:cloud|GEN-SM-10,GEN-SM-10,GEN-10,Generative Design Strategies,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|OPT-PEP-01,OPT-PEP-01,OPT-01,Optimization Approaches,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|OPT-PEP-02,OPT-PEP-02,OPT-02,Optimization Approaches,peptide,Kimi K2.5,2,claude
+kimi-k2.5:cloud|OPT-PEP-03,OPT-PEP-03,OPT-03,Optimization Approaches,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|OPT-PEP-04,OPT-PEP-04,OPT-04,Optimization Approaches,peptide,Kimi K2.5,2,expert
+kimi-k2.5:cloud|OPT-PEP-05,OPT-PEP-05,OPT-05,Optimization Approaches,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|OPT-PEP-06,OPT-PEP-06,OPT-06,Optimization Approaches,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|OPT-PEP-07,OPT-PEP-07,OPT-07,Optimization Approaches,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|OPT-PEP-08,OPT-PEP-08,OPT-08,Optimization Approaches,peptide,Kimi K2.5,2,claude
+kimi-k2.5:cloud|OPT-PEP-09,OPT-PEP-09,OPT-09,Optimization Approaches,peptide,Kimi K2.5,2,expert
+kimi-k2.5:cloud|OPT-PEP-10,OPT-PEP-10,OPT-10,Optimization Approaches,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|OPT-SM-01,OPT-SM-01,OPT-01,Optimization Approaches,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|OPT-SM-02,OPT-SM-02,OPT-02,Optimization Approaches,small_molecule,Kimi K2.5,2,expert
+kimi-k2.5:cloud|OPT-SM-03,OPT-SM-03,OPT-03,Optimization Approaches,small_molecule,Kimi K2.5,2,claude
+kimi-k2.5:cloud|OPT-SM-04,OPT-SM-04,OPT-04,Optimization Approaches,small_molecule,Kimi K2.5,3,expert
+kimi-k2.5:cloud|OPT-SM-05,OPT-SM-05,OPT-05,Optimization Approaches,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|OPT-SM-06,OPT-SM-06,OPT-06,Optimization Approaches,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|OPT-SM-07,OPT-SM-07,OPT-07,Optimization Approaches,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|OPT-SM-08,OPT-SM-08,OPT-08,Optimization Approaches,small_molecule,Kimi K2.5,2,claude
+kimi-k2.5:cloud|OPT-SM-09,OPT-SM-09,OPT-09,Optimization Approaches,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|OPT-SM-10,OPT-SM-10,OPT-10,Optimization Approaches,small_molecule,Kimi K2.5,2,claude
+kimi-k2.5:cloud|SAR-PEP-01,SAR-PEP-01,SAR-01,SAR Reasoning,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|SAR-PEP-02,SAR-PEP-02,SAR-02,SAR Reasoning,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|SAR-PEP-03,SAR-PEP-03,SAR-03,SAR Reasoning,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|SAR-PEP-04,SAR-PEP-04,SAR-04,SAR Reasoning,peptide,Kimi K2.5,2,expert
+kimi-k2.5:cloud|SAR-PEP-05,SAR-PEP-05,SAR-05,SAR Reasoning,peptide,Kimi K2.5,2,expert
+kimi-k2.5:cloud|SAR-PEP-06,SAR-PEP-06,SAR-06,SAR Reasoning,peptide,Kimi K2.5,2,claude
+kimi-k2.5:cloud|SAR-PEP-07,SAR-PEP-07,SAR-07,SAR Reasoning,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|SAR-PEP-08,SAR-PEP-08,SAR-08,SAR Reasoning,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|SAR-PEP-09,SAR-PEP-09,SAR-09,SAR Reasoning,peptide,Kimi K2.5,2,claude
+kimi-k2.5:cloud|SAR-PEP-10,SAR-PEP-10,SAR-10,SAR Reasoning,peptide,Kimi K2.5,3,claude
+kimi-k2.5:cloud|SAR-SM-01,SAR-SM-01,SAR-01,SAR Reasoning,small_molecule,Kimi K2.5,1,expert
+kimi-k2.5:cloud|SAR-SM-02,SAR-SM-02,SAR-02,SAR Reasoning,small_molecule,Kimi K2.5,2,expert
+kimi-k2.5:cloud|SAR-SM-03,SAR-SM-03,SAR-03,SAR Reasoning,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|SAR-SM-04,SAR-SM-04,SAR-04,SAR Reasoning,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|SAR-SM-05,SAR-SM-05,SAR-05,SAR Reasoning,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|SAR-SM-06,SAR-SM-06,SAR-06,SAR Reasoning,small_molecule,Kimi K2.5,2,claude
+kimi-k2.5:cloud|SAR-SM-07,SAR-SM-07,SAR-07,SAR Reasoning,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|SAR-SM-08,SAR-SM-08,SAR-08,SAR Reasoning,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|SAR-SM-09,SAR-SM-09,SAR-09,SAR Reasoning,small_molecule,Kimi K2.5,3,claude
+kimi-k2.5:cloud|SAR-SM-10,SAR-SM-10,SAR-10,SAR Reasoning,small_molecule,Kimi K2.5,3,claude
+qwen3-next:80b-cloud|ADMET-PEP-01,ADMET-PEP-01,ADMET-01,ADMET / Pharmacokinetic Properties,peptide,Qwen 3 Next 80B,1,claude
+qwen3-next:80b-cloud|ADMET-PEP-02,ADMET-PEP-02,ADMET-02,ADMET / Pharmacokinetic Properties,peptide,Qwen 3 Next 80B,2,expert
+qwen3-next:80b-cloud|ADMET-PEP-03,ADMET-PEP-03,ADMET-03,ADMET / Pharmacokinetic Properties,peptide,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|ADMET-PEP-04,ADMET-PEP-04,ADMET-04,ADMET / Pharmacokinetic Properties,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|ADMET-PEP-05,ADMET-PEP-05,ADMET-05,ADMET / Pharmacokinetic Properties,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|ADMET-PEP-06,ADMET-PEP-06,ADMET-06,ADMET / Pharmacokinetic Properties,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|ADMET-PEP-07,ADMET-PEP-07,ADMET-07,ADMET / Pharmacokinetic Properties,peptide,Qwen 3 Next 80B,2,expert
+qwen3-next:80b-cloud|ADMET-PEP-08,ADMET-PEP-08,ADMET-08,ADMET / Pharmacokinetic Properties,peptide,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|ADMET-PEP-09,ADMET-PEP-09,ADMET-09,ADMET / Pharmacokinetic Properties,peptide,Qwen 3 Next 80B,1,claude
+qwen3-next:80b-cloud|ADMET-PEP-10,ADMET-PEP-10,ADMET-10,ADMET / Pharmacokinetic Properties,peptide,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|ADMET-SM-01,ADMET-SM-01,ADMET-01,ADMET / Pharmacokinetic Properties,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|ADMET-SM-02,ADMET-SM-02,ADMET-02,ADMET / Pharmacokinetic Properties,small_molecule,Qwen 3 Next 80B,1,expert
+qwen3-next:80b-cloud|ADMET-SM-03,ADMET-SM-03,ADMET-03,ADMET / Pharmacokinetic Properties,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|ADMET-SM-04,ADMET-SM-04,ADMET-04,ADMET / Pharmacokinetic Properties,small_molecule,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|ADMET-SM-05,ADMET-SM-05,ADMET-05,ADMET / Pharmacokinetic Properties,small_molecule,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|ADMET-SM-06,ADMET-SM-06,ADMET-06,ADMET / Pharmacokinetic Properties,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|ADMET-SM-07,ADMET-SM-07,ADMET-07,ADMET / Pharmacokinetic Properties,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|ADMET-SM-08,ADMET-SM-08,ADMET-08,ADMET / Pharmacokinetic Properties,small_molecule,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|ADMET-SM-09,ADMET-SM-09,ADMET-09,ADMET / Pharmacokinetic Properties,small_molecule,Qwen 3 Next 80B,2,expert
+qwen3-next:80b-cloud|ADMET-SM-10,ADMET-SM-10,ADMET-10,ADMET / Pharmacokinetic Properties,small_molecule,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|ASSAY-PEP-01,ASSAY-PEP-01,ASSAY-01,Assay Interpretation,peptide,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|ASSAY-PEP-02,ASSAY-PEP-02,ASSAY-02,Assay Interpretation,peptide,Qwen 3 Next 80B,2,expert
+qwen3-next:80b-cloud|ASSAY-PEP-03,ASSAY-PEP-03,ASSAY-03,Assay Interpretation,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|ASSAY-PEP-04,ASSAY-PEP-04,ASSAY-04,Assay Interpretation,peptide,Qwen 3 Next 80B,3,expert
+qwen3-next:80b-cloud|ASSAY-PEP-05,ASSAY-PEP-05,ASSAY-05,Assay Interpretation,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|ASSAY-PEP-06,ASSAY-PEP-06,ASSAY-06,Assay Interpretation,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|ASSAY-PEP-07,ASSAY-PEP-07,ASSAY-07,Assay Interpretation,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|ASSAY-PEP-08,ASSAY-PEP-08,ASSAY-08,Assay Interpretation,peptide,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|ASSAY-PEP-09,ASSAY-PEP-09,ASSAY-09,Assay Interpretation,peptide,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|ASSAY-PEP-10,ASSAY-PEP-10,ASSAY-10,Assay Interpretation,peptide,Qwen 3 Next 80B,1,claude
+qwen3-next:80b-cloud|ASSAY-SM-01,ASSAY-SM-01,ASSAY-01,Assay Interpretation,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|ASSAY-SM-02,ASSAY-SM-02,ASSAY-02,Assay Interpretation,small_molecule,Qwen 3 Next 80B,1,claude
+qwen3-next:80b-cloud|ASSAY-SM-03,ASSAY-SM-03,ASSAY-03,Assay Interpretation,small_molecule,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|ASSAY-SM-04,ASSAY-SM-04,ASSAY-04,Assay Interpretation,small_molecule,Qwen 3 Next 80B,2,expert
+qwen3-next:80b-cloud|ASSAY-SM-05,ASSAY-SM-05,ASSAY-05,Assay Interpretation,small_molecule,Qwen 3 Next 80B,2,expert
+qwen3-next:80b-cloud|ASSAY-SM-06,ASSAY-SM-06,ASSAY-06,Assay Interpretation,small_molecule,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|ASSAY-SM-07,ASSAY-SM-07,ASSAY-07,Assay Interpretation,small_molecule,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|ASSAY-SM-08,ASSAY-SM-08,ASSAY-08,Assay Interpretation,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|ASSAY-SM-09,ASSAY-SM-09,ASSAY-09,Assay Interpretation,small_molecule,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|ASSAY-SM-10,ASSAY-SM-10,ASSAY-10,Assay Interpretation,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|GEN-PEP-01,GEN-PEP-01,GEN-01,Generative Design Strategies,peptide,Qwen 3 Next 80B,1,claude
+qwen3-next:80b-cloud|GEN-PEP-02,GEN-PEP-02,GEN-02,Generative Design Strategies,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|GEN-PEP-03,GEN-PEP-03,GEN-03,Generative Design Strategies,peptide,Qwen 3 Next 80B,1,claude
+qwen3-next:80b-cloud|GEN-PEP-04,GEN-PEP-04,GEN-04,Generative Design Strategies,peptide,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|GEN-PEP-05,GEN-PEP-05,GEN-05,Generative Design Strategies,peptide,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|GEN-PEP-06,GEN-PEP-06,GEN-06,Generative Design Strategies,peptide,Qwen 3 Next 80B,1,expert
+qwen3-next:80b-cloud|GEN-PEP-07,GEN-PEP-07,GEN-07,Generative Design Strategies,peptide,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|GEN-PEP-08,GEN-PEP-08,GEN-08,Generative Design Strategies,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|GEN-PEP-09,GEN-PEP-09,GEN-09,Generative Design Strategies,peptide,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|GEN-PEP-10,GEN-PEP-10,GEN-10,Generative Design Strategies,peptide,Qwen 3 Next 80B,1,expert
+qwen3-next:80b-cloud|GEN-SM-01,GEN-SM-01,GEN-01,Generative Design Strategies,small_molecule,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|GEN-SM-02,GEN-SM-02,GEN-02,Generative Design Strategies,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|GEN-SM-03,GEN-SM-03,GEN-03,Generative Design Strategies,small_molecule,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|GEN-SM-04,GEN-SM-04,GEN-04,Generative Design Strategies,small_molecule,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|GEN-SM-05,GEN-SM-05,GEN-05,Generative Design Strategies,small_molecule,Qwen 3 Next 80B,1,expert
+qwen3-next:80b-cloud|GEN-SM-06,GEN-SM-06,GEN-06,Generative Design Strategies,small_molecule,Qwen 3 Next 80B,1,claude
+qwen3-next:80b-cloud|GEN-SM-07,GEN-SM-07,GEN-07,Generative Design Strategies,small_molecule,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|GEN-SM-08,GEN-SM-08,GEN-08,Generative Design Strategies,small_molecule,Qwen 3 Next 80B,1,claude
+qwen3-next:80b-cloud|GEN-SM-09,GEN-SM-09,GEN-09,Generative Design Strategies,small_molecule,Qwen 3 Next 80B,1,expert
+qwen3-next:80b-cloud|GEN-SM-10,GEN-SM-10,GEN-10,Generative Design Strategies,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|OPT-PEP-01,OPT-PEP-01,OPT-01,Optimization Approaches,peptide,Qwen 3 Next 80B,1,expert
+qwen3-next:80b-cloud|OPT-PEP-02,OPT-PEP-02,OPT-02,Optimization Approaches,peptide,Qwen 3 Next 80B,2,expert
+qwen3-next:80b-cloud|OPT-PEP-03,OPT-PEP-03,OPT-03,Optimization Approaches,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|OPT-PEP-04,OPT-PEP-04,OPT-04,Optimization Approaches,peptide,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|OPT-PEP-05,OPT-PEP-05,OPT-05,Optimization Approaches,peptide,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|OPT-PEP-06,OPT-PEP-06,OPT-06,Optimization Approaches,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|OPT-PEP-07,OPT-PEP-07,OPT-07,Optimization Approaches,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|OPT-PEP-08,OPT-PEP-08,OPT-08,Optimization Approaches,peptide,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|OPT-PEP-09,OPT-PEP-09,OPT-09,Optimization Approaches,peptide,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|OPT-PEP-10,OPT-PEP-10,OPT-10,Optimization Approaches,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|OPT-SM-01,OPT-SM-01,OPT-01,Optimization Approaches,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|OPT-SM-02,OPT-SM-02,OPT-02,Optimization Approaches,small_molecule,Qwen 3 Next 80B,1,claude
+qwen3-next:80b-cloud|OPT-SM-03,OPT-SM-03,OPT-03,Optimization Approaches,small_molecule,Qwen 3 Next 80B,1,claude
+qwen3-next:80b-cloud|OPT-SM-04,OPT-SM-04,OPT-04,Optimization Approaches,small_molecule,Qwen 3 Next 80B,2,expert
+qwen3-next:80b-cloud|OPT-SM-05,OPT-SM-05,OPT-05,Optimization Approaches,small_molecule,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|OPT-SM-06,OPT-SM-06,OPT-06,Optimization Approaches,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|OPT-SM-07,OPT-SM-07,OPT-07,Optimization Approaches,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|OPT-SM-08,OPT-SM-08,OPT-08,Optimization Approaches,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|OPT-SM-09,OPT-SM-09,OPT-09,Optimization Approaches,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|OPT-SM-10,OPT-SM-10,OPT-10,Optimization Approaches,small_molecule,Qwen 3 Next 80B,2,expert
+qwen3-next:80b-cloud|SAR-PEP-01,SAR-PEP-01,SAR-01,SAR Reasoning,peptide,Qwen 3 Next 80B,1,expert
+qwen3-next:80b-cloud|SAR-PEP-02,SAR-PEP-02,SAR-02,SAR Reasoning,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|SAR-PEP-03,SAR-PEP-03,SAR-03,SAR Reasoning,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|SAR-PEP-04,SAR-PEP-04,SAR-04,SAR Reasoning,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|SAR-PEP-05,SAR-PEP-05,SAR-05,SAR Reasoning,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|SAR-PEP-06,SAR-PEP-06,SAR-06,SAR Reasoning,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|SAR-PEP-07,SAR-PEP-07,SAR-07,SAR Reasoning,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|SAR-PEP-08,SAR-PEP-08,SAR-08,SAR Reasoning,peptide,Qwen 3 Next 80B,3,expert
+qwen3-next:80b-cloud|SAR-PEP-09,SAR-PEP-09,SAR-09,SAR Reasoning,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|SAR-PEP-10,SAR-PEP-10,SAR-10,SAR Reasoning,peptide,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|SAR-SM-01,SAR-SM-01,SAR-01,SAR Reasoning,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|SAR-SM-02,SAR-SM-02,SAR-02,SAR Reasoning,small_molecule,Qwen 3 Next 80B,2,claude
+qwen3-next:80b-cloud|SAR-SM-03,SAR-SM-03,SAR-03,SAR Reasoning,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|SAR-SM-04,SAR-SM-04,SAR-04,SAR Reasoning,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|SAR-SM-05,SAR-SM-05,SAR-05,SAR Reasoning,small_molecule,Qwen 3 Next 80B,2,expert
+qwen3-next:80b-cloud|SAR-SM-06,SAR-SM-06,SAR-06,SAR Reasoning,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|SAR-SM-07,SAR-SM-07,SAR-07,SAR Reasoning,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|SAR-SM-08,SAR-SM-08,SAR-08,SAR Reasoning,small_molecule,Qwen 3 Next 80B,1,claude
+qwen3-next:80b-cloud|SAR-SM-09,SAR-SM-09,SAR-09,SAR Reasoning,small_molecule,Qwen 3 Next 80B,3,claude
+qwen3-next:80b-cloud|SAR-SM-10,SAR-SM-10,SAR-10,SAR Reasoning,small_molecule,Qwen 3 Next 80B,2,expert
