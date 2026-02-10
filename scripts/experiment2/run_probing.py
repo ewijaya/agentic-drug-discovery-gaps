@@ -116,9 +116,11 @@ def call_model_with_retry(
                 chat_kwargs["think"] = False
                 options["think"] = False
             elif model_tag == "qwen3-next:80b-cloud":
-                # Qwen may emit empty content under default reasoning settings.
-                # Use supported reasoning_effort instead of think=False.
+                # Qwen can spend much of a small token budget on reasoning, yielding
+                # empty message.content. Use supported reasoning controls and a larger
+                # generation budget for this model.
                 options["reasoning_effort"] = "minimal"
+                options["num_predict"] = max(MAX_TOKENS, 4096)
 
             response = client.chat(**chat_kwargs)
             latency_ms = int((time.perf_counter() - start) * 1000)
