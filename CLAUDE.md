@@ -4,10 +4,11 @@
 
 This repository contains a **position paper** titled:
 
-**"The Blind Spots of Agentic Drug Discovery"**
+**"Beyond SMILES: Evaluating Agentic Systems for Drug Discovery"**
 
-Target word count: 6,000-8,000 words
-Target venues: arXiv cs.AI (primary), Drug Discovery Today, Nature Machine Intelligence (perspective piece)
+Published on arXiv: [2602.10163](https://arxiv.org/abs/2602.10163) (q-bio.QM, cs.AI)
+
+46 pages, 8 figures, 15 tables, ~11,100 words
 
 ## Author
 
@@ -131,24 +132,31 @@ Position this paper AGAINST these three:
 agentic-drug-discovery-gaps/
 ├── CLAUDE.md                    # This file - project context
 ├── README.md                    # Project overview + abstract
+├── arxiv-submission.tar         # arXiv submission archive (monolithic main.tex + PDF figures)
+├── latex/
+│   ├── main.tex                 # Master LaTeX file
+│   ├── preamble.tex             # Packages and formatting
+│   ├── references.bib           # BibTeX bibliography
+│   ├── sections/                # 15 independent .tex files per section
+│   └── figures/                 # 8 figures (6 JPEG + 2 PDF)
 ├── outline/
 │   ├── full-outline.md          # Complete section-by-section outline
 │   └── illustrations.md         # Figure and visual asset specifications
 ├── references/
 │   └── key-papers.md            # Bibliography of papers to cite
-├── drafts/                      # Section drafts go here
-│   └── .gitkeep
-└── figures/                     # Generated figures go here
-    └── .gitkeep
+├── reviews/                     # Multi-perspective self-review
+├── scripts/
+│   ├── generate_fig6_pareto.py
+│   └── experiment2/             # LLM knowledge probing experiment
+├── drafts/                      # Early markdown drafts
+└── figures/                     # Legacy figure drafts
 ```
 
-## How to Start Writing
+## Editing the Paper
 
-1. Read `outline/full-outline.md` first - it has the full structure with key arguments per section
-2. Write one section at a time into `drafts/section-N-name.md`
-3. Follow the word count targets in the outline
-4. Check every paragraph against the constraints above
-5. Reference `outline/illustrations.md` for where figures should be placed
+1. Edit sections in `latex/sections/*.tex`
+2. Compile with `cd latex && pdflatex main && bibtex main && pdflatex main && pdflatex main`
+3. For arXiv resubmission: create uncompressed `.tar` with all figures as PDF
 
 ## Notion Pages (for reference)
 
