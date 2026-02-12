@@ -2,7 +2,8 @@
 
 **Edward Wijaya, StemRIM, Inc.**
 
-> Submitted to arXiv cs.AI on 2026-02-10 (submit/7253518)
+[![arXiv](https://img.shields.io/badge/arXiv-2602.10163-b31b1b.svg)](https://arxiv.org/abs/2602.10163)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 ## Abstract
 
@@ -87,7 +88,7 @@ Agentic systems for drug discovery have demonstrated autonomous synthesis planni
 
 ## Venue
 
-Submitted to **arXiv cs.AI** on 2026-02-10.
+Published on **arXiv** (q-bio.QM, cs.AI) on 2026-02-10. arXiv:2602.10163
 
 ## Related Work
 
